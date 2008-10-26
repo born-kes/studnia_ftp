@@ -1,0 +1,5 @@
+[Enter code here]
+
+                                                          title,    points, owner,    ally,       mur,    pik,    mie,    axe,     ar,     zw,    lk,     kar,     ck,    tar,    kat,    ry,    sz,    opis,    data
+id_map   , id_y   , id_x   , typ   , id_wsi   , id   , nazwa_wsi   , pkt   , gracz   , plemie   , mur   , pik   , mie   , axe   , arch   , zw   , lk   , karch   , ck   , tar   , kat   , ry   , sz   , opis   , Data
+0	      1,    2          3         4       5        6           7       8          9         10      11      12      13       14     15     16      17        18     19       20   21      22      23        24
