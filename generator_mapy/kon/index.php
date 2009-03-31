@@ -2,7 +2,7 @@
 <caption>Konwerter raportow Wojennych ;p</caption><TR><TD  align="center">
 <?php
 
-echo'<form action="." method="get"><textarea id="query" name="query" onclick="highlight(this);" rows="12" cols="52"></textarea></TD></TR>	
+echo'<form action="konwertuj.php" method="get"><textarea id="query" name="query" onclick="highlight(this);" rows="12" cols="52"></textarea></TD></TR>	
 <TR><TD align="center"><input type="submit" value="Konwertuj" style="margin-top: 5px;"/>
 		</div>
 	</form>';

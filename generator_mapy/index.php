@@ -1,6 +1,6 @@
 <?php
 require "html.php";
-echo'<table align="center"><TR><TD><img src="img/ka19.jpg"></TD></TR></table>
+echo'<table align="center"><TR><TD><img src="http://pl5.plemiona.pl/user_image.php?image_id=11528"></TD></TR></table>
 <table border="1" align="center"><TR><TD align="center">';
 
 if( $_GET[szer]== null ){echo'<b>Witam w Generatorze Map</b><br><br>
@@ -36,19 +36,4 @@ echo'</TD></TR><TR><TD align="center"><b>Dziekuje za wspolprace </b> <br><br>
 require "chmurka.php";
 require "test_map.php";}
 
-echo'<TR><TD align="center">';
-if( $_POST!= null){require "kon/index.php";}else{
-echo' <BR><BR><FORM METHOD="post" action=""><INPUT TYPE="submit" name="pole" VALUE="Tu mozesz dodac raport?"> </FORM><BR><BR>';
-if($_GET[query]!=null){
-      require "kon/ini.php";
-echo"</td></tr><tr><td>";
-      require "kon/db.php";
-if($zapytanie!=NULL){require "connection.php";
-connection();
-$wynik = mysql_query($zapytanie)or die('B³¹d zapytania');}
-
-}}
-
 ?>
-</TD></TR>
-</html>

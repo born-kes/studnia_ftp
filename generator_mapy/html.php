@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>KEStools.raportów - Plemiona</title>
 
-<link rel="stylesheet" type="text/css" href="img/stamm1201718544.css">
-<script src="img/mootools.js" type="text/javascript"></script>
-<script src="img/script.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<script src="../mootools.js" type="text/javascript"></script>
+<script src="../script.js" type="text/javascript"></script>
 </head>
 <br><body>

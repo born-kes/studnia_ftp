@@ -1,0 +1,38 @@
+ /*wygl±d linków*/
+a:link	{ font-weight:bold; color: #ffffff; text-decoration:none; }
+a:visited	{ font-weight:bold; color: #000000; text-decoration:none; }
+a:active	{ font-weight:bold; color: #000000; text-decoration:none; }
+a:hover { font-weight:bold; color: #000000; text-decoration:none; }
+td		{ font-size:9pt; }
+.hidden { color:#DED3B9; }
+body	{ background-color: #DED3B9; font-size:9pt; font-family: Verdana, Arial }
+
+/* color wype³nienia */
+table.menu tr td, ul.quickbar li {
+	padding: 2px; padding-left: 4px; padding-right: 4px;
+	white-space: nowrap;
+   background-image: url(menu_tlo.png);
+}
+
+/* ukrywanie rozwijanie ??? */
+ul.quickbar li{
+	padding-top: 0px; padding-bottom: 0px;
+	display:inline;
+}
+
+/* Ukrywanie rozwijanie */
+table.menu tr td table {
+	z-index:100;
+	position:absolute;
+	border-top: 1px solid black;
+	margin-left: -5px; margin-top:1px;
+	visibility: hidden;
+}
+
+/* odwijanie ukrytego rozwiniecia */
+table.menu tr td:hover table, table.menu tr td.hover table {
+	visibility: visible;
+}
+
+
+

@@ -15,39 +15,64 @@ else
 
 
 
-function map_popup(data, title, owner, mur, typ,  pik, mie, axe, ar, zw, lk, kar, ck, tar, kat, ry, sz, opis)
+function map_popup(typ, title, user, mur, data, pik, mie, axe, ar, zw, lk, kar, ck, tar, kat, ry, sz, opis)
 {
 	
         setText(gid("info_title"), title);	
-	
+	if(data != 'NULL') {
+		setText(gid("info_data"), data);
+		gid("info_data_on").style.display = '';
+		gid("info_data_off").style.display = 'none';
+		gid("info_wor_a").style.display = '';
+		gid("info_wor_b").style.display = '';
+		gid("info_wor_c").style.display = '';
+		gid("info_wor_d").style.display = '';
 
-	if(owner != null) {
-		setText(gid("info_owner"), owner);
-		gid("info_owner_row").style.display = '';
-		gid("info_left_row").style.display = 'none';
-	}
-	else {
-		gid("info_owner_row").style.display = 'none';
-		gid("info_left_row").style.display = '';
-	}
-	setText(gid("info_data"), typ);	
-	setText(gid("info_typ"), data);
-	
-        setText(gid("info_mur"), mur);
         setText(gid("info_wor_pik"), pik);
         setText(gid("info_wor_mie"), mie);
         setText(gid("info_wor_axe"), axe);
         setText(gid("info_wor_ar"), ar);
+        setText(gid("info_wor_tar"), tar);
+        setText(gid("info_wor_ry"), ry);
+
         setText(gid("info_wor_zw"), zw);
         setText(gid("info_wor_lk"), lk);
         setText(gid("info_wor_kar"), kar);
         setText(gid("info_wor_ck"), ck);
-        setText(gid("info_wor_tar"), tar);
         setText(gid("info_wor_kat"), kat);
-        setText(gid("info_wor_ry"), ry);
         setText(gid("info_wor_sz"), sz);
-        setText(gid("info_opis"),  opis);
 
+	}
+	else {
+		gid("info_data_on").style.display = 'none';
+		gid("info_data_off").style.display = '';
+		gid("info_wor_a").style.display = 'none';
+		gid("info_wor_b").style.display = 'none';
+		gid("info_wor_c").style.display = 'none';
+		gid("info_wor_d").style.display = 'none';
+	}
+
+	if(user != 'NULL') {
+		setText(gid("info_user"), user);
+		gid("info_user_on").style.display = '';
+		gid("info_user_off").style.display = 'none';
+	}
+	else {
+		gid("info_user_on").style.display = 'none';
+		gid("info_user_off").style.display = '';
+	}
+        setText(gid("info_mur"), mur);
+	setText(gid("info_typ"), typ);		
+
+        if(opis != 'NULL') {
+		setText(gid("info_opis"), opis);
+		gid("info_opis_on").style.display = '';
+		gid("info_opis_off").style.display = 'none';
+	}
+	else {
+		gid("info_opis_on").style.display = 'none';
+		gid("info_opis_off").style.display = '';
+	}
 
 	map_move();
 	var info = gid("info");
@@ -785,6 +810,6 @@ function _(t) {
 }
 
 function displayWindow(url, width, height) {
-        var Win = window.open(url,"displayWindow",'width=' + width + ',height=' + height + ',resizable=0,scrollbars=yes,menubar=no,moveTo=yes' );
+        var Win = window.open(url,"displayWindow",'width=' + width + ',height=' + height + ',resizable=yes,scrollbars=yes,moveTo=yes' );
         windows.('300','300');
 }

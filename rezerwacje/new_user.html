@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Logowanie</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+<script language="JavaScript" type="text/javascript">
+<!-- Ukrycie przed przeglšdarkami nie obsługujšcymi JavaScriptu
+function sprawdz()
+{
+  var f = document.forms.formularz1;
+
+  if(f.nazwa.value.length < 3 || 
+     f.nazwa.value.length > 20){
+    alert('Nazwa musi mieć od 3 do 20 znaków!');
+    return;
+  }
+
+  if(f.haslo.value.length < 6 || 
+     f.haslo.value.length > 40){
+    alert('Hasło musi mieć od 6 do 40 znaków!');
+    return;
+  }
+
+  if(f.haslo.value != f.haslo2.value) {
+    alert('Hasła różniš się od siebie!');
+    return;
+  }
+
+  f.submit();
+}
+// Koniec kodu JavaScript -->
+</script>
+</head>
+<body>
+<h2 align="center"> Wprowad&#65533; dane rejestracyjne: </h2>
+<form name = "formularz1"
+      action = "new_user.php"
+      method = "POST"
+>
+<table border="0" align="center"><tr>
+
+<td>Nazwa użytkownika:</td>
+<td>
+  <input type="text" name="nazwa">
+</td>
+</tr><tr>
+
+<td>Hasło:</td>
+<td>
+  <input type="password" name="haslo">
+</td>
+</tr><tr>
+
+<td>Powtórz hasło:</td>
+<td>
+  <input type="password" name="haslo2">
+</td>
+</tr><tr>
+
+<td colspan="2" align="right">
+  <input type="button" value="Rejestracja" onClick="sprawdz();">
+</td>
+</tr></table>
+</form>
+</body>
+</html>

@@ -3,168 +3,171 @@
 <head><title>Aurelia1 (613|681) - Plemiona</title>
 
 
-<link rel="stylesheet" type="text/css" href="stamm1201718544.css">
-<script src="img/mootools.js" type="text/javascript"></script>
-<script src="img/script.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<script src="../mootools.js" type="text/javascript"></script>
+<script src="../script.js" type="text/javascript"></script>
 </head>
+<BR><BR>
+<table><tr><td><b>LEGENDA : </b></td>
+<td><img src="img/m3.png"></td><td><b>mur</b>
+<td><img src="img/img.php?off=Off&def=deff&zw=zwiad"></td><td>-off<br>-def<br>-zwiad</td>
+<td><img src="img/img.php?off=01&def=&zw="></td><td>01 oznacza 0,1<br>10% zagrody?<br> tutaj<b> off</b></td>
+<td><img src="img/img.php?off=&def=6&zw="></td><td>6 x 18k <br> Ile wiosek broni<br> <b>tu deff</b></td>
+<td><img src="img/img.php?off=&def=&zw=00"></td><td>tylko <b>Zwiad</b><br>liczymy w tys. <br>00 to mniej ni¿ 100</td>
 
-<br><br>
+
+</table><br><br>
 
 <body style="margin-top: 6px;">
 <tbody>
 
-           <td ><div id="info" style="position: absolute; top: 373px; left: 31px; width: 400px; height: 1px; visibility: hidden; z-index: 10;"> </div>
-           <table id="info_content" class="vis" style="background-color: rgb(240, 230, 200);"><tbody><tr>
-    <TD>Data:</TD>
-    <TD colspan="5" id="info_data" align="center">01-11-08</TD>
-</tr>
-<tr>
-    <Th>Wies:</Th>
-    <TH colspan="5" id="info_title" align="center">nazwa wsi(xxx|yyy) Kyx</TH>
-
-</TR>
-<TR style="" id="info_owner_row">
-    <TD>Gracz:</TD>
-    <TD colspan="5" align="center" id="info_owner" align="center">nick (plemie)</TD>
-
-</TR>
-<TR style="display: none;" align="center" id="info_left_row">
-    <td colspan="6">opuszczona</td>
-</TR>
-<TR>
-    <TD>Mur:</TD>
-    <TD id="info_mur" colspan="2" >.</TD>
-    <td>Typ</td>
-    <td id="info_typ" colspan="2" >....</td>
-</TR>
-<TR>
-    <TH align="center" >Pik.</TH>
-    <TH align="center" >Mie.</TH>
-    <TH align="center" >Top.</TH>
-    <TH align="center" >Luk.</TH>
-    <TH align="center" >Ryc.</TH>
-    <TH align="center" >Tar.</TH>
-</TR>
-<TR>
-    <TD align="center"  id="info_wor_pik">Pik</TD>
-    <TD align="center"  id="info_wor_mie">Mie</TD>
-    <TD align="center" id="info_wor_axe" >Axe</TD>
-    <TD align="center" id="info_wor_ar" >Ar</TD>
-    <TD align="center"  id="info_wor_ry">Ryc</TD>
-    <TD align="center"  id="info_wor_tar">Tar</TD>
-</TR>
-<TR>
-    <TH align="center" >Zw.</TH>
-    <TH align="center" >LK.</TH>
-    <TH align="center" >KLuk.</TH>
-    <TH align="center" >CK.</TH>
-    <TH align="center" >Sz.</TH>
-    <TH align="center" >Kat.</TH>
-</TR>
-<TR>
-    <TD align="center"  id="info_wor_zw">zw</TD>
-    <TD align="center"  id="info_wor_lk">LK</TD>
-    <TD align="center"  id="info_wor_kar">kar</TD>
-    <TD align="center" id="info_wor_ck" >ck</TD>
-    <TD align="center" id="info_wor_sz" >sz</TD>
-    <TD align="center"  id="info_wor_kat">kat</TD>
-</TR>
-<TR>
-    <TH>Opis:</TH>
-    <TD colspan="5" id="info_opis">toczy siê toczy</TD>
-</TR>
-</tbody></table>
-
-</div>
-
-<TABLE class="map_container" cellspacing =0 cellpadding =0 ><tbody><TR>
-
 <?php
-if($_GET[x] != 0 && $_GET[y] != 0 )
-{echo'skubi<br>';
+require "chmurka.php";
+echo'<form name="zmiana opisu" action="" METHOD="post">';
+echo'<TABLE class="map_container" cellspacing =0 cellpadding =0 ><tbody><TR>';
+  $step = intval($_GET[szer]/2);
+  $szerokosc = $_GET[szer]; //ilosc kolumn i wierszy
+  $x=$_GET[x]-$step;        //z uchwytu pobiera x
+  $y=$_GET[y]-$step;        //z uchwytu pobiera y
+  $wiersz =0;               // wiersz poczatkowy
+  $licz = 0;                // liczy ilosc kolumn
+echo '<table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(241, 235, 221);" id="mapCoords" cellpadding="0" cellspacing="0">';
+$p=", ";
 require "connection.php";
+    while($wiersz<$szerokosc){$wiersz++;  echo"</tr>\n<tr>";  //pêtla 1 = zapisuje wiersze
+     while($licz<$szerokosc){                                 //pêtla 2 = zapisuje kolumny
+
 connection();
+      $wynik = @mysql_query("SELECT w.id AS id_wsi, w.x, w.y, p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.points, w.typ, w.data, w.mur, w.pik, w.mie, w.axe, w.luk, w.zw, w.lk, w.kl, w.ck, w.tar, w.kat, w.ry, w.sz, w.opis
+FROM village w, tribe p, ally a
+WHERE w.player = p.id
+AND p.ally = a.id
+      And w.x ='$x'
+      And w.y ='$y'")or die('Blad zapytania');
 
-   $szer =$_post[inputx]-$_post[inputy]+1;
-$index=-1;
-$wynik = mysql_query("SELECT m.*, w.*
-FROM nev_map m , wsi w
-Where m.id_wsi = w.wsi_id
-AND m.id_x >='$_GET[odx]'
-And m.id_x <='$_GET[dox]'
-And m.id_y >='$_GET[ody]'
-And m.id_y <='$_GET[doy]'
-ORDER BY m.id_y, m.id_x")
-or die('B³¹d zapytania');
-if(mysql_num_rows($wynik) > 0)
- {
-  echo'<td><table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(241, 235, 221);" id="mapCoords" cellpadding="0" cellspacing="0">
-';
-    while($r = mysql_fetch_array($wynik))
-  {       $index++;
-       if($index==$szer){echo "</TR><TR>"; $index=0;}
-  $linnie = $r[2];
-echo '<TD class="';
+   echo'<TD class="';                  //tworzymy linie kontynêtów
+   $linnie = $x;
+if($linnie%10 == 0){echo'con';}else{echo'border';}echo'-left-new ';
 
-    if($linnie[2] == 0&&$linnie[1] == 0){echo'con'   ;}
-elseif($linnie[2] == 0||$linnie[2] == 5){echo'border';}
-else                                    {echo'space' ;}
+   $linnia = $y+1;                             //tworzymy linie kontynêtów
+if($linnia%10 == 0){echo'con';}else{echo'border';}echo'-bottom-new" ';
 
-   echo'-left-new ';
-   $linnia = $r[1];
-    if($linnia[2] == 0&&$linnia[1] == 0){echo'con'   ;}
-elseif($linnia[2] == 0||$linnia[2] == 5){echo'border';}
-else                                    {echo'space' ;}
+      if($r = mysql_fetch_array($wynik)){       //za³adowanie zapytania do $r   - wioska istnieje
+                                               // dajemy kolory
+      echo 'style="background-color: rgb';    //tabeli td
+    switch($r[5]){
+case 0:
+ echo '(190, 190, 190);">';
+  break;
+case 4469:
+ echo '(244, 0, 0);">';              //zp
+  break;
+case 50811:
+ echo '(0, 0, 200);">';              //-SNRG- i HW
+  break;
+case 23185:
+ echo '(241, 235, 221);">';          //MAD
+  break;
+default:
+ echo '(170, 100, 0);">';
+  break;
+}
+if($r[typ]!=NULL){
+$rodzaje = array ('brak typu','wioska off','wioska def','wioska ck','wioska palac','wioska zwiadowcza');
+$typ= "'".$rodzaje[$r[typ]]."'";}else{$typ="'NULL'";}		//typ
+if($r[11]!=NULL){$mur= $r[11];}else{$mur="' '";}		//mur
+if($r[7]!=NULL){$wsi="'".$r[7]."(".$r[1]."|".$r[2].") pkt:".$r[8]."'";}else{$wsi="'Blad'";}	//nazwa wioski(x|y)
 
-     echo'-bottom-new" id="'.$r[1].'|'.$r[2].'"';
+                                                //wykrywamy istnienia
+ if($user=$r[id_User]&&$r[id_User]!=0){         //gracz istnieje
+     if($r[5]==0){$gracz="'".$r[4]."'";
+    }else{$plemz=urldecode($r[6]);
+    $gracz="'".$r[4]."(".$plemz.")'";}		//gracz (plemie)
+   $gr=1;
+   $raport_gracz=$gracz;
+ }else{                                         //gracz nie istnieje
+   $gr=0;
+   $raport_gracz="'NULL'";
+ }
 
-if ($r[4]==1)
-   {echo'><img src="img/0.png"></TD>';
-   }
-     else
-     {
-     echo 'style="background-color: rgb';
+if($r[opis]!=''&&$opis=$r[opis]){              //opis istnieje
+$opis=$r[opis];
+   $op=1;
+   $raport_opis="'".$opis."'";                //opis
+ }else{
+   $op=0;                                     //opis nie istnieje
+   $raport_opis="'NULL'";
+ }
 
-           if($r[9] =='ZP')  { echo '(244, 0, 0);">';    }
-       elseif($r[9] =='HW')  { echo '(0, 0, 244);">';    }
-       elseif($r[9] =='SNRG'){ echo '(241, 235, 221);">';}
-       else                  { echo '(170, 0, 0);">';    }
-           
-        
-echo'<a href="javascript:displayWindow(\'edycja_wsi.php?a=edit&amp;id='.$r[5].'\',630,475)">';
-echo' <img src="img/m';
-    if($r[10] ==0){echo"0";}
-elseif($r[10] <6 ){echo"1";}
-elseif($r[10] <11){echo"2";}
-elseif($r[10] <16){echo"3";}
-elseif($r[10] <21){echo"4";}
-echo'.png"><img src="img/';
+if($data=$r[data]){                          //raport istnieje   $r[10]
+     $da="'".$data."'";	                      //data
+     $off = $r[axe]+($r[lk]*4)+ ($r[kl]*5)+ ($r[tar]*5)+ ($r[kat]*6);
+     $def= $r[pik]+$r[mie]+$r[luk]+($r[ck]*6);
+     $zw=$r[zw];
+                                                            //sumuje wojsko - off
+  if($off!=Null){
+               if($off>18000){$off=intval($off/18000);}
+               else{$off='0'.intval($off/1800);}}
+  elseif($data!=null){$off=0;}elseif($data==null){$off=' ';}
+                                                            //sumuje wojsko - def
+  if($def!=Null){
+               if($def>18000){$def=intval($def/18000);}
+               else{$def='0'.intval($def/1800);}}
+  elseif($data!=null){$def=0;}elseif($data==null){$def=' ';}
+                                                            //sumuje wojsko - zw
+  if($zw!=Null){
+              if($zw>999){$zw=intval($zw/1000);}
+              else{$zw='0'.intval($zw/100);}}
+  elseif($data!=null){$zw=0;}elseif($data==null){$zw=' ';}
 
-      if($r[7]<1000 ){echo "1";}
-  elseif($r[7]<3000 ){echo "2";}
-  elseif($r[7]<7000 ){echo "3";}
-  elseif($r[7]>7000 ){echo "4";}
+if($r[pik]!==NULL){$w[0]=$r[12];}else{$w[0]="' '";}      //pik
+if($r[mie]!==NULL){$w[1]=$r[13];}else{$w[1]="' '";}      //miecz
+if($r[axe]!==NULL){$w[2]=$r[14];}else{$w[2]="' '";}      //axe
+if($r[luk]!==NULL){$w[3]=$r[15];}else{$w[3]="' '";}      //luk
+if($r[tar]!==NULL){$w[8]=$r[20];}else{$w[8]="' '";}      //tar
+if($r[ry]!==NULL){$w[10]=$r[22];}else{$w[10]="' '";}      //ry
 
- echo'.png" onmouseover="map_popup';
+if($r[zw]!==NULL){$w[4]= $r[16];}else{$w[4]= "' '";}     //zw
+if($r[lk]!==NULL){$w[5]= $r[17];}else{$w[5]= "' '";}     //lk
+if($r[kl]!==NULL){$w[6]= $r[18];}else{$w[6]= "' '";}     //k³
+if($r[ck]!==NULL){$w[7]= $r[19];}else{$w[7]= "' '";}     //ck
+if($r[kat]!=NULL){$w[9]= $r[21];}else{$w[9]="' '";}     //kat
+if($r[sz]!==NULL){$w[11]=$r[23];}else{$w[11]="' '";}	 //sz
+$raport_data=$da.$p.$w[0].$p.$w[1].$p.$w[2].$p.$w[3].$p.$w[4].$p.$w[5].$p.$w[6].$p.$w[7].$p.$w[8].$p.$w[9].$p.$w[10].$p.$w[11];
+ }else{
+$raport_data="'NULL','','','','','','','','','','','',''";                                                           //raport nie istnieje
+ }
+echo'<a href="javascript:popup_scroll(\'menu.php?id='.$r[id_wsi].'\',300,150)">';
 
- echo"('".$r[6]." ".$r[2]."|".$r[1]."','".$r[7]."', ";
-      if($r[8]==''){echo"null";}
-               else{ echo"'".$r[8]."'";}
-echo",'".$r[9]."','".$r[10]."','".$r[11]."','".$r[12]."','".$r[13]."','".$r[14]."','".$r[15]."','".$r[16]."','".$r[17]."','".$r[18]."','".$r[19]."','".$r[20]."','".$r[21]."','".$r[22]."','".$r[23]."','".$r[24]."')\" ";
-echo ' onmouseout="map_kill()">';
-echo'<img src="img/';
-$off = $r[13]+$r[16]+$r[17]+$r[19]+$r[20];
-$def = $r[11]+$r[12]+$r[14]+$r[18];
-$zw  = $r[15];
-
-    if($zw > 0){echo"z";}
-    if($off> 0){echo"o";}
-    if($def> 0){echo"d";}
-    if($zw==0&&$off==0&&$def==0){echo"dddz";}
-echo'.png"></a></TD>'; }
-  }
-     echo "</TR></TABLE></tbody>";
-   }}
-else{echo "zle wytyczne.";}
+      //             <INPUT size="25" TYPE="image" NAME="id" value="'.$r[0].'"
+ echo'<img src="img/tys/i_m.php?m='.$r[mur].'">';
+ echo'<img src="img/tys/i_wsi.php?t='.$r[typ].'&op='.$op.'&p='.$r[8].'&g='.$gr.'"';
+ echo" onmouseover=\"map_popup(".$typ.$p.$wsi.$p.$raport_gracz.$p.$mur.$p.$raport_data.$p.$raport_opis.")\" onmouseout=\"map_kill()\">";
+ echo'<img src="img/tys/i_w.php?zw='.$zw.'&def='.$def.'&off='.$off.'"><br>';
+ echo'<img src="img/tys/i_s.php?n='.$r[7].'">';
+$op=$nulls;
+$da=$nulls;
+$off=$nulls;
+$def=$nulls;
+$zw=$nulls;
+$typ=$nulls;
+$wsi=$nulls;
+$raport_gracz=$nulls;
+$mur=$nulls;
+$raport_data=$nulls;
+$raport_opis=$nulls;
+echo '</a></td>';                                                  //zamkniecie komurki
+      }else{
+                                                               //wioska nie istnieje
+      echo'style="background-color: rgb(66, 120, 40);" id="'.$x.'|'.$y.'"><img src="img/0.png"></TD>';
+      }
+     ++$licz;
+#echo"<TD>$x|$y</td>\n";
+$x++;
+}                                                               //koniec wewnêtrznej pêtli
+     $licz = 0;                                                 // zeruje kolumne
+     $y++;                                                      // nowy wiersz
+     $x=$_GET[x]-$step;                                         // zeruje x przed pêtla
+         }                                                      //koniec zewnêtrznej pêtli
+     echo "</TR></tbody></TABLE>";
 ?>
-
