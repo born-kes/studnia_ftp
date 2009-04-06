@@ -17,8 +17,10 @@ function connection() {
 function destructor(){
 @mysql_close();
 }
-
-$rodzaje = array ('brak typu','wioska off','wioska def','Zwiad','wioska LK','wioska CK','do rozbudowy',);
+$status[typ] = array ('Niewybrana','Niebroniona','Broniona','Bunkier');
+function status($s){if($s===NULL || $s<0){return 0;}elseif($s<100){return 1;}elseif($s<15000){return 2;}else{return 3;}}
+$rodzaje = array ('brak typu','wioska off','wioska def','Zwiad','wioska LK','wioska CK','do rozbudowy');
+$wojska_rap = array ('pik','mie','axe','luk','zw','lk','kl','ck','tar','kat','ry','sz');
 
 $plemiona = array ('bez plemienia','-SNRG-','~ZP','=MAD=', 'NWO','-BAE-','ZCR');
 $id_plem   = array (  0,            50811 ,   4469, 23185 , 48588,23660  , 26084);
@@ -41,7 +43,7 @@ connection();     $wynik = mysql_query("SELECT tribe_id, r, g, b
 else  { 
 switch($id_plemie){
 case 47716:
- destructor();   return 'rr';       //@~HW~@
+ destructor();   return 'so';       //@~HW~@
 case  48588:
  destructor();   return 'po';       //NWO
 case  51473:

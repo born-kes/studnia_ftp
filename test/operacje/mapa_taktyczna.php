@@ -46,7 +46,7 @@ echo '<table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(
     if($licz<$szerokosc){
        $linnia = $y+1;
 connection();
-      $wynik = @mysql_query("SELECT w.id AS id_wsi,p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.points, w.typ, w.data, w.mur, w.pik, w.mie, w.axe, w.luk, w.zw, w.lk, w.kl, w.ck, w.tar, w.kat, w.ry, w.sz
+      $wynik = @mysql_query("SELECT w.id AS id_wsi,p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.typ, w.data, w.mur, w.status, w.sz
 FROM village w, tribe p, ally a
 WHERE w.player = p.id
 AND p.ally = a.id
@@ -64,10 +64,7 @@ if($_GET[t_w]!=NULL){ $wx.="&t=".$r[typ];  }             // typ wioski
 
 if($_GET[r_w]!=NULL&&$r[data]!=null){$wx.='&r=1';}  // raport istnieje
 if($_GET[obrona]!=NULL){
-if(ile_woja($r[12],$r[13],$r[14],$r[15], $r[16], $r[17], $r[18],$r[19],$r[20],$r[21],$r[22],$r[23])>35000)
-{$wx.="&b=2";}
-elseif(ile_woja($r[12],$r[13],$r[14],$r[15], $r[16], $r[17], $r[18],$r[19],$r[20],$r[21],$r[22],$r[23])>18000)            // bunkier
-{$wx.="&b=1";}
+$wx.="&b=$r[status]";
 }
 echo'<a href="javascript:popup_scroll(\'menu.php?id='.$r[id_wsi].'\',315,350)">';
 if($_GET[sz_w]!=NULL && $r[sz]!=NULL && $r[sz]!=0){$wx.="&sz=1";}

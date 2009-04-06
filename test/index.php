@@ -32,10 +32,9 @@ function map_ini() {
                         	var str_buffer =  new String (
     '<select name="plem_op" OnChange="selecturl(this)">'+
     '<OPTION VALUE="none">Wybierz adres</OPTION>'+
-    '<OPTION VALUE="http://pl5.twmaps.org/showmap.php?id=f55f1ae3e7b5dc7fb33b0dc0032684cc">duchy</OPTION>'+
-    '<OPTION VALUE="http://pl5.twmaps.org/showmap.php?id=f87b116c923d5b99c9932cf586819a82">zp i opuszczone</OPTION>'+
-    '<OPTION VALUE="http://pl5.twmaps.org/showmap.php?id=a198f96ff369938982f84232690dda47">Zwykla</OPTION>'+
-    '</select>');
+<?PHP connection();  $wynik = @mysql_query("SELECT `hex`, `nazwa` FROM `hex_kolor`");
+      while($r = mysql_fetch_array($wynik)){echo'\'<OPTION VALUE="http://pl5.twmaps.org/showmap.php?id='.$r[hex].'">'.$r[nazwa].'</OPTION>\'+
+';}@destructor(); ?>    '</select>');
        return str_buffer;
 }
 function check(){ return intval(gid('zoom_h').value*1.5); }
@@ -94,7 +93,7 @@ function intval( mixed_var, base ) {
 <div style="position: relative; top: -25px; left: 0px; z-index:1;" id="go3"><script type="text/javascript"></script>
 
 
-<iframe src="" width="100%" height="80%" frameborder="0" name="ramka">Twoja przegl±darka nie akceptuje p³ywaj±cych ramek!</iframe></div>
+<iframe src="" width="100%" height="80%" frameborder="0" name="ramka" style="z-index:1;">Twoja przegl±darka nie akceptuje p³ywaj±cych ramek!</iframe></div>
 <div style="position: absolute; top: 50px; right: 30px; z-index:1;" id="go0"><a href="http://www.szu.pl" target="_blank"><img src="http://szu.pl/szu-banerki/10.gif" border="0" alt="Bazy danych MySQL, konta pocztowe, konta WWW, parkowanie domen"></a></div>
 <script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');</script>
 <b style="cursor: pointer;" onclick="loading(input_h('o_oko',0)+input_h('o_xy',0),'o_map_go');on('map0');iss='o_';">Tak, pokaz mape by okreslic rejon</b>

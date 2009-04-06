@@ -11,4 +11,10 @@ function connection() {
 function destructor(){
 @mysql_close();
 }
+function uakt($co){
+$ddd=date("y-m-d G:i:s");
+connection();
+mysql_query("UPDATE uakt SET data='$ddd' WHERE id=$co; ");
+destructor();
+}
 ?>

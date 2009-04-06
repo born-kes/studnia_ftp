@@ -1,11 +1,5 @@
 <html> Aktualizacja Graczy<br>przynale¿no¶æ do plemienia<br>
-<?PHP
-require "connection.php";
-
-$ddd=date("y-m-d G:i:s");
-connection();
-mysql_query("UPDATE uakt SET data='$ddd' WHERE id=2; ");
-destructor();
+<?PHP   require "connection.php";   uakt(2);
 echo "po³±czenie OK,<br> ¶ci±gam dane z serwera plemion";
 
 $lines = gzfile('http://pl5.plemiona.pl/map/tribe.txt.gz');
@@ -22,10 +16,6 @@ connection();
 destructor();}
 
 
-$ddd=date("y-m-d G:i:s");
-$query =" UPDATE uakt SET data='$ddd' WHERE id=2; ";
-connection();
-mysql_query($query);
-destructor();
+uakt(2);
 ?>
 <br> skonczylem</html>
