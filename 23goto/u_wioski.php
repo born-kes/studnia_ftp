@@ -6,7 +6,7 @@ $zap=" UPDATE village SET name='".$name."', player=".$player.", points=".$points
 
 $lines = gzfile('http://pl5.plemiona.pl/map/village.txt.gz');
 foreach($lines as $line) { $tot = explode(',', $line);
-if($tot[2]>=300 && $tot[3]>=400)  {   $name = addslashes(urldecode($tot[1])); update($tot[0],$name,$tot[4],$tot[5]); }
+if(($tot[2]>=300||$tot[2]<=700) && ($tot[3]>=500||$tot[3]<=850))  {   $name = addslashes(urldecode($tot[1])); update($tot[0],$name,$tot[4],$tot[5]); }
 }
 uakt(1);
 ?>

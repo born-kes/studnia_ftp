@@ -1,5 +1,5 @@
 <?PHP
-echo'<TABLE border="0" class="vis" align="center"><tr>
+echo'<br /><TABLE border="0" class="vis" align="center"><tr>
 <Th>Gracz</Th>
 <Th>Nazwa</Th>
 <Th>X|Y</Th>
@@ -20,6 +20,7 @@ echo'<TABLE border="0" class="vis" align="center"><tr>
 <Th><IMG SRC="http://pl5.plemiona.pl/graphic/unit/unit_knight.png"></Th>
 <Th><IMG SRC="http://pl5.plemiona.pl/graphic/unit/unit_snob.png"></Th>
 <Th>Opis</Th>
+<Th>Status</Th>
 </tr>';
 $zapytanie=zap_raport();
 $zapytanie.=$zap;
@@ -34,15 +35,9 @@ echo'<TD>'.$r[gracz].'</TD>
 <TD>'.$r[x].'|'.$r[y].'</TD>
 <TD class="hidden">'.$r[points].'</TD>
 <TD>'.$rodzaje[$r[typ]].'</TD>
-<TD>';
-    if($r[data]==Null){
-     echo'<IMG SRC="http://pl5.plemiona.pl/graphic/overview/prod_impossible.png" title="Nie ma raportu">';}
-elseif($r[data]=='0000-00-00'){
-     echo'<IMG SRC="http://pl5.plemiona.pl/graphic/overview/prod_avail.png" title="Data nie zapisana">';}
-elseif($r[data]!='0000-00-00'){
-     echo'<IMG SRC="http://pl5.plemiona.pl/graphic/overview/prod_running.png" title="Raport w bazie">';}
+<TD>'.data_z_bazy($r[data]);
 
-echo $r[data].'</TD>
+echo '</TD>
 <TD>'.$r[mur].'</TD>
 <TD>'.$r[pik].'</TD>
 <TD>'.$r[mie].'</TD>
@@ -57,6 +52,7 @@ echo $r[data].'</TD>
 <TD>'.$r[ry].'</TD>
 <TD>'.$r[sz].'</TD>
 <TD>'.$r[opis].'</TD>
+<TD>'.$status[typ][$r[status]].'</TD>
 </tr>'; }
 destructor();
 echo'</TABLE>';

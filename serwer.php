@@ -1,5 +1,6 @@
 <?PHP
 
+
 function connection() {
     $mysql_server = "85.17.1.175";          // serwer    
     $mysql_admin = "bornkesws";             // admin
@@ -17,10 +18,12 @@ function connection() {
 function destructor(){
 @mysql_close();
 }
-$status[typ] = array ('Niewybrana','Niebroniona','Broniona','Bunkier');
-function status($s){if($s===NULL || $s<0){return 0;}elseif($s<100){return 1;}elseif($s<15000){return 2;}else{return 3;}}
+$status[typ] = array ('Niewybrana','<i>Niebroniona</i>','Broniona','<b>Bunkier</b>');
+function status($s){if($s===NULL || $s<0){return 0;}elseif($s<100){return 1;}elseif($s<24000){return 2;}else{return 3;}}
 $rodzaje = array ('brak typu','wioska off','wioska def','Zwiad','wioska LK','wioska CK','do rozbudowy');
 $wojska_rap = array ('pik','mie','axe','luk','zw','lk','kl','ck','tar','kat','ry','sz');
+
+$godzina_zero = 1220000000;$godzina_jeden =(mktime()-172800-$godzina_zero);
 
 $plemiona = array ('bez plemienia','-SNRG-','~ZP','=MAD=', 'NWO','-BAE-','ZCR');
 $id_plem   = array (  0,            50811 ,   4469, 23185 , 48588,23660  , 26084);

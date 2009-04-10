@@ -1,14 +1,4 @@
-<?php
-
-session_start();
-if(!isSet($_SESSION['zalogowany'])||
-   !isSet($_SESSION['prawa'])     ||
-   !isSet($_SESSION['id'])          ){
-  $_SESSION['komunikat'] = "Nie jesteś zalogowany!";
-    include('logowanie/form.htm');    
-exit();
-}
-?>
+<?php  include('../connection.php'); ?>
 <html><head>
 <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
 <link rel="stylesheet" type="text/css" href="../img/stamm1201718544.css">
@@ -18,13 +8,7 @@ exit();
 </head>
 <body>
 
-Minutnik to proste narzędzie do odliczania czasu<BR />
-Zapamiętuje on datę i opis i odmierza czas do zdarzenia<BR />
-Każdy ma własną listę zdarzeń, a więc nie zaśmiecają ci jej<BR />
-notatka innych graczy, a fajnie jest móc sobie coś zapisać w tej formie<BR />
-Kiedy wyprowadzić siostrę na spacer, podlać kwiatki, wysłać atak... itd.<BR /><BR />
-
-<?PHP  include('../connection.php');
+<?PHP 
 $id_zalogowany=$_SESSION['id'];
 
 if($_POST[czas1]!=NULL && $_POST[opis]!=NULL)

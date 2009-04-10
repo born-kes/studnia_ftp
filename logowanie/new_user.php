@@ -24,15 +24,15 @@ function rejestruj($nazwa, $haslo, $imie, $nazwisko, $email)
   if($imie == "" || $nazwisko == "" || $email == "")
     return EMPTY_FIELDS;
 
-  //po³¹czenie z baz¹ danych
+  //po³±czenie z baz± danych
 
   if (!$db_lnk = mysql_connect("85.17.1.175", "bornkesws", "MKO208")){
-    //echo('Wyst¹pi³ b³¹d podczas próby po³¹czenia z serwerem MySQL...');
+    //echo('Wyst±pi³ b³±d podczas próby po³±czenia z serwerem MySQL...');
     return SERVER_ERROR;
   }
 
   if(!mysql_select_db("bornkesws")){
-    //echo('Wyst¹pi³ b³¹d podczas wyboru bazy danych: test...');
+    //echo('Wyst±pi³ b³±d podczas wyboru bazy danych: test...');
     @mysql_close();
     return SERVER_ERROR;
   }
@@ -42,13 +42,13 @@ function rejestruj($nazwa, $haslo, $imie, $nazwisko, $email)
   $query = "SELECT COUNT(*) FROM Users WHERE Nazwa='$nazwa' ";
 
   if(!$result = mysql_query($query, $db_lnk)){
-    //echo('Wyst¹pi³ b³¹d: Instrukcja SELECT...');
+    //echo('Wyst±pi³ b³ad: Instrukcja SELECT...');
     @mysql_close();
     return SERVER_ERROR;
   }
 
   if(!$row = mysql_fetch_row($result)){
-    //echo('Wyst¹pi³ b³¹d: nieprawid³owe wyniki zapytania...');
+    //echo('Wystapi³ b³ad: nieprawid³owe wyniki zapytania...');
     @mysql_close();
     return SERVER_ERROR;
   }
@@ -78,7 +78,7 @@ function rejestruj($nazwa, $haslo, $imie, $nazwisko, $email)
   $query .= "$wynik[0], '$nazwa', '$haslo', '$imie', '$nazwisko', '$email','0')";
 
   if(!$result = mysql_query($query, $db_lnk)){
-    //echo('Wyst¹pi³ b³¹d: instrukcja INSERT...');
+    //echo('Wystapi³ b³ad: instrukcja INSERT...');
     @mysql_close();
     return SERVER_ERROR;
   }
@@ -145,7 +145,7 @@ else{
     echo("Nazwa u¿ytkownika, nie wystêpuje w bazie graczy .");
   }
   else{
-    echo("B³¹d serwera. Rejestracja nie powiod³a siê.");
+    echo("B³±d serwera. Rejestracja nie powiod³a siê.");
   }
 }
 ?>

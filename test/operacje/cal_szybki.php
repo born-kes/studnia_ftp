@@ -1,10 +1,10 @@
 <html><head>
-<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
-<link rel="stylesheet" type="text/css" href="../img/stamm1201718544.css">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="stamm.css">
 <script src="../mootools.js" type="text/javascript"></script>
 <script src="../scriptt.js" type="text/javascript"></script>
 </head>
-<body><?PHP
+<body><br /><?PHP
   include('../connection.php');
 if($_POST[xy]!=NULL)
   {
@@ -47,7 +47,7 @@ if($czas_af!=NULL){ echo '<th></th><td>'.date("d.m.y G:i:s", $czas_af-unliczenie
 echo'</tr>';
 echo'<tr><td>
 <img src="http://pl5.plemiona.pl/graphic/unit/unit_light.png" title="Lekka Kawaleria" alt="">
-<img src="http://pl5.plemiona.pl/graphic/unit/unit_marcher.png" title="Konni Łucznicy" alt="">
+<img src="http://pl5.plemiona.pl/graphic/unit/unit_marcher.png" title="Konni Lucznicy" alt="">
 <img src="http://pl5.plemiona.pl/graphic/unit/unit_knight.png" title="rycerz" alt="">
 </td><td align="right">'.$lk.'</td>';
 if($czas_af!=NULL){ echo '<th></th><td>'.date("d.m.y G:i:s", $czas_af-unliczenie($zw)).'</td>'; }
@@ -60,7 +60,7 @@ echo'</tr>';
 echo'<tr><td>
 <img src="http://pl5.plemiona.pl/graphic/unit/unit_spear.png" title="Pikinier" alt="">
 <img src="http://pl5.plemiona.pl/graphic/unit/unit_axe.png" title="Topory" alt="">
-<img src="http://pl5.plemiona.pl/graphic/unit/unit_spear.png" title="Łuki" alt="">
+<img src="http://pl5.plemiona.pl/graphic/unit/unit_spear.png" title="Luki" alt="">
 </td><td align="right">'.$pik.'</td>';
 if($czas_af!=NULL){ echo '<th></th><td>'.date("d.m.y G:i:s", $czas_af-unliczenie($pik)).'</td>'; }
 echo'</tr>';

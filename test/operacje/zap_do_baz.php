@@ -1,6 +1,6 @@
 <html><head>
-<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
-<link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="stamm.css">
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head>
 <body>
@@ -11,7 +11,7 @@ if($_POST[_xy]!=NULL)
   {
     $xy=  explode('|',$_POST[_xy]);
     
-   if($_POST[oko]!=NULL) {  $oko=intval($_POST[oko]/2);
+   if($_POST[_oko]!=NULL) {  $oko=intval($_POST[_oko]/2);
        $od_x=$xy[0]-$oko;
        $od_y=$xy[1]-$oko;  
        $do_x=$xy[0]+$oko;  

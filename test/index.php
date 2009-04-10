@@ -93,7 +93,7 @@ function intval( mixed_var, base ) {
 <div style="position: relative; top: -25px; left: 0px; z-index:1;" id="go3"><script type="text/javascript"></script>
 
 
-<iframe src="" width="100%" height="80%" frameborder="0" name="ramka" style="z-index:1;">Twoja przegl±darka nie akceptuje p³ywaj±cych ramek!</iframe></div>
+<iframe src="http://img.audiovis.nac.gov.pl/PIC/PIC_2-2094.jpg" width="100%" height="80%" frameborder="0" name="ramka" style="z-index:1;">Twoja przegl±darka nie akceptuje p³ywaj±cych ramek!</iframe></div>
 <div style="position: absolute; top: 50px; right: 30px; z-index:1;" id="go0"><a href="http://www.szu.pl" target="_blank"><img src="http://szu.pl/szu-banerki/10.gif" border="0" alt="Bazy danych MySQL, konta pocztowe, konta WWW, parkowanie domen"></a></div>
 <script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');</script>
 <b style="cursor: pointer;" onclick="loading(input_h('o_oko',0)+input_h('o_xy',0),'o_map_go');on('map0');iss='o_';">Tak, pokaz mape by okreslic rejon</b>

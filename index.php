@@ -1,5 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
-<HTML>
+<HTML><head>
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
+</head><body>
 <?php
 
 session_start();
@@ -12,8 +14,8 @@ echo 'error';
 exit();
 }
 
-    if($_SESSION['prawa']>0){    header("Location: www/");}
-  else{                          header("Location: rezerwacje/");}
-
+    if($_SESSION['prawa']>0){    header("Location: test/");}
+else{  $_SESSION['komunikat'] = "Brak uprawnien bey bey!";
+    header("Location: logowanie/logout.php");}
 ?>	
-</HTML>
+</body></HTML>

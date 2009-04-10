@@ -118,7 +118,7 @@ function str2dt (str_datetime) {
 }
 function dt2dtstr (dt_datetime) {
 	return (new String (
-			dt_datetime.getDate()+"-"+(dt_datetime.getMonth()+1)+"-"+dt_datetime.getFullYear()+" "));
+			dt_datetime.getDate()+"."+(dt_datetime.getMonth()+1)+"."+dt_datetime.getFullYear()+" "));
 }
 function dt2tmstr (dt_datetime) {
 	return (new String (

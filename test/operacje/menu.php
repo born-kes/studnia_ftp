@@ -1,20 +1,18 @@
 <?php
 $stat = Array('Niewybrana:','<i>Niebroniona:</i>','Broniona:','<b>Bunkier:</b>');
-function status($status,$co){
+function status_on($status,$co){
 if($status==$co){return ' checked="tak" ';}
 }
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
-if($_GET[usun_all]!=NULL && $_GET[id]!=NULL){ $Zap="UPDATE village SET typ=NULL, data=NULL, mur=NULL, pik=NULL, mie=NULL, axe=NULL, luk=NULL, zw=NULL, lk=NULL, kl=NULL, ck=NULL, tar=NULL, kat=NULL, ry=NULL, sz=NULL, opis=NULL  Where id=".$_GET[id]; 
+if($_GET[usun_all]!=NULL && $_GET[id]!=NULL){ $Zap="UPDATE village SET typ=NULL, data=NULL, mur=NULL, pik=NULL, mie=NULL, axe=NULL, luk=NULL, zw=NULL, lk=NULL, kl=NULL, ck=NULL, tar=NULL, kat=NULL, ry=NULL, sz=NULL, opis=NULL, status=0   Where id=".$_GET[id]; 
 connection();
 $zmiana = @mysql_query($Zap);
 destructor(); }
 
-if($_POST[status]!=NULL){$Zap="UPDATE village SET status=".$_POST[status]." Where id=".$_GET[id];connection();
-$zmiana = @mysql_query($Zap);
-destructor(); }
 if($_POST!=NULL){
 $Zap="UPDATE village SET ";
 $p=' , ';
+
 if($_POST[typ]!=NULL &&  $_POST[typ]!=0)	{$Zap.="typ= ".$_POST[typ].$p; }elseif($_POST[typ]!=NULL ){$Zap.="`typ`=NULL ".$p; }
 if($_POST[mur]!=NULL && $_POST[mur]!=' ')	{$Zap.="mur= ". $_POST[mur].$p;}
 
@@ -30,7 +28,15 @@ if($_POST[tar]!=NULL &&  $_POST[tar]!=0)	{$Zap.="tar= ". $_POST[tar].$p;}elseif(
 if($_POST[kat]!=NULL &&  $_POST[kat]!=0)	{$Zap.="kat= ". $_POST[kat].$p;}elseif($_POST[kat]!=NULL ){$Zap.="`kat`=NULL ".$p; }
 if($_POST[ry] !=NULL &&  $_POST[ry] !=0)	{$Zap.=" ry= ". $_POST[ry].$p; }elseif($_POST[ry] !=NULL ) {$Zap.="`ry`=NULL ".$p; }
 if($_POST[sz] !=NULL &&  $_POST[sz] !=0)	{$Zap.=" sz= ". $_POST[sz].$p; }elseif($_POST[sz] !=NULL){$Zap.="`sz`=NULL ".$p; }
-if($_POST[data]!=NULL && $_POST[data]!=' '){$Zap.="data='". $_POST[data]."'".$p;}elseif($_POST[data]!=NULL ){$Zap.="`data`=NULL ".$p; }
+$wol=jaki_czas_marszu($_POST[pik],$_POST[mie],$_POST[axe],$_POST[luk],$_POST[zw],$_POST[lk],$_POST[kl],$_POST[ck],$_POST[tar],$_POST[kat],$_POST[ry],$_POST[sz]);
+$sta=status(ile_woja($_POST[pik],$_POST[mie],$_POST[axe],$_POST[luk],$_POST[zw],$_POST[lk],$_POST[kl],$_POST[ck],$_POST[tar],$_POST[kat],$_POST[ry],$_POST[sz]));
+if($wol!=NULL){$Zap.=" wolny = ". $wol.$p; }else{$Zap.=" wolny = 0".$p; }
+
+if($_POST[status]!=0){$Zap.=" status=".$_POST[status].$p;}elseif($sta!=NULL){$Zap.=" status = ". $sta.$p; }
+
+if($_POST[data]!=NULL && $_POST[data]!=' ')
+{$zdat=mkczas_pl($_POST[data])-$godzina_zero;
+$Zap.="data='".$zdat ."'".$p;}elseif($_POST[data]!=NULL ){$Zap.="`data`=NULL ".$p; }
 if($_POST[opis]!=NULL && $_POST[opis]!=' '){$Zap.="opis='". $_POST[opis]."'".$p;}elseif($_POST[opis]!=NULL ){$Zap.="`opis`=NULL ".$p; }
 
 $Zap=substr($Zap,0,-2);
@@ -76,11 +82,13 @@ $wynik = mysql_query($zap) or die (mysql_error());
 
 
  if($r = @mysql_fetch_array($wynik)){
+
+
 if(!$typ=$r[typ]){$typ=0;}
-if(!$datta=$r[data]){$datta="rrrr-mm-dd";}
+$data=data_z_bazy($r[data]);
 echo'
 <tr id="data_on" style="" ><td>Raport z</td>
-<td>'.$r[data].'</td>
+<td>'.$data.'</td>
 <td><a href="javascript:editToggle(\'data_on\' , \'data_off\')"><img src="../img/rename.png" alt="zmieñ nazwê" title="zmieñ nazwê"></a>
 
 </td>
@@ -183,10 +191,10 @@ if($r[sz]!=NULL){echo ($r[sz]);}else{echo'-';}    echo '</Td></tr>
 <tr id="status_on"><td>STATUS= '.$stat[$r[status]].'</td><td><a href="javascript:editToggle(\'status_on\' , \'status_off\')"><img src="../img/rename.png" alt="zmieñ nazwê" title="zmieñ nazwê"></a></td></tr>
 <tr id="status_off" style="display: none;"><td colspan="3">
 
-Niewybrana:<input type="radio" name="status" value="0" '.status($r[status],'0').' /><br>
-<i>Niebroniona:</i><input type="radio" name="status" value="1"'.status($r[status],1).' />
-Broniona:<input type="radio" name="status" value="2" '.status($r[status],2).'/>
-<b>Bunkier:</b><input type="radio" name="status" value="3"'.status($r[status],3).' /></td></tr>
+Niewybrana/Auto:<input type="radio" name="status" value="0" '.status_on($r[status],'0').' /><br>
+<i>Niebroniona:</i><input type="radio" name="status" value="1"'.status_on($r[status],1).' />
+Broniona:<input type="radio" name="status" value="2" '.status_on($r[status],2).'/>
+<b>Bunkier:</b><input type="radio" name="status" value="3"'.status_on($r[status],3).' /></td></tr>
 <tr style="display: none;" id="ok_ok" ><td></td><td></td><td><input value="Zapisz Zmiany" type="submit"></td>
 </tr></table>';
 $obr_pi=(15*$r[pik])+(50*$r[mie])+(10*$r[axe])+(50*$r[luk])+(2*$r[zw])+(30*$r[lk])+(40*$r[kl])+(200*$r[ck])+(20*$r[tar])+(100*$r[kat])+(250*$r[ry])+(100*$r[sz]);

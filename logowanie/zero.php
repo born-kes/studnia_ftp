@@ -9,7 +9,7 @@
 if(isSet($_SESSION['komunikat']))
   echo $_SESSION['komunikat'];
 else
-  echo "Wprowad&#65533; nazwê i has³o u¿ytkownika:";
+  echo "Wprowadz nazwê i has³o u¿ytkownika:";
 ?>
 </h2>
 </body>

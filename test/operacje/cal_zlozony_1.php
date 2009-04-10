@@ -6,7 +6,7 @@
 </head>
 <body>
 <table class="main" align="center"><TR><TD>
-<form enctype="multipart/form-data" action="3.php" method="GET"><br>
+<form enctype="multipart/form-data" action="3.php" method="POST"><br>
 
 <table border=1>
 <?php
@@ -14,8 +14,8 @@
 $ata=array_keys($_POST['ata']);
 $obr=array_keys($_POST['obr']);
  echo'<form enctype="multipart/form-data" action="3.php" method="post">
-      <input name="cos" value="'.$_POST[cos].'" type="hidden">
-      <input name="czas" value="'.$_POST[czas].'" type="hidden">
+      <input name="cos" value="'.$_POST[wojsko].'" type="hidden">
+      <input name="czas1" value="'.$_POST[czas1].'" type="hidden">
       <br />
       <table border=1 class="vis"><tr class="units_there"><td>Nazwa</td><td>X | Y</td><td>Atakowana</td></tr><tr>';
         $query='Select id , name , x , y, wolny FROM village Where id IN (';        $quert=$query;
@@ -29,7 +29,7 @@ $quert=substr($quert,0,-1).")";
   connection();  $wynik = mysql_query($query);
 
   while($f = mysql_fetch_array($wynik)) {
-echo"<tr><td>$f[1]</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[1]|$f[2]|$f[3]\" type=\"hidden\"></td><td>";
+echo"<tr><td>$f[1]</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[0]\" type=\"hidden\"></td><td>";
        $g_dotarcia = mkczas_pl($_POST[czas1]);                            //godzina dotarcia do celu
 
 echo'<select name="obr[]">';
@@ -48,7 +48,7 @@ echo'<select name="obr[]">';
             if($_POST[do_h]!=NULL&&$okno_czas>$_POST[do_h]){/*maxymalna odleglost => czas do ataku/têpo */destructor(); continue;}
                  $hx=$g_dotarcia-$g_wyslania;
                  $h= date("d.m.Y G:i:s",$hx);
-        echo '<option value="'.$r[1].' ('.$r[2].'|'.$r[3].')'.$hx.'">'.$h.' : '.$r[1].' ('.$r[2].'|'.$r[3].')</option>
+        echo '<option value="'.$r[0].'">'.$h.' : '.$r[1].' ('.$r[2].'|'.$r[3].')</option>
 ';
         }  destructor();
         echo"</select>

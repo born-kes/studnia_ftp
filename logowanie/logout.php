@@ -24,7 +24,7 @@ session_destroy();
 </head>
 <body>
 <?php echo $komunikat ?>
-<br><br>
-<a href="index.php">Powrót do strony logowania</a>
+<br><br>Dziêkujemy za Wizytê :)<br><br><br>
+<a href="../index.php">Powrót do strony logowania</a>
 </body>
 </html>

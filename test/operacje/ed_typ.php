@@ -32,11 +32,11 @@ if($z_wojo!=NULL){
          $wry=$_POST['ry'][$ry[$i]];
          $wsz=$_POST['sz'][$sz[$i]];}
          $wid=$_POST['id'][$id[$i]];
-
+$wol=jaki_czas_marszu($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz);
+$sta=status(ile_woja($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz));
 $query = " UPDATE village
-     SET";
-
-if($_POST[n_typ]!=NULL){ $query .="typ='$_POST[n_typ]' , ";}
+     SET ";
+if($_POST[n_typ]!=NULL){ $query .=" typ='$_POST[n_typ]' , ";}
 if($z_wojo!=NULL){
 $query .= "  
          pik='$wpik',
@@ -50,7 +50,9 @@ $query .= "
          tar='$wtar',
          kat='$wkat',
          ry='$wry',
-         sz='$wsz'";}
+         sz='$wsz',
+         wolny='$wol'
+         status=$sta";}
 $query .= "     WHERE `id`='$wid'; ";
   connection();
    $wynik=@mysql_query($query);

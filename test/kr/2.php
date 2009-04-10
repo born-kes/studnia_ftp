@@ -10,7 +10,7 @@ $wynik = mysql_query($z_a) or die (mysql_error());
 if($r = @mysql_fetch_array($wynik)){
 $baza_a[id]=$r[id];
 $baza_a[typ]=$r[typ];
-$baza_a[data]=$r[data];
+$baza_a[data]=data_z_bazy($r[data]);
 $baza_a[mur]=$r[mur];
 $baza_a[wojo]= array ($r[pik],$r[mie],$r[axe],$r[luk],$r[zw],$r[lk],$r[kl],$r[ck],$r[tar],$r[kat],$r[ry],$r[sz]);
 $baza_a[opis]=$r[opis];
@@ -28,26 +28,23 @@ $wyniko = mysql_query($z_o) or die (mysql_error());
 if($r = @mysql_fetch_array($wyniko)){
 $baza_o[id]=$r[id];
 $baza_o[typ]=$r[typ];
-$baza_o[data]=$r[data];
+$baza_o[data]=data_z_bazy($r[data]);
 $baza_o[mur]=$r[mur];
 $baza_o[wojo]= array ($r[pik],$r[mie],$r[axe],$r[luk],$r[zw],$r[lk],$r[kl],$r[ck],$r[tar],$r[kat],$r[ry],$r[sz]);
 $baza_o[opis]=$r[opis];
 $baza_o[status]=$r[status];}
 
-destructor();
-echo '<input type="hidden" name="o_id" value="'.$baza_o[id].'" />
-      <input type="hidden" name="a_id" value="'.$baza_a[id].'" />';
-?>
-
+destructor();?>
 <table><CAPTION><b>W bazie Raportow</b></CAPTION>
-<tr><td class="hidden">| </td></tr>
-<tr><td colspan="2" style="border: 1px solid black; padding: 4px;" valign="top" height="160">
+<tr><td class="hidden">| <?PHP echo '<input type="hidden" name="o_id" value="'.$baza_o[id].'" /><input type="hidden" name="a_id" value="'.$baza_a[id].'" />';
+?></td></tr>
+<tr><td colspan="2" style="border: 1px solid black; padding: 4px;" valign="top" height="10">
 <br>
 <table style="border: 1px solid rgb(222, 211, 185);" width="100%">
 <tbody>
 <CAPTION>Raport z: <?PHP echo $baza_a[data];?></CAPTION>
-<tr><th width="100">Agresor:</th><th colspan="2" valign="top"><a href="#"><?PHP echo $raport[agresor]; ?></a></th></tr>
-<tr><td>Wioska:</td><td><a href="#">(<?PHP echo $raport[w_agr]; ?>)</a></td><th><?PHP echo $rodzaje[$baza_a[typ]]; ?></th></tr>
+<tr><th width="100">Agresor:</th><th colspan="2" valign="top"><a href=""><?PHP echo $raport[agresor]; ?></a></th></tr>
+<tr><td>Wioska:</td><td><a href="javascript:popup_scroll('../operacje/menu.php?id=<?PHP echo $baza_a[id]; ?>',315,350)">(<?PHP echo $raport[w_agr]; ?>)</a></td><th><?PHP echo $rodzaje[$baza_a[typ]]; ?></th></tr>
 <tr><th>Opis</th><td><?PHP echo $baza_a[opis];?></td></tr>
 <tr><td colspan="3">
 	<table class="vis">
@@ -59,16 +56,14 @@ echo '<input type="hidden" name="o_id" value="'.$baza_o[id].'" />
 		<tr class="center">
 			<td>Zostalo:</td><?PHP echo wpisz($baza_a[wojo]); ?></tr>
 	</tbody></table>
-</td></tr>
+</td></tr></tbody></table></td></tr>
 
-<tr><td colspan="2"></td></tr>
-
-</tbody></table><br>
+<tr><td colspan="2" style="border: 1px solid black; padding: 4px;" valign="top" height="10">
 <table style="border: 1px solid rgb(222, 211, 185);" width="100%">
 <tbody>
 <CAPTION>Raport z: <?PHP echo $baza_o[data];?></CAPTION>
 <tr><th width="100">Obroñca:</th><th colspan="2"><?PHP echo $raport[obronca]; ?></th></tr>
-<tr><td>Wioska:</td><td><a href="#">(<?PHP echo $raport[w_obr]; ?>)</a></td><th><?PHP echo $rodzaje[$baza_o[typ]]; ?></th></tr>
+<tr><td>Wioska:</td><td><a href="javascript:popup_scroll('../operacje/menu.php?id=<?PHP echo $baza_o[id]; ?>',315,350)">(<?PHP echo $raport[w_obr]; ?>)</a></td><th><?PHP echo $rodzaje[$baza_o[typ]]; ?></th></tr>
 <tr><th>Opis</th><td><?PHP echo $baza_o[opis];?></td></tr>
 
 <tr><td colspan="3">

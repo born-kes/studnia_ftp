@@ -25,11 +25,16 @@ function mennu()
      '<tr><td background="tlo_menu.PNG" width="753" height="154" valign="bottom" >'+
        '<table class="menu nowrap" width="753" id="menu" cellpadding="45" cellspacing="10">'+
        '<tbody><tr id="menu_row">'+
+       '<td><a href="../logowanie/logout.php">wyloguj</a><br>'+
+      '<td>Profil<br>'+
+       '<table cellspacing="4"><tbody>'+
+       '<tr><td><a href="operacje/minuta.php" target="ramka">Minutnik</a></td></tr>'+
+       '</tbody></table></td>'+
+
        '<td>Konwertuj<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="operacje/edt_typ.php" target="ramka">Typów wiosek</a></td></tr>'+
-       '<tr><td><a href="operacje/cal_zlozony.php" target="ramka">Radar</a></td></tr>'+
-       '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_zlozony\'));on(\'suwak\');">Z³o¿ony</a></td></tr>'+
+       '<tr><td><a href="kr/" target="ramka">raportów</a></td></tr>'+
        '</tbody></table></td>'+
        '<td>Kalkulatory<br>'+
        '<table cellspacing="4"><tbody>'+
@@ -46,7 +51,7 @@ function mennu()
       '<td>Mapy<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="javascript:loading_text(suwak(\'szukaj_taktyczna\'));on(\'suwak\');">Taktyczna</a></td></tr>'+
-       '<tr><td><a href="javascript:loading_text(suwak(\'szukaj_klasyczna\'));on(\'suwak\');">Klasyczna</a></td></tr>'+
+       '<tr><td><a href="operacje/legenda.php" target="ramka">Legenda</a></td></tr>'+
        '</tbody></table></td>'+
     '</tr></tbody></table></td>'+
    '</center>'

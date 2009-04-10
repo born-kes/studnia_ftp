@@ -8,7 +8,7 @@ include_once('f-cje.php');
 echo $_POST[haslo].$_POST[user].'<br>';
 session_start();
 if(isSet($_SESSION['zalogowany'])){
-    header("Location: http://www.bornkes.w.szu.pl/www/");}
+    header("Location: http://www.bornkes.w.szu.pl/test/");}
 
 elseif(!isSet($_POST["haslo"]) || !isSet($_POST["user"]))
   {
@@ -24,7 +24,7 @@ else{
   header("Location: http://www.bornkes.w.szu.pl/");
   }
   else if($val == 1){
-    $_SESSION['komunikat'] = "B³¹d serwera. Zalogowanie nie by³o mo¿liwe.";
+    $_SESSION['komunikat'] = "B³±d serwera. Zalogowanie nie by³o mo¿liwe.";
 header("Location:form.php");
   }
   else if($val == 2){
@@ -32,7 +32,7 @@ header("Location:form.php");
 header("Location:form.php");
   }
   else{
-    $_SESSION['komunikat'] = "B³¹d serwera. Zalogowanie nie by³o mo¿liwe.";
+    $_SESSION['komunikat'] = "B³±d serwera. Zalogowanie nie by³o mo¿liwe.";
 header("Location:form.php");
   }
 }
@@ -71,7 +71,9 @@ else
 <td colspan="2" align="center">
   <input type="submit" value="Wejdz">
 </td><td><a href="new_user.php">rejestracja</a></td>
-</tr></table>
+</tr>
+<tr><td align="center" colspan="2"><img src="http://img.audiovis.nac.gov.pl/SM0/SM0_18-333-7.jpg" border="0"></td></tr>
+</table>
 </form>
 <table><tr><td>
 <a href="http://www.szu.pl" target="_blank">
