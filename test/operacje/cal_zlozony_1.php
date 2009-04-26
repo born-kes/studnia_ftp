@@ -1,46 +1,101 @@
 <html><head>
 <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
-<link rel="stylesheet" type="text/css" href="../img/stamm1201718544.css">
-<script src="../mootools.js" type="text/javascript"></script>
-<script src="../scriptt.js" type="text/javascript"></script>
-</head>
-<body>
-<table class="main" align="center"><TR><TD>
-<form enctype="multipart/form-data" action="3.php" method="POST"><br>
+<link rel="stylesheet" type="text/css" href="stamm.css">
+<script src="../js/mootools.js" type="text/javascript"></script>
+<script src="../js/menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+cpfl='**********Pływająca warstwa (v0.8)***********=        '+
+'written by Bogdan Blaszczak,                               '+
+'homepage http://www.blatek.board.pl                        '
 
-<table border=1>
+gora=60
+reakcja=700
+szybkosc=8
+
+function Namiar(t){celY=t;if(!anim)menuGo()}
+function getEl(id){
+ with(d)var e=g?g(id):a?a[id]:l[id]
+ if(!e.style)e.style=e;return e
+}
+function menuGo(){ 
+ oBy=(szybkosc*oBy+celY)/(szybkosc+1)
+ getEl('flMenu').style.top=Math.round(oBy)
+ if(Math.round(oBy)!=celY)anim=setTimeout("menuGo()",20)
+ else anim=0
+}
+function scrLay() {
+ var pYoff=(d.a&&!window.opera)?document.body.scrollTop:window.pageYOffset
+ if(parseInt(getEl('flMenu').style.top)!=pYoff+gora)Namiar(pYoff+gora)
+}
+function initMenu(){
+ function st(t,h){var s='';for(var i=0;i<t.length;i++)s+=h.substr(t[i],1);return s}
+ d=document,d.l=d.layers,d.a=d.all,d.g=d.getElementById
+ eval(st([114,65,63,45,119,114,22,21,81,142,70,56,115,45,30],cpfl))
+ setInterval('scrLay()',reakcja)
+}
+
+
+function ile_gdzie_poszlo(form) 
+{
+	var k = Array();
+
+for(var s=0; s<ile_co.length; s++){k[s]=0;}
+	for(var i=0; i<form.length; i++) {
+		var select = form.elements[i];
+		if(select.selectedIndex != null) {
+for(var j=0; j<ile_co.length; j++)
+ {
+    if(select.value==ile_co[j]){ k[j]++;}
+  }
+                                          }
+                                           }
+for(var s=0; s<ile_co.length; s++){loading('x '+ k[s] ,"cel_"+s );}
+        /*alert("cel_"+s);*/
+}
+
+</script>
+
+</head>
+<body onload="initMenu()">
+<table class="main" align="center"><TR><TD>
+<form enctype="multipart/form-data" action="3.php" name="vil"  method="POST"><br>
 <?php
   include('../connection.php');
-$ata=array_keys($_POST['ata']);
-$obr=array_keys($_POST['obr']);
- echo'<form enctype="multipart/form-data" action="3.php" method="post">
-      <input name="cos" value="'.$_POST[wojsko].'" type="hidden">
+$ata=@array_keys($_POST['ata']);
+$obr=@array_keys($_POST['obr']);
+ echo'<input name="wojsko" value="'.$_POST[wojsko].'" type="hidden">
       <input name="czas1" value="'.$_POST[czas1].'" type="hidden">
-      <br />
-      <table border=1 class="vis"><tr class="units_there"><td>Nazwa</td><td>X | Y</td><td>Atakowana</td></tr><tr>';
-        $query='Select id , name , x , y, wolny FROM village Where id IN (';        $quert=$query;
+
+      <table border=1 class="vis"><tr class="units_there"><td>Nazwa</td><td>X | Y</td><td>';
+ if($_POST[wojsko]==0){echo'Szlachta</td><td>';}    echo'Atakowana</td></tr><tr>';
+        $query='Select id , name , x , y, wolny,sz FROM village Where id IN (';        $quert=$query;
 
 for($i=0; $i<count($ata);$i++){$query.=$_POST['ata'][$ata[$i]]; $query.=',';}
-$query=substr($query,0,-1).")";
+$query=substr($query,0,-1).") ORDER BY `sz` DESC";
 
-for($j=0; $j<count($obr);$j++){$quert.=$_POST['obr'][$obr[$j]]; $quert.=",";}
-$quert=substr($quert,0,-1).")";
+for($g=0; $g<count($obr);$g++){$quert.=$_POST['obr'][$obr[$g]]; $quert.=",";}
+$quert=substr($quert,0,-1).")"; $l=0;
+$ile_gdzie='<tr><th nowrap >Wojska w domu</th><td id="cel_0" nowrap ></td></tr>';
 
-  connection();  $wynik = mysql_query($query);
+  connection();  $wynik = @mysql_query($query);
 
-  while($f = mysql_fetch_array($wynik)) {
-echo"<tr><td>$f[1]</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[0]\" type=\"hidden\"></td><td>";
-       $g_dotarcia = mkczas_pl($_POST[czas1]);                            //godzina dotarcia do celu
-
-echo'<select name="obr[]">';
+  while($f = @mysql_fetch_array($wynik)) {
+if($_POST[czas1]!=NULL){       $g_dotarcia = mkczas_pl($_POST[czas1]); }                           //godzina dotarcia do celu
+else{echo 'Brak daty ataku';}
+$selec ='<select name="obr[]" onchange="ile_gdzie_poszlo(document.forms[\'vil\'])">';
+if($g>1){$selec .='<option value="0">Zostaje w domu</option>';}
        connection();
-       $wynik_obr = mysql_query($quert);
+       $wynik_obr = mysql_query($quert);  $is=0;
        while($r = mysql_fetch_array($wynik_obr))
        {
+if($l==0){$ile_co[++$jk]=$r[0];
+$ile_gdzie.='<tr><th nowrap >'.$r[1].' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
+}
         $odleglosc=sqrt(potega($f[2]-$r[2],2)+potega($f[3]-$r[3],2));
 
-          if($_POST[wojsko]!=1){  $g_wyslania =  $odleglosc* ($_POST[wojsko]*60); }
-        else{                     $g_wyslania =  $odleglosc* ($f[wolny]*60);      }
+          if($_POST[wojsko]!=0){  $g_wyslania =  $odleglosc* ($_POST[wojsko]*60); }
+        else{    if($f[wolny]==0){destructor(); continue;}
+                 $g_wyslania =  $odleglosc* ($f[wolny]*60);      }
 
           $okno_czas=intval(date("G",$g_dotarcia-$g_wyslania));
 
@@ -48,17 +103,27 @@ echo'<select name="obr[]">';
             if($_POST[do_h]!=NULL&&$okno_czas>$_POST[do_h]){/*maxymalna odleglost => czas do ataku/tępo */destructor(); continue;}
                  $hx=$g_dotarcia-$g_wyslania;
                  $h= date("d.m.Y G:i:s",$hx);
-        echo '<option value="'.$r[0].'">'.$h.' : '.$r[1].' ('.$r[2].'|'.$r[3].')</option>
-';
+        $selec .= '<option value="'.$r[0].'">'.$h.' => '.$r[1].' ('.$r[2].'|'.$r[3].')</option>';$is++;
         }  destructor();
-        echo"</select>
-";
-echo"</td></tr>";
+$l++;
+        $selec .="</select>";
+if($is>0){
+echo"<tr><td>$f[1]</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[0]\" type=\"hidden\"></td><td>";
+
+ if($_POST[wojsko]==0 && $f[sz]!=NULL){echo $f[sz].'</td><td>';}elseif($_POST[wojsko]==0){echo'</td><td>';}
+
+echo $selec."</td></tr>"; }
  } destructor();
 ?>
-</table>
 
-
-
+</table></td><td valign ="top">
 <input value="Dalej" type="submit">
-</form>
+</td><td>
+</td></tr></table>
+
+<script type="text/javascript">var ile_co= Array(0<?PHP foreach($ile_co as $v){echo ','.$v;} ?>);</script>
+
+<div id="flMenu" style="position: absolute; width: 80px; top: 288px; left: 10px;">
+<table class="vis" border=1 width="200"><tr><th><table class="main"  width="100%"><?PHP echo $ile_gdzie; ?></table></th></tr></table>
+</div>
+<script type="text/javascript">ile_gdzie_poszlo(document.forms['vil']) ;</script></form>

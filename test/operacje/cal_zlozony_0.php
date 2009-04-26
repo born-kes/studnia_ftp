@@ -3,35 +3,48 @@
 <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
 <link rel="stylesheet" type="text/css" href="../img/stamm1201718544.css">
 <script language="JavaScript">
-function selectAllata(form, checked,co) {
+function selectAllata(form, checked) {
 	var spans = document.getElementsByTagName("span");
 
-	for(var i=0; i<form.length; i++) {
+	for(var i=0; i<=form.length; i++) {
 		var span = spans[i];
-		if(span.className == co) {
+	if(span.className == "ata") {		
 		form.elements[i].checked = checked;}
-	}
-}</script>
-<script src="../scriptt.js" type="text/javascript"></script>
+}
+}
+function selectAobr(form, checked) {
+	var spans = document.getElementsByTagName("span");
+
+	for(var i=0; i<=form.length; i++) {
+		var span = spans[i];
+	if(span.className == "obr") {		
+		form.elements[i].checked = checked;}
+}
+}
+</script>
 </head>
-<body><table align="center" valign="top" class="main"><TR><TD>
+<body>
+<form enctype="multipart/form-data" name="vu" action="cal_zlozony_1.php" method="POST">
+<table align="center" valign="top" class="main"><TR><TD>
 <?php
-echo'<form enctype="multipart/form-data" action="cal_zlozony_1.php" method="POST">
-<input name="wojsko" value="'.$_POST[wojsko].'" type="hidden">
-<input name="czas1" value="'.$_POST[czas1].'" type="hidden">';
-if($_POST[od_h]!=NULL||$_POST[do_h]){echo'<input name="od_h" value="'.$_POST[od_h].'" type="hidden"><input name="do_h" value="'.$_POST[do_h].'" type="hidden"> ';}
+$echos='<input name="wojsko" value="'.$_POST[wojsko].'" type="hidden">';
+if($_POST[czas1]!=NULL){  $echos.= '<span><input name="czas1" value="'.$_POST[czas1].'" type="hidden"></span>'; }                           //godzina dotarcia do celu
+else{echo '<h4>Brak daty ataku</h4>';}
+
+
+if($_POST[od_h]!=NULL||$_POST[do_h]){$echos.='<span><input name="od_h" value="'.$_POST[od_h].'" type="hidden"></span><span><input name="do_h" value="'.$_POST[do_h].'" type="hidden"></span> ';}
 
 echo'<TABLE><tr><td  valign ="top">';
 if($d==1){   agresor($zap1,$atakujacy);}else{echo 'Agresor nie okreslony'; exit();}
 
 echo'</td><td valign ="top">';
 
-if($o==1){   obronca($zap2,$o_name);}else{echo 'Cela ataku nie okreslony'; exit();}
+if($o>0){  obronca($zap2,$o_name);}else{echo 'Cela ataku nie okreslony'; exit();}
 
 echo'</td><td colspan="2"  valign ="top">';
 
-  echo'<input value="Dalej" type="submit"><BR></form>';
-
-echo"</td></tr></table>";
+  echo'<span class="atas"><input value="Dalej" type="submit"></span><BR>';
+echo $echos;
+echo"</td></tr></table></form>";
 
 ?>

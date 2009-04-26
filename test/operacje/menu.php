@@ -206,9 +206,9 @@ destructor();;}else{echo"Wioska --- zg³os b³ad do administratora";}
 ?>
 </form>
 <table width="100%">
-<tr><td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def.png?1"><?PHP echo $obr_pi; ?></td>
-<td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def_cav.png?1"><?PHP echo $obr_lk; ?></td>
-<td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def_archer.png?1"><?PHP echo $obr_kl; ?></td></tr>
+<tr><td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def.png"><?PHP echo $obr_pi; ?></td>
+<td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def_cav.png"><?PHP echo $obr_lk; ?></td>
+<td><IMG SRC="http://pl5.plemiona.pl/graphic/unit/def_archer.png"><?PHP echo $obr_kl; ?></td></tr>
 </table>
 <SCRIPT LANGUAGE="JavaScript">
 <!--

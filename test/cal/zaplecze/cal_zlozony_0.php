@@ -1,41 +1,39 @@
 <?PHP 
-$statustyp= $status[typ];
+
 function agresor($zap,$name){
 echo'<TABLE border="1" class="vis"><caption>'.$name.'</caption>
 <tr>
 <td>Nazwa</td>
 <td> X | Y </td>
 <td>Punkty</td>
-<td><span class="ataa"><input name="alla"  class="selectAata"  type="checkbox" onclick="selectAllata(this.form, this.checked)" >all</span></TD>
+<td><input name="all"  type="checkbox" onclick="selectAllata(this.form, this.checked,\'ata\')">all</TD>
 </tr>';
 
 connection();
  $wynik1 = mysql_query($zap)or die('B³±d zapytania');
 while($r = mysql_fetch_array($wynik1))
 {
-  if($r[wolny]==0){destructor(); continue;}
-   
+    
 echo'<tr class="nowrap units_moving">
 <td><a href="javascript:popup_scroll(\'menu.php?id='.$r[id].'\',350,380)">'.$r[name].'</a></td>
 <td>'. $r[x].'|'.$r[y].'</td>
 <td>'.$r[points].'</td>
-<td><span class="ata"><input name="ata[]" value="'.$r[id].'" type="checkbox"></span></td>
+<td><span name="ata" class="ata"><input name="ata[]" value="'.$r[id].'" type="checkbox"></span></td>
 </TR>';
 }
 echo'</TABLE>';
 destructor();}
 
 function obronca($zap,$name)
-{ 
-global $statustyp;
+{
 echo'<TABLE border="1" class="vis"><caption>'.$name.'</caption>
 <TR>
 <TD>Nazwa</TD>
 <TD> X | Y </TD>
 <TD>Punkty</TD>
-<TD><span class="atao"><input name="obr"  type="checkbox" onclick="selectAobr(this.form, this.checked)">all</span></TD>
+<TD><input name="all"  type="checkbox" onclick="selectAllata(this.form, this.checked,\'obr\')">all</TD>
 <td>opis</td>
-<td>Status</td></TR>';
+</TR>';
 connection();
 $wynik2 = mysql_query($zap)or die('B³±d zapytania');
 
@@ -46,13 +44,13 @@ echo'<tr class="nowrap row_b">
 <td>'.$p[points].'</td>
 <td><span name="obr" class="obr"><input name="obr[]" value="'.$p[id].'" type="checkbox"></span></td>
 <td>'.$p[opis].'</td>
-<th>'.$statustyp[$p[status]].'</th></tr>';}
+</tr>';}
 echo"</TABLE>";
        destructor();
 }
 
 $atakujacy=$_POST[agracz];
-$zap1=" SELECT v.name, v.x, v.y, v.points, v.id ,wolny
+$zap1=" SELECT v.name, v.x, v.y, v.points, v.id 
 FROM `village` v, tribe t
 WHERE v.player = t.id ";
 $d=0;
@@ -61,16 +59,16 @@ if($_POST[a_typ]!=NULL){$zap1.=$and."v.typ='$_POST[a_typ]' ";$d=1;}else{/*Typ ni
 if($_POST[a_oko]!=NULL&&$_POST[a_xy]!=NULL){$d=1;
 $xy = explode("|", $_POST[a_xy]); $od_x=$xy[0]-$_POST[a_oko]; $do_x=$xy[0]+$_POST[a_oko]; $od_y=$xy[1]-$_POST[a_oko]; $do_y=$xy[1]+$_POST[a_oko];
 $zap1.= "AND v.x>'$od_x'  AND v.y>'$od_y'  AND v.x<'$do_x'  AND v.y<'$do_y' ";}else{/*xy niema znaczenia*/}
-$zap1.="ORDER BY `v`.`sz`,`v`.`name` ASC";
+$zap1.="ORDER BY `v`.`name` ASC";
 
-$zap2=" SELECT v.name, v.x, v.y, v.points,v.id, v.opis, v.status
+$zap2=" SELECT v.name, v.x, v.y, v.points,v.id, v.opis
 FROM `village` v, tribe t
 WHERE v.player = t.id 
 ";
 
-if($_POST[plem_op]!=NULL){$zap2.=$and." t.ally='$_POST[plem_op]' ";$o=1;$o_name='Gracz <b>'.$_POST[plem_op].'</b>';}else            //cel plemie
-if($_POST[ogracz]!=NULL){$zap2.=$and." t.name='$_POST[ogracz]' ";$o=1;$o_name='Plemie <b>'.($co_za_plemie[$_POST[ogracz]]).'</b>';}else                //cel wioska
-if($_POST[xy]!=NULL){$xy = explode("|", $_POST[xy]);$zap2.=$and." v.x='$xy[0]' AND v.y='$xy[1]' ";$o=2;$o_name='Wioska <b>'.$_POST[xy].'</b>';}  //cel gracz
+if($_POST[plem_op]!=NULL){$zap2.=$and." t.ally='$_POST[plem_op]' ";$o=1;$o_name=$_POST[plem_op];}else            //cel plemie
+if($_POST[ogracz]!=NULL){$zap2.=$and." t.name='$_POST[ogracz]' ";$o=1;$o_name=$_POST[ogracz];}else                //cel wioska
+if($_POST[_xy]!=NULL){$xy = explode("|", $_POST[_xy]);$zap2.=$and." w.x='$xy[0]' AND w.y='$xy[1]' ";$o=2;$o_name=$_POST[xy];}  //cel gracz
 
 if($_POST[o_oko]!=NULL&&$_POST[o_xy]!=NULL&&$o!=2){$o=1;
 $xy = explode("|", $_POST[o_xy]); $od_x=$xy[0]-$_POST[o_oko]; $do_x=$xy[0]+$_POST[o_oko]; $od_y=$xy[1]-$_POST[o_oko]; $do_y=$xy[1]+$_POST[o_oko];

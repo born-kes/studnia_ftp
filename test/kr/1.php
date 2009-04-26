@@ -136,14 +136,14 @@ echo'Zaden zolnierz nie wrocil zywy. Nie mozna ustalic zadnych informacji o wiel
 <tr><td><br></td></tr>
 <tr><td>Wojska<br>Agresora:</td><td><input type="checkbox" name="wa"  value="1" /></td></tr>
 <tr><td background="../img/strzalka.PNG" colspan="2"><HR></td></tr>
-<tr><td>Date dla Obroncy:</td><td><input type="checkbox" name="odata" value="1" /></td></tr>
+<tr><td>Date dla Obroncy:</td><td><input type="checkbox" name="odata" value="1" <?PHP if($raport[data]!=NULL){echo' checked="tak"'; }?>/></td></tr>
 <tr><td>Typ Wioski:</td><td><input type="checkbox" name="two"  value="1" /></td></tr>
 
-<?PHP if($brak_obr==NULL){echo'<tr><td>Wojska<br>Obroncy:</td><td><input type="checkbox" name="wo" value="1" /></td></tr>';} ?>
+<?PHP if($brak_obr==NULL){echo'<tr><td>Wojska<br>Obroncy:</td><td><input type="checkbox" name="wo" value="1" checked="tak" /></td></tr>';} ?>
 <tr><td><br></td></tr>
-<tr><td>Mur Obroncy:</td><td><input type="checkbox" name="mo" value="1" /></td></tr>
-<?PHP if($brak_obr==NULL){echo'<tr><td>Status<br>Obroncy:</td><td><input type="checkbox" name="so" value="1" /></td></tr>';}else
-{echo'<tr><td>Status <b>BUNKIER</b>:</td><td><input type="checkbox" name="so" checked="tak"  value="2" /></td></tr>';} ?>
+<?PHP if($raport[nev_mur]!==NULL){echo'<tr><td>Mur Obroncy:</td><td><input type="checkbox" name="mo" value="1" checked="tak" /></td></tr>';}
+ if($brak_obr==NULL){echo'<tr><td>Status<br>Obroncy:</td><td><input type="checkbox" name="so" value="1" checked="tak" /></td></tr>';}else
+ if($brak_obr!=NULL){echo'<tr><td>Status <b>BUNKIER</b>:</td><td><input type="checkbox" name="so" checked="tak"  value="2" /></td></tr>';} ?>
 <tr><td><br></td></tr>
 <tr><td background="../img/strzalka.PNG" colspan="2">   <input type="submit" value="Zapisz" /></td></tr>
 

@@ -8,19 +8,12 @@
 <table align="center">
 <TR><TD>
 <?php  include('../connection.php');
-$id_zalogowany=$_SESSION['id'];   $minu=@array_keys($_POST['minu']);
-for($i=0; $i<count($minu);$i++){  
+$id_zalogowany=$_SESSION['id'];   $minu=@array_keys($_POST['minu']);   $opis=@array_keys($_POST['opis']);
+for($i=0; $i<count($minu);$i++){  $data=mkczas_pl($_POST['minu'][$minu[$i]])-$godzina_zero; 
+$opiss=urlencode($_POST['opis'][$opis[$i]]);
 
-$opis = explode('|',$_POST['minu'][$minu[$i]]);
-$data=data_z_bazy($opis[0]); 
-$w_atak=$opis[1];
-$w_obro=$opis[2];
-
-$opiss=urldecode($opis[3]);
-
-
-echo '<img src="../img/dodaj.PNG"> '.$opiss.' o godzinie '.$data.'<BR>';
-$into = "Insert Into `Minutnik` Values('','$opis[0]','$id_zalogowany','$opis[3]','$w_atak','$w_obro');";
+echo '<img src="../img/dodaj.PNG"> '.$_POST['opis'][$opis[$i]].' o godzinie '.$_POST['minu'][$minu[$i]].'<BR>';
+$into = "Insert Into `Minutnik` Values('','$data','$id_zalogowany','$opiss','','');";
  connection(); 
 @mysql_query($into); 
 destructor();}

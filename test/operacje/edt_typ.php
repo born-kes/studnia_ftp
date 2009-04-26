@@ -50,7 +50,7 @@ echo'</tr>';
               $wioska_xy =explode("|", substr($lis[$i] , $st_r-3 , 7 ));
               $wioska_wojo =explode(" ", substr($lis[$i] , $st_k));
 
-  if($wioska_xy[0]==NULL && $wioska_xy[1]==NULL ){ }
+  if($wioska_xy[0]!=NULL && $wioska_xy[1]!=NULL ){
 
   connection();
    $wynik = @mysql_query("SELECT id, name FROM village
@@ -77,7 +77,7 @@ if($z_wojo = $_POST[wo]){
    }
 echo '</tr> ';
  @destructor();
-}
+}}
 }
 echo'<tr />
 <tr><td><input type="submit" value="Zgadza sie" style="margin-top: 5px;"/></td></tr>';

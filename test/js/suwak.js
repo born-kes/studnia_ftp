@@ -9,7 +9,7 @@ function input(name,value) {
 }
 function div_oko(tu) {
 	var str_buffer =  new String (
-        '<tr><td id="siedem"><b style="cursor: pointer;" onclick="loading(input(\''+tu+'_oko\',0)+input(\''+tu+'_xy\',0),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Okolica </b>/ '+
+        '<tr><td id="sie'+tu+'"><b style="cursor: pointer;" onclick="loading(input(\''+tu+'_oko\',0)+input(\''+tu+'_xy\',0),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Okolica </b>/ '+
         ' <b style="cursor: pointer;" onclick="loading(input(\''+tu+'_oko\',0)+input(\''+tu+'_xy\',0),\''+tu+'_map_go\');"> Recznie </b></td></tr>'+
         '<tr><td id="'+tu+'_map_go"></td></tr>'
 
@@ -109,7 +109,7 @@ else window.status='Maxymalny Zoom'
 
 var photos=new Array()
 var which=0
-var wojo=new Array(9,10,11,18,22,30,35)
+var wojo=new Array(9,10,11,18,22,30,35,0)
 photos[0]=inqlude+"img/1.PNG"
 photos[1]=inqlude+"img/2.PNG"
 photos[2]=inqlude+"img/3.PNG"
@@ -117,7 +117,7 @@ photos[3]=inqlude+"img/4.PNG"
 photos[4]=inqlude+"img/5.PNG"
 photos[5]=inqlude+"img/6.PNG"
 photos[6]=inqlude+"img/7.PNG"
-
+photos[7]=inqlude+"img/0.PNG"
 function backward()
 {
 if (which>0){
@@ -206,6 +206,27 @@ function suwak(b) { var a=b
         '</tbody></table>'+
         '</form>');
  }
+  if(a=='kalkulator_tk')
+ {
+ 	var str_buffer =  new String (
+        '<form name="form" method="POST" target="wnd" onsubmit="nowe_okno(\'operacje/tancerz_wojny.php\',245,650)" action="operacje/tancerz_wojny.php" >'+
+        '<table><tbody><th>Agresor</th></tr>'+
+        '<tr><td>Nazwa Gracza</td></tr>'+
+        '<tr><td>'+input_name("a")+'</td></tr>'+
+        '<tr><td>Typ Wioski</td></tr>'+
+        '<tr><td>'+input_typ("a")+'</td></tr>'+div_oko("a")+
+
+        '<tr><td><hr></td></tr>'+
+        '<tr><td>Nazwa Gracza</td></tr>'+
+        '<tr><td>'+input_name("o")+'</td></tr>'+div_oko("o")+
+        '<tr><td><hr></td></tr>'+
+        '<tr><td>'+input_wojo()+'</td></tr>'+
+        '<tr><td>Godzina Ataku</td></tr>'+
+        '<tr><td>'+input_czas()+'</td></tr>'+
+        '<tr><td>'+input_wykonaj()+'</td></tr>'+
+        '</tbody></table>'+
+        '</form>');
+ }
   if(a=='kalkulator_zlozony')
  {
  	var str_buffer =  new String (
@@ -218,9 +239,9 @@ function suwak(b) { var a=b
 
         '<tr><td><hr></td></tr><tr><th>Obronca</th></tr>'+
         '<tr><td>'+
-        'Gracz <input type="radio" name="ofiarra" onclick="loading(input_name(\'o\'),\'kogo_go\');on(\'siedem\');" /><br />'+
-        'Plemie <input type="radio" name="ofiarra" onclick="loading(input_plemie(),\'kogo_go\');on(\'siedem\');" /><br />'+
-        'Wioska <input type="radio" name="ofiarra" onclick="loading(\'xxx|yyy\'+input_xy(\'\'),\'kogo_go\');off(\'siedem\');loading(\'\',\'o_map_go\');" /><br />'+
+        'Gracz <input type="radio" name="ofiarra" onclick="loading(input_name(\'o\'),\'kogo_go\');on(\'sieo\');" /><br />'+
+        'Plemie <input type="radio" name="ofiarra" onclick="loading(input_plemie(),\'kogo_go\');on(\'sieo\');" /><br />'+
+        'Wioska <input type="radio" name="ofiarra" onclick="loading(\'xxx|yyy\'+input_xy(\'\'),\'kogo_go\');off(\'sieo\');loading(\'\',\'o_map_go\');" /><br />'+
         '</td></tr>'+
         '<tr><td id="kogo_go"></td></tr>'+div_oko("o")+
         '<tr><td><hr></td></tr>'+
@@ -228,6 +249,10 @@ function suwak(b) { var a=b
         '<tr><td>'+input_wojo()+'</td></tr>'+
         '<tr><td>Godzina Ataku</td></tr>'+
         '<tr><td>'+input_czas()+'</td></tr>'+
+        '<tr><td>Okno wysylane atakow</td></tr>'+
+        '<tr><td>Tak <input type="radio" name="okno_atak" value="" onclick="loading(\' od \'+input(\'od_h\',\'16\')+\' do \'+input(\'do_h\',\'21\'),\'czas_start\');" />'+
+              ' Nie <input type="radio" name="okno_atak" value="" onclick="loading(\'\',\'czas_start\');" /></td></tr>'+
+        '<tr><td><span id="czas_start"></span></td></tr>'+
         '<tr><td>'+input_wykonaj()+'</td></tr>'+
         '</tbody></table>'+
         '</form>');
@@ -244,7 +269,7 @@ function suwak(b) { var a=b
    if(a=='szukaj_taktyczna')
  { which_lupa=7
  	var str_buffer =  new String (
-        '<form name="form" action="operacje/mapa_taktyczna.php" method="GET" target="ramka">'+
+        '<form name="form" action="operacje/mapa_taktyczna.php" method="GET" target="_blank">'+
         '<table><tbody>'+div_oko("")+
         '<tr><td>Status obrony <input name="obrona" checked="checked" type="checkbox"></td></tr>'+
         '<tr><td>Typy Wiosek <input name="t_w" checked="checked" type="checkbox"></td></tr>'+
@@ -255,4 +280,8 @@ function suwak(b) { var a=b
         '</form>');
  }
        return str_buffer;
+}
+function nowe_okno(url, width, height) {
+	wnd = window.open(url, "wnd", "width="+width + ",height="+height + ",left=50,top=50,resizable=yes,scrollbars=yes");
+	wnd.focus();
 }

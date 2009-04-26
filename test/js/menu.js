@@ -5,7 +5,7 @@ function suwakk()
 {
     var str_buffer = new String (
      '<div style="position: absolute; left: -10px; top: -20px; ">'+
-     '<table cellpadding="0" cellspacing="0"><tr><td id="suwak" style="display:none;background-color: maroon; border-style: dotted;">'+
+     '<table cellpadding="0" cellspacing="0"><tr><td id="suwak" style="display:none;background-color: #AD5700; border-style: dotted;">'+
      '<table><tr><td></td></tr><tr><td>XXXXXXXXXXXXXX</td></tr></table>'+
      '</td><td valign="top" style="border-left-color: maroon;">'+
      '<img src="img/grip.gif" onclick="javascript:show_suwak()" /></td></tr></table></div>'+
@@ -40,6 +40,7 @@ function mennu()
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_prostu\'));on(\'suwak\');">Prosty</a></td></tr>'+
        '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_radar\'));on(\'suwak\');">Radar</a></td></tr>'+
+       '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_tk\'));on(\'suwak\');">Tancerz Wojny</a></td></tr>'+
        '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_zlozony\'));on(\'suwak\');">Z³o¿ony</a></td></tr>'+
        '</tbody></table></td>'+
        '<td>Baza Danych<br>'+

@@ -1,6 +1,7 @@
 <?
-$p=" , ";
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
+$wczasy = mktime()-$godzina_zero;
+$p=" , ";
 $z_wojo =   $_POST[wojska];
 $id=array_keys($_POST['id']);
 if($z_wojo!=NULL){
@@ -51,9 +52,11 @@ $query .= "
          kat='$wkat',
          ry='$wry',
          sz='$wsz',
-         wolny='$wol'
-         status=$sta";}
+         wolny='$wol',
+         status=$sta,
+         data=$wczasy";}
 $query .= "     WHERE `id`='$wid'; ";
+
   connection();
    $wynik=@mysql_query($query);
  @destructor();

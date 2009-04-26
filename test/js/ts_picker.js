@@ -121,7 +121,6 @@ function dt2dtstr (dt_datetime) {
 			dt_datetime.getDate()+"."+(dt_datetime.getMonth()+1)+"."+dt_datetime.getFullYear()+" "));
 }
 function dt2tmstr (dt_datetime) {
-	return (new String (
-			dt_datetime.getHours()+":"+dt_datetime.getMinutes()+":"+dt_datetime.getSeconds()));
-}
+	return (new String ('8:00:00'));
+}/*dt_datetime.getHours()+":"+dt_datetime.getMinutes()+":"+dt_datetime.getSeconds()*/
 

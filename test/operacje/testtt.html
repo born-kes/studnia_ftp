@@ -1,0 +1,142 @@
+<html><head>
+
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+	<meta name="Author" content="Bogdan Błaszczak [BlaTek]">
+	<meta name="description" content="Kurs języka HTML - przydatne skrypty - pływające menu">
+	<meta name="keywords" content="Język HTML, skrypty, JavaScript, Paweł Wimmer, PCkurier">
+	<title>Pływające menu</title>
+<style type="text/css">
+<!--
+h2 {font-family: Arial, Helvetica; font-size: 15pt}
+body { margin-left: 100px; background-color: #000000; font-family: Arial, Helvetica; font-size: 10pt; color: #FFFFFF}
+td {color: #ffffff; font-weight:bold}
+a { font:normal bold 13px 'Courier New',Arial; line-height:30px}
+a:link { text-decoration: none; color: #FF8000}
+a:visited { text-decoration: none; color: #FF8000}
+a:hover { text-decoration: underline; color: #FF0000}
+pre {margin-left:15pt; padding-left:15pt; border-left:solid #FFFFFF 2pt;font-family: 'Courier New',monospace}
+-->
+</style>
+
+<script type="text/javascript">
+cpfl='**********Pływająca warstwa (v0.8)***********=        '+
+'written by Bogdan Blaszczak,                               '+
+'homepage http://www.blatek.board.pl                        '
+
+gora=60
+reakcja=700
+szybkosc=8
+
+function Namiar(t){celY=t;if(!anim)menuGo()}
+function getEl(id){
+ with(d)var e=g?g(id):a?a[id]:l[id]
+ if(!e.style)e.style=e;return e
+}
+function menuGo(){ 
+ oBy=(szybkosc*oBy+celY)/(szybkosc+1)
+ getEl('flMenu').style.top=Math.round(oBy)
+ if(Math.round(oBy)!=celY)anim=setTimeout("menuGo()",20)
+ else anim=0
+}
+function scrLay() {
+ var pYoff=(d.a&&!window.opera)?document.body.scrollTop:window.pageYOffset
+ if(parseInt(getEl('flMenu').style.top)!=pYoff+gora)Namiar(pYoff+gora)
+}
+function initMenu(){
+ function st(t,h){var s='';for(var i=0;i<t.length;i++)s+=h.substr(t[i],1);return s}
+ d=document,d.l=d.layers,d.a=d.all,d.g=d.getElementById
+ eval(st([114,65,63,45,119,114,22,21,81,142,70,56,115,45,30],cpfl))
+ setInterval('scrLay()',reakcja)
+}
+
+</script>
+
+</head><body onload="initMenu()">
+
+<h2>Pływające menu</h2>
+
+<div id="flMenu" style="position: absolute; width: 80px; top: 288px; left: 10px;">
+<a href="http://www.pckurier.pl" target="_top">PCkurier</a><br>
+<a href="http://www.enter.pl" target="_top">Enter</a><br>
+<a href="http://www.pcworld.com.pl" target="_top">PCWorld Komputer</a><br>
+<a href="http://www.chip.pl" target="_top">Chip</a><br>
+
+<a href="http://blatek.board.pl" target="_top">Autor</a><br>
+</div>
+
+<p>Kod nie jest zbyt "gigantyczny", a korzyści spore. Tworzymy menu, którego nie trzeba szukać, zawsze jest pod ręką.
+Odnośniki umieszczone są na warstwie pozycjonowanej absolutnie. Warstwa porusza się w płynny sposób wraz z przewijaniem
+zawartości dokumentu.
+</p>
+
+<p>Za pomocą zmiennej <b>gora</b> ustalamy odległość warstwy od górnej krawędzi okna. Jeśli chodzi o płynność i szybkość
+menu, to możemy sobie tutaj poeksperymentować zmieniając wartości zmiennych <b>reakcja</b> i <b>szybkosc</b>.
+Przy czym należy pamiętać, że im większa wartość zmiennej <b>szybkosc</b>, tym mniejsza jest rzeczywista szybkość
+poruszania się menu (taki przekręt autora :)))
+
+</p>
+
+<p>Aby menu nie "właziło" nam ponad zawartość naszego dokumentu, należy ustalić odpowiedni margines dokumentu, np. poprzez CSS:<br><br>
+body { margin-left:100px }<br><br>
+lub opracować odpowiednią konstrukcję tabelaryczną, w celu stworzenia odpowiedniej przestrzeni dla poruszającego się menu.
+</p>
+
+<p>Skopiuj przykładowy kod</p>
+
+<hr>
+<p><font color="#ff0000">W ramach HEAD</font></p>
+
+<pre>&lt;script type="text/javascript"&gt;
+
+cpfl='**********Pływająca warstwa (v0.8)***********=        '+
+'written by Bogdan Blaszczak,                               '+
+'homepage http://www.blatek.board.pl                        '
+
+gora=60
+reakcja=700
+szybkosc=8
+
+function Namiar(t){celY=t;if(!anim)menuGo()}
+function getEl(id){
+ with(d)var e=g?g(id):a?a[id]:l[id]
+ if(!e.style)e.style=e;return e
+}
+function menuGo(){ 
+ oBy=(szybkosc*oBy+celY)/(szybkosc+1)
+ getEl('flMenu').style.top=Math.round(oBy)
+ if(Math.round(oBy)!=celY)anim=setTimeout("menuGo()",20)
+ else anim=0
+}
+function scrLay() {
+ var pYoff=(d.a&amp;&amp;!window.opera)?document.body.scrollTop:window.pageYOffset
+ if(parseInt(getEl('flMenu').style.top)!=pYoff+gora)Namiar(pYoff+gora)
+}
+function initMenu(){
+ function st(t,h){var s='';for(var i=0;i&lt;t.length;i++)s+=h.substr(t[i],1);return s}
+ d=document,d.l=d.layers,d.a=d.all,d.g=d.getElementById
+ eval(st([114,65,63,45,119,114,22,21,81,142,70,56,115,45,30],cpfl))
+ setInterval('scrLay()',reakcja)
+}
+&lt;/script&gt;
+</pre>
+
+<p><font color="#ff0000">W ramach BODY</font></p>
+
+<pre>&lt;body onload="initMenu()"&gt;
+
+&lt;div id="flMenu" style="position:absolute;width:80px;top:60px;left:10px"&gt;
+&lt;a href="http://www.pckurier.pl"&gt;PCkurier&lt;/a&gt;&lt;br&gt;
+
+&lt;a href="http://www.enter.pl"&gt;Enter&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://www.gambler.com.pl"&gt;Gambler&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://www.chip.pl"&gt;Chip&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://blatek.board.pl"&gt;Autor&lt;/a&gt;&lt;br&gt;
+
+&lt;/div&gt;
+
+</pre>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+</body></html>

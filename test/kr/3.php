@@ -13,9 +13,9 @@ $Zap=substr($Zap,0,-2);
 $Zap.=" Where id=".$_POST[a_id];
 
  connection();
-$zmiana1 = mysql_query($Zap) or die ('zapytanie bledne');
+$zmiana1 = mysql_query($Zap) or die ('<h4>zapytanie bledne</h4>');
 destructor();
-echo "Zmiany w Wiosce Agresora - zapisane pomyslnie<br />";
+echo "<h4>Zmiany w Wiosce Agresora - zapisane pomyslnie</h4><br />";
 }
 
 if(isSet($_POST[o_id])&&($_POST[two]==1||$_POST[wo]==1||$_POST[mo]==1||isSet($_POST[so])) )
@@ -29,11 +29,17 @@ if($_POST[so]==1){$Zap.="status=".$_POST[o_status].$p;}elseif($_POST[so]==2){$Za
 $Zap=substr($Zap,0,-2);
 $Zap.=" Where id=".$_POST[o_id];
  connection();
-$zmiana2 = mysql_query($Zap) or die ('zapytanie bledne');
+$zmiana2 = mysql_query($Zap) or die ('<h4>zapytanie bledne</h4>');
 destructor();
-echo "Zmiany w Wiosce Obroncy - zapisane pomyslnie<br />";
+echo "<h4>Zmiany w Wiosce Obroncy - zapisane pomyslnie</h4><br />";
 
 }
 
 ?>
-<br /><a href="index.html" target="ramka">Dodaj Nowy</a>
+<br /><form action="1.php" method="POST">
+<table border="1" cellspacing="1" cellpadding="2" bgcolor="#FFCC66" align="center">
+<TR><TD  align="center" colspan="2">
+<textarea id="query" name="query" rows="12" cols="64"></textarea></TD></TR>
+<TR><TD align="center" colspan="2"><input type="submit" value="Konwertuj" style="margin-top: 5px;"/>
+
+</TD></TR></table></form><br />
