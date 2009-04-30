@@ -169,6 +169,8 @@ function suwak(b) { var a=b
         '<table><tbody>'+
         '<tr><td>Nazwa Gracza</td></tr>'+
         '<tr><td>'+input_name("_")+'</td></tr>'+
+        '<tr><td>Typ Wioski</td></tr>'+
+        '<tr><td>'+input_typ("")+'</td></tr>'+
         '<tr><td>Plemie</td></tr>'+
         '<tr><td>'+input_plemie()+'</td></tr>'+div_oko("")+
         '<tr><td>'+input_wykonaj()+'</td></tr>'+
@@ -269,7 +271,7 @@ function suwak(b) { var a=b
    if(a=='szukaj_taktyczna')
  { which_lupa=7
  	var str_buffer =  new String (
-        '<form name="form" action="operacje/mapa_taktyczna.php" method="GET" target="_blank">'+
+        '<form name="form" action="operacje/mapa_taktyczna.php" method="GET" target="ramka">'+
         '<table><tbody>'+div_oko("")+
         '<tr><td>Status obrony <input name="obrona" checked="checked" type="checkbox"></td></tr>'+
         '<tr><td>Typy Wiosek <input name="t_w" checked="checked" type="checkbox"></td></tr>'+

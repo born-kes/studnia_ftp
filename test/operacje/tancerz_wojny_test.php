@@ -12,3 +12,13 @@
 <input type="text" name="czas1" value="23.4.2009 8:00:00" />czas1  <br />
 <input type="submit" value="go" /><br />
 </form>
+
+
+<?php   include('../connection.php');
+//$is = 159 * 4000;
+//echo przeliczenie($is);
+
+//echo '<br>';
+
+//echo date("d G:i:s", $is); 
+?>
