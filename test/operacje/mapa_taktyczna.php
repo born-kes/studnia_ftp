@@ -7,6 +7,7 @@
 <body>
 
 <?php
+$nosnik="&_oko=".$_GET[_oko]."&t_w=".$_GET[t_w]."&r_w=".$_GET[r_w]."&obrona=".$_GET[obrona]."&sz_w=".$_GET[sz_w];
 //echo $_GET[_xy];
 $p=" , ";
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
@@ -18,18 +19,18 @@ if( $_GET!= null ){
 echo '<table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(241, 235, 221);" id="mapCoords" cellpadding="0" cellspacing="0">
 <tr>
 <td colspan="2" align="center">
-<a href="?_xy='.($xy[0]-$_GET[_oko])."|".($xy[1]-$_GET[_oko]).'&_oko='.$_GET[_oko].'">skos</a>
+<a href="?_xy='.($xy[0]-$_GET[_oko])."|".($xy[1]-$_GET[_oko]).$nosnik.'">skos</a>
 </td>
 <td colspan="1" align="center">
-<a href="?_xy='.$xy[0]."|".($xy[1]-$_GET[_oko]).'&_oko='.$_GET[_oko].'">gora</a>
+<a href="?_xy='.$xy[0]."|".($xy[1]-$_GET[_oko]).$nosnik.'">gora</a>
 </td>
 <td colspan="2" align="center">
-<a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]-$_GET[_oko]).'&_oko='.$_GET[_oko].'">skos</a>
+<a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]-$_GET[_oko]).$nosnik.'">skos</a>
 </td>
 </tr>
 <tr>
 <td colspan="1" align="center">
-<a href="?_xy='.($xy[0]-$_GET[_oko])."|".$xy[1].'&_oko='.$_GET[_oko].'">bok</td>
+<a href="?_xy='.($xy[0]-$_GET[_oko])."|".$xy[1].$nosnik.'">bok</td>
 
 <td colspan="3" align="center"><table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(241, 235, 221);" id="mapCoords" cellpadding="0" cellspacing="0">';
 
@@ -46,7 +47,7 @@ echo '<table style="border: 1px solid rgb(241, 235, 221); background-color: rgb(
     if($licz<$szerokosc){
        $linnia = $y+1;
 connection();
-      $wynik = @mysql_query("SELECT w.id AS id_wsi,p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.typ, w.data, w.mur, w.status, w.sz
+      $wynik = @mysql_query("SELECT w.id AS id_wsi,p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.typ, w.data, w.mur, w.status, w.sz, w.points
 FROM village w, tribe p, ally a
 WHERE w.player = p.id
 AND p.ally = a.id
@@ -60,7 +61,10 @@ AND p.ally = a.id
       if($r = mysql_fetch_array($wynik))
       {  echo map_color($r[id_User],$r[id_plemie]).'">'; //wioska istnieje
 
-if($_GET[t_w]!=NULL){ $wx.="&t=".$r[typ];  }             // typ wioski
+if($_GET[t_w]!=NULL){ $wx.="&t=".$r[typ];  }
+elseif($_GET[t_w]==NULL){
+if($r[points]>3000){ $wx.="&ww=2";  }else{$wx.="&ww=1";}
+}
 
 if($_GET[r_w]!=NULL&&$r[data]!=null){$wx.='&r=1';}  // raport istnieje
 if($_GET[obrona]!=NULL){
@@ -83,10 +87,10 @@ $licz = 0;                 // zeruje kolumne
               }
      echo "</TR></tbody></TABLE>";
      echo '
-</td><td align="center"><a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]).'&_oko='.$_GET[_oko].'">bok</td></tr>
-<tr><td colspan="2" align="center" ><a href="?_xy='.($xy[0]-$_GET[_oko])."|".($xy[1]+$_GET[_oko]).'&_oko='.$_GET[_oko].'">skos</a></td>
-<td colspan="1" align="center"><a href="?_xy='.($xy[0])."|".($xy[1]+$_GET[_oko]).'&_oko='.$_GET[_oko].'">dol</td>
-<td  colspan="2" align="center"><a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]+$_GET[_oko]).'&_oko='.$_GET[_oko].'">skos</td></tr>
+</td><td align="center"><a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]).$nosnik.'">bok</td></tr>
+<tr><td colspan="2" align="center" ><a href="?_xy='.($xy[0]-$_GET[_oko])."|".($xy[1]+$_GET[_oko]).$nosnik.'">skos</a></td>
+<td colspan="1" align="center"><a href="?_xy='.($xy[0])."|".($xy[1]+$_GET[_oko]).$nosnik.'">dol</td>
+<td  colspan="2" align="center"><a href="?_xy='.($xy[0]+$_GET[_oko])."|".($xy[1]+$_GET[_oko]).$nosnik.'">skos</td></tr>
 </tbody></table>';
 }
 

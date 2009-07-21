@@ -293,10 +293,12 @@ function MapClick(e)
 	//	alert(v_x+"|"+v_y+" - "+sURL);
 	gmap(v_x+"|"+v_y);
 
-off('map0');
-             /*   oHTTP.open('GET', sURL, true);
+off('map0');/*
+               oHTTP.open('GET', sURL, true);
                 oHTTP.onreadystatechange = ShowVillageInfo;
-                oHTTP.send(null);*/
+                oHTTP.send(null);
+	alert(oHTTP.onreadystatechange);
+*/
 	}
 }
 

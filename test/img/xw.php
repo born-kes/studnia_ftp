@@ -24,7 +24,16 @@ break;
 default:
 $dest= imagecreatefrompng("null.PNG");
 break;
-}}else{$dest= ImageCreateFromPng("null.PNG");}
+}}elseif($_GET[ww]!=Null){
+switch($_GET[ww]){
+case 1:
+$dest=  imagecreatefrompng("wies0.PNG");
+break;
+case 2:
+$dest=  imagecreatefrompng("wies1.PNG");
+break;}
+}
+else{$dest= ImageCreateFromPng("null.PNG");}
 
 if($_GET[r]!=Null){ //raport
 $kolor_cz = ImageColorAllocate($dest,1,1,1);
