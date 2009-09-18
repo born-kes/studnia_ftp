@@ -5,17 +5,12 @@
 <?php
 
 session_start();
-if(!isSet($_SESSION['zalogowany'])||
-   !isSet($_SESSION['prawa'])     ||
-   !isSet($_SESSION['id'])          ){
+if(!isSet($_SESSION['zalogowany'])){
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
     include('logowanie/form.htm');    
-echo 'error';
 exit();
 }
+    header("Location: test/");
 
-    if($_SESSION['prawa']>0){    header("Location: test/");}
-else{  $_SESSION['komunikat'] = "Brak uprawnien bey bey!";
-    header("Location: logowanie/logout.php");}
 ?>	
 </body></HTML>

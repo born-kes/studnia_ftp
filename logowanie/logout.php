@@ -1,3 +1,4 @@
+<?PHP /* ########### Destruktor sesji ######## */ ?>
 <script language="JavaScript" type="text/javascript">
 	setTimeout ("changePage()", 200);
 

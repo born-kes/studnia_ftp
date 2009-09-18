@@ -2,9 +2,9 @@
 session_start();
 if(!isSet($_SESSION['zalogowany'])){
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
-  include('../form.php');
+  //include('../form.php');
   exit();}
-include('connection.php');
+include('../test/connection.php');
 
 if(!isSet($_SESSION['id'])){
    connection();

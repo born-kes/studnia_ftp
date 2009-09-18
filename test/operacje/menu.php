@@ -1,5 +1,4 @@
 <?php
-$stat = Array('Niewybrana:','<i>Niebroniona:</i>','Broniona:','<b>Bunkier:</b>');
 function status_on($status,$co){
 if($status==$co){return ' checked="tak" ';}
 }
@@ -188,13 +187,14 @@ if($r[sz]!=NULL){echo ($r[sz]);}else{echo'-';}    echo '</Td></tr>
 <Td><INPUT size="3" TYPE="text" NAME="sz"  value="'.$r[sz].'"></Td></tr>
 </table>
 <table width="100%">
-<tr id="status_on"><td>STATUS= '.$stat[$r[status]].'</td><td><a href="javascript:editToggle(\'status_on\' , \'status_off\')"><img src="../img/rename.png" alt="zmieñ nazwê" title="zmieñ nazwê"></a></td></tr>
+<tr id="status_on"><td>STATUS= '.$status[typ][$r[status]].'</td><td><a href="javascript:editToggle(\'status_on\' , \'status_off\')"><img src="../img/rename.png" alt="zmieñ nazwê" title="zmieñ nazwê"></a></td></tr>
 <tr id="status_off" style="display: none;"><td colspan="3">
 
 Niewybrana/Auto:<input type="radio" name="status" value="0" '.status_on($r[status],'0').' /><br>
 <i>Niebroniona:</i><input type="radio" name="status" value="1"'.status_on($r[status],1).' />
-Broniona:<input type="radio" name="status" value="2" '.status_on($r[status],2).'/>
-<b>Bunkier:</b><input type="radio" name="status" value="3"'.status_on($r[status],3).' /></td></tr>
+Posterunek<input type="radio" name="status" value="1"'.status_on($r[status],2).' />
+Broniona:<input type="radio" name="status" value="2" '.status_on($r[status],3).'/>
+<b>Bunkier:</b><input type="radio" name="status" value="3"'.status_on($r[status],4).' /></td></tr>
 <tr style="display: none;" id="ok_ok" ><td></td><td></td><td><input value="Zapisz Zmiany" type="submit"></td>
 </tr></table>';
 $obr_pi=(15*$r[pik])+(50*$r[mie])+(10*$r[axe])+(50*$r[luk])+(2*$r[zw])+(30*$r[lk])+(40*$r[kl])+(200*$r[ck])+(20*$r[tar])+(100*$r[kat])+(250*$r[ry])+(100*$r[sz]);

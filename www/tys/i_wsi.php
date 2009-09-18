@@ -1,14 +1,9 @@
 <?php
 
-if($_GET[p]!=Null){
-      if($_GET[p]< 299 ){$pkt=1;}
-  elseif($_GET[p]< 999 ){$pkt=2;}
-  elseif($_GET[p]< 2999 ){$pkt=3;}
-  elseif($_GET[p]< 8999 ){$pkt=4;}
-  elseif($_GET[p]< 10999 ){$pkt=5;}
-  elseif($_GET[p]>= 10999 ){$pkt=6;}
+if($_GET['p']!=Null){
+     $pkt=$_GET['p'];
 if($_GET[g]==1){$pkt.="v";}
-$pkt.=".PNG";}else{$pkt='0.PNG';}
+$pkt.=".PNG";}else{$pkt='0.png';}
 
 $dest = imagecreatefrompng("$pkt");
 

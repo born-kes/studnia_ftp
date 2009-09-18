@@ -37,6 +37,15 @@ function rodzaj($rr)
 { global $rodzaje; $wynik = $rodzaje[$rr];
     return $wynik;
 }
+function wpisz_rodzaj($nr){ global $rodzaje;
+     $str ='<option value=""></option>';
+ for($licz=0; $licz<count($rodzaje); $licz++){
+ $str .='<option value="'.$licz.'"';
+  if($nr==$licz){$str .='  SELECTED ';}
+ $str .= '>'.$rodzaje[$licz].'</option>';
+  }
+    return $str;
+}
 
 function data_z_bazy($rr)
 { global $godzina_zero;
@@ -127,5 +136,19 @@ function ustal_k($x,$y)
 {
 $k = intval($y /100).intval($x /100);
     return $k;
+}
+function data_map($rr)
+{ global $godzina_zero;
+  global $godzina_jeden; 
+if($rr==NULL){
+     //$ciag = ' Brak Raportu';
+}
+elseif($rrr<$godzina_jeden && $rr<$godzina_jeden-2592000 )//obecnie - 30dni
+{     $ciag ='"Stary raport"'; return 1;
+}
+elseif($rr<$godzina_jeden && $rr>$godzina_jeden- 1296000 )//obecnie - 15dni
+{     $ciag ='"Nowy Rapoirt"'; return 2;}
+elseif($rr>$godzina_jeden-172800){ //obecnie -(3) i -3 dni
+     $ciag ='"Jeszcze goracy raport"'; return 3;}
 }
 ?>

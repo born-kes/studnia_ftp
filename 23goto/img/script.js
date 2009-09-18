@@ -394,6 +394,8 @@ function map_info_get(village_id, source_id)
 	var map_info_callback = new Object();
 
 
+
+
 	map_info_callback.complete = function(req) {
 		var village_data = new Object();
 		var village = req.responseXML.firstChild;

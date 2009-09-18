@@ -31,6 +31,9 @@ table.vis tr.units_moving td { background-color:#FBF4DD; background-image:none;}
 table.vis tr.row_a td { background-color:#F6EBCA; background-image:none;}
 table.vis tr.row_b td { background-color:#FBF4DD; background-image:none;}
 table.vis tr.edit_player_colors td{ background-image:none;}
+table.main tr.row td { background-color:#006600 ; background-image:none; color:#DED3B9;}
+
+table.main tr.row td.hidden { color:#333366; }
 
 
 

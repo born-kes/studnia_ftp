@@ -1,9 +1,9 @@
 <?php
-session_start();
+/*session_start();
 if(!isSet($_SESSION['zalogowany'])){
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
   include('../logowanie/form.php');
-  exit();}
+  exit();}*/
 include_once(dirname(dirname(__FILE__)) . '/serwer.php');
 
 
