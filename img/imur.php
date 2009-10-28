@@ -4,7 +4,7 @@ $k_txt = ImageColorAllocate($dest,0,0,0);
 $kolor  = ImageColorAllocate($dest,100,55,0);
 
 if($r[mur]>=0){
-$flaga =  imagecreatefrompng("m.png");
+$flaga =  imagecreatefromgif("m.gif");
 imagecopy($dest, $flaga , 0, 28, 0, 0, 12,10);
 
 $wys=36;//wojska

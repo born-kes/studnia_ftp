@@ -26,7 +26,7 @@ function kukocIsNumeric($txt) {
    else
       return false;
 }
-$zapytanie ="SELECT id AS id_wsi,x,y,typ,mur,data,
+$zapytanie ="SELECT id AS id,x,y,typ,mur,data,
 pik,mie,axe,luk,zw,lk,kl,ck,tar,kat,ry,sz,status
   FROM `village`";
 
@@ -50,9 +50,9 @@ $obr_pi=(15*$r[pik])+(50*$r[mie])+(10*$r[axe])+(50*$r[luk])+(2*$r[zw])+(30*$r[lk
 $obr_lk=(45*$r[pik])+(15*$r[mie])+(5*$r[axe])+(40*$r[luk])+(1*$r[zw])+(40*$r[lk])+(30*$r[kl])+(80*$r[ck])+(50*$r[tar])+(50*$r[kat])+(400*$r[ry])+(50*$r[sz]);
 $obr_kl=(20*$r[pik])+(40*$r[mie])+(10*$r[axe])+(5*$r[luk])+(2*$r[zw])+(30*$r[lk])+(50*$r[kl])+(180*$r[ck])+(20*$r[tar])+(100*$r[kat])+(150*$r[ry])+(100*$r[sz]);
 
-echo'<TABLE border="0" class="main" align="center" width="100%" height="49">
+echo'<TABLE class="main" align="center" width="100%" height="51">
 <tbody><TR n>
-<TD colspan="2" width="145" ><a href="javascript:popup_scroll(\''.$include_per.'menu.php?id='.$r[id_wsi].'\',350,380)">'.data_z_bazy($r[data]).'</a></TD>
+<TD colspan="2" width="145" ><a href="javascript:popup_scroll(\''.$include_per.'menu.php?id='.$r[id].'\',350,380)">'.data_z_bazy($r[data]).'</a></TD>
 <Th width="80" align="center">'.$rodzaje[$r[typ]].'</Th>';
 echo '<TD>';
 if($r[pik]>0){echo ' <IMG SRC="http://pl5.plemiona.pl/graphic/unit/unit_spear.png">'.   $r[pik];}

@@ -1,30 +1,26 @@
 <?PHP
 if($r[typ]!=NULL&&$r[typ]!=0){
-$flag =  imagecreatefrompng("flaga.png");
-imagecopy($dest, $flag , 38, 0, 0, 0, 15,15);
-
 switch($r[typ]){
 case 1:
-$src =  imagecreatefrompng("off1.png");
+$src =  imagecreatefromgif("off1.gif");
 break;
 case 2:
-$src =  imagecreatefrompng("ck1.png");
+$src =  imagecreatefromgif("def1.gif");
 break;
 case 3:
-$src =  imagecreatefrompng("zw1.png");
+$src =  imagecreatefromgif("zw1.gif");
 break;
 case 4:
-$src =  imagecreatefrompng("lk1.png");//  LK
+$src =  imagecreatefromgif("off1.gif");//  LK
 break;
 case 5:
-$src =  imagecreatefrompng("ck1.png");
+$src =  imagecreatefromgif("def1.gif");
 break;
 case 6:
-$src =  imagecreatefrompng("dr1.png");
+$src =  imagecreatefromgif("flaga.gif");
 break;
 default:
 break;}
-
-imagecopy($dest, $src, 43, 5, 0, 0, 6,6);
+imagecopy($dest, $src, 38, 0, 0, 0, 15,15);
 }
 ?>

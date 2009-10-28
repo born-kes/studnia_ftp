@@ -1,4 +1,4 @@
-<?PHP include_once('../www/connection.php');
+<?PHP include_once('../serwer.php');
 
     if($_GET[p]!==NULL)
 {$pass=$_GET[p];}
@@ -36,7 +36,7 @@ echo IP_prawdziwe();
  connection();
  //zapytanie o dane przypisane do ip
   
- $zap="SELECT u.id,u.login,u.haslo FROM `us` u , `proxi` p Where u.nr_ip = p.id AND p.ip='$ip';";
+ $zap="SELECT u.id,u.name AS login,u.haslo2 AS haslo FROM `list_user` u , `list_proxi` p Where u.nr_proxi=p.id AND p.ip='$ip';";
 $wynik = mysql_query($zap);
  //zakonczenie poloczenia z baza
 

@@ -1,12 +1,13 @@
 <html><head>
 <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
 <link rel="stylesheet" type="text/css" href="stamm.css">
-<script src="../js/mootools.js" type="text/javascript"></script>
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head>
 <body>
 
 <?php include_once(dirname(dirname(__FILE__)) . '/connection.php');
+//echo 'elo'.$ec;
+// $ec =mktime()-$godzina_zero; //<script src="../js/mootools.js" type="text/javascript"></script>
 
 if(isSet($_SESSION['id'])){ $moje_id= $_SESSION['id'];}
 else{ $user=$_SESSION['zalogowany'];

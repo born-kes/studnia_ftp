@@ -1,3 +1,5 @@
+alert('helo');
+
 function ch(){ if(false == window.closed)
  {window.opener='x';
     window.close ();

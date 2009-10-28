@@ -96,6 +96,7 @@ function intval( mixed_var, base ) {
 <iframe src="http://img.audiovis.nac.gov.pl/PIC/PIC_2-2094.jpg" width="100%" height="80%" frameborder="0" name="ramka" style="z-index:1;">Twoja przegl±darka nie akceptuje p³ywaj±cych ramek!</iframe></div>
 <div style="position: absolute; top: 50px; right: 30px; z-index:1;" id="go0"><a href="http://www.szu.pl" target="_blank"><img src="http://szu.pl/szu-banerki/10.gif" border="0" alt="Bazy danych MySQL, konta pocztowe, konta WWW, parkowanie domen"></a></div>
 <script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');</script>
+
 </body>
   </html>
 

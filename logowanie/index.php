@@ -103,8 +103,8 @@ else{  $val = checkPass($_POST["user"], $_POST["haslo"]);  /* Funkcja sprawdza l
     <td colspan="2" align="center"><input type="submit" value="Wejdz"></td>
     <td><a href="new_user.php">rejestracja</a></td>
   </tr>
-  <tr><td align="center" colspan="2"><img src="http://img.audiovis.nac.gov.pl/SM0/SM0_18-333-7.jpg" border="0"></td></tr>
- </table>
+ <?PHP //<tr><td align="center" colspan="2"><img src="http://img.audiovis.nac.gov.pl/SM0/SM0_18-333-7.jpg" border="0"></td></tr>
+?> </table>
 </form>  <?PHP include_once('../baner.php'); ?>
 </body>
 </html>

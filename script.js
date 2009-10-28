@@ -57,3 +57,10 @@ function color_picker_change() {
 function color_picker_ok() {
 	color_picker_change();
 }
+
+function insertUnit(input, count) {
+	if(input.value != count)
+		input.value=count;
+	else
+		input.value='';
+}

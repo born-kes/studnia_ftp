@@ -17,9 +17,9 @@ function connection() {
 function destructor(){
 @mysql_close();
 }
-$status[typ] = array ('Niewybrana','<i>Niebroniona</i>','posterunek','Broniona','<b>Bunkier</b>');
+$statuss[typ] = array ('Niewybrana','<i>Niebroniona</i>','posterunek','Broniona','<b>Bunkier</b>','<strike>BUNKIER<strike>');
 function status($s){
-if($s===NULL || $s<0){return 0;}
+if($s===NULL || $s<0){return 5;}
 elseif($s==0){return 1;}
 elseif($s<5000){return 2;}
 elseif($s<21000){return 3;}

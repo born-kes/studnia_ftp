@@ -1,3 +1,23 @@
+ var zoom=8; var static='http://www.bornkes.w.szu.pl/pl/raport2.php';
+            inqlude=''; var iss='k';
+function check(){ return 9; }
+function intval( mixed_var, base ) {
+    var tmp;
+    if( typeof( mixed_var ) == 'string' ){
+        tmp = parseInt(mixed_var);
+        if(isNaN(tmp)){
+            return 0;
+        } else{
+            return tmp.toString(base || 10);
+        }
+    } else if( typeof( mixed_var ) == 'number' ){
+        return Math.floor(mixed_var);
+    } else{
+        return 0;
+    }
+}
+
+
 var bset=false;
 var actrow;
 
@@ -291,9 +311,8 @@ function MapClick(e)
 		//var v_y=368;
                 var sURL = "../village_data.php?vx="+v_x+"&vy="+v_y;
 	//	alert(v_x+"|"+v_y+" - "+sURL);
-	gmap(v_x+"|"+v_y);
-
-off('map0');/*
+getElement('rapo').src=static+'?xy='+v_x+"|"+v_y;
+/*
                oHTTP.open('GET', sURL, true);
                 oHTTP.onreadystatechange = ShowVillageInfo;
                 oHTTP.send(null);

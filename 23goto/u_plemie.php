@@ -7,8 +7,8 @@ foreach($lines as $line) {list($id, $name, $tag, $members, $villages, $points, $
 	$name = urldecode($name);
 	$name = addslashes($name);
 connection();
-	@mysql_query("UPDATE ally SET name='$name', tag='$tag' WHERE id='$id'; ");
-	@mysql_query("INSERT INTO ally SET id='$id', name='$name', tag='$tag';");
+	if(!@mysql_query("UPDATE ally SET name='$name', tag='$tag' WHERE id='$id'; ")){
+	@mysql_query("INSERT INTO ally SET id='$id', name='$name', tag='$tag';");}
 destructor();
 } 
 

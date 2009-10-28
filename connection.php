@@ -2,20 +2,20 @@
 session_start();
 //if(!isSet($_COOKIE['wtyk'])){
 if(!isSet($_SESSION['zalogowany'])){
+//$village=$_GET[village];
+ // $query = "SELECT `name`,id FROM `Users` u, village v WHERE v.id='$village' AND u.id=v.player  AND u.prawa>0 ";
+//connection();  $test= mysql_query($query);
+//if($row = @mysql_fetch_row($test)){
+// $_SESSION['zalogowany']= $row[0];
+// $_SESSION['id']= $row[1];
+// destructor();
+  $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
 
-include_once('serwer.php');
-$village=$_GET[village];
-  $query = "SELECT `name` FROM `Users` u, village v WHERE v.id='$village' AND u.id=v.player  AND u.prawa>0 ";
-connection();  $test= mysql_query($query);
-if($row = @mysql_fetch_row($test)){
- $_SESSION['zalogowany']= $row[0];}else{  $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";}
- destructor();
-
-
-
-#  header("Location: ../index.php");
-#  exit();}//
-}
+  header("Location: ../");
+  exit();
+}else if($_SESSION['zalogowany']===NULL){
+  header("Location: ../");
+  exit();}
 include_once('serwer.php');
 
 # Wyciaga x|y Wioski 
@@ -63,13 +63,13 @@ function data_z_bazy($rr)
 { global $godzina_zero;
   global $godzina_jeden; $wynik = date("d.m.Y G:i:s", $rr+$godzina_zero);
 if($rr==NULL){
-     $ciag = '<IMG SRC="http://pl5.plemiona.pl/graphic/overview/prod_impossible.png" title="Nie ma raportu"> Brak Raportu';}
+     $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu"> Brak Raportu';}
 elseif($rrr<$godzina_jeden && $rr<$godzina_jeden-518400 ){
-     $ciag ='<IMG SRC="http://pl5.plemiona.pl/graphic/overview/prod_avail.png" title="Stary raport"> '.$wynik;}
+     $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Stary raport"> ';}
 elseif($rr<$godzina_jeden && $rr>$godzina_jeden-518400 ){
-     $ciag ='<IMG SRC="http://pl5.plemiona.pl/graphic/dots/yellow.png" title="Nowy Rapoirt"> '.$wynik;}
+     $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Nowy Raport"> ';}
 elseif($rr>$godzina_jeden){
-     $ciag ='<IMG SRC="http://pl5.plemiona.pl/graphic/dots/red.png" title="Jeszcze goracy raport"> '.$wynik;}
+     $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
     return $ciag;
 }
 
@@ -162,5 +162,15 @@ elseif($rr<$godzina_jeden && $rr>$godzina_jeden- 1296000 )//obecnie - 15dni
 {     $ciag ='"Nowy Rapoirt"'; return 2;}
 elseif($rr>$godzina_jeden-172800){ //obecnie -(3) i -3 dni
      $ciag ='"Jeszcze goracy raport"'; return 3;}
+}
+function url_proxi($str)
+{  $str=str_replace('amp;','',base64_decode($str));
+   $str= explode("?",$str);
+   $str= explode("&",$str[1]);
+   for($i=0;count($str)>$i;$i++ )
+   { $Get = explode("=",$str[$i]);
+     $url[$Get[0]]=$Get[1];
+   }
+   return $url;
 }
 ?>

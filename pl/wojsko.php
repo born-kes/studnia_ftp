@@ -35,7 +35,7 @@ for($i=0; $i<count($id);$i++){
          $wid=$_POST['id'][$id[$i]];
 $wol=jaki_czas_marszu($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz);
 $sta=status(ile_woja($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz));
-$query = " UPDATE village
+$query = " UPDATE ws_mobile
      SET ";
 if($_POST[n_typ]!=NULL){ $query .=" typ='$_POST[n_typ]' , ";}
 
@@ -52,8 +52,6 @@ $query .= "
          kat='$wkat',
          ry='$wry',
          sz='$wsz',
-         wolny='$wol',
-         status=$sta,
          data=$wczasy";
 $query .= "     WHERE `id`='$wid'; ";
 //echo $query;
@@ -65,12 +63,30 @@ $query .= "     WHERE `id`='$wid'; ";
  
 //for($j=0; $j<count($obr);$j++){$quert.=$_POST['obr'][$obr[$j]]; $quert.=",";}
 //$quert=substr($quert,0,-1).")";
+?>
+<html><head>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+</head><style type="text/css">
+<!--
+
+  BODY {background: #F7EED3;}
+table.main { background-color:#F7EED3; border:0px solid #804000;}
+table.ba { border-bottom:0px;}
+table.main td{font-size:11px;}
+table.main th{font-size:11px;}
+table.main tr.row th{font-size:11px;}
+table.main tr.row td { background-color:#006600; background-image:none; color:#F1EBDD;}
+table.main tr.row td.hidden { color:#333366; }
+tr.center td { text-align:center; }
 
 
-  echo '<br />Zapisano zmiany w';
+-->
+</style><body><?PHP 
+
+  echo 'Zapisano zmiany w';
 if($_POST[n_typ]!=NULL){echo' Typie wiosek i';}
 echo' ilosci wojska do bazy<br>';
   echo ' W sumie '.$licz.'rekordow <br>';
  echo 'Data aktualizacji :'.data_z_bazy($wczasy);
 
-?>
+?></body></html>

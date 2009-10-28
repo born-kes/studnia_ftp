@@ -8,11 +8,11 @@ if($data=$r[data]){                          //raport istnieje   $r[10]
     // $da="'".$data."'";	                      //data
     // $off = $r[axe]+($r[lk]*4)+ ($r[kl]*5)+ ($r[tar]*5)+ ($r[kat]*6);
      $def= $r[pik]+$r[mie]+$r[luk]+($r[ck]*6);
-     $zw=$r[zw];
+     $zw= $r[zw];
  if($def!=Null){
                if($def>18000)//sumuje wojsa def. w wiosce
                    {         // ilo¶æ zagród
-                    $flaga =  imagecreatefrompng("m.png");
+                    $flaga =  imagecreatefromgif("m.gif");
                      imagecopy($dest, $flaga , 12, 29, 0, 0, 12,10);
                     $k_txt = ImageColorAllocate($dest,0,0,0);
                     $def=intval($def/18000);
@@ -20,7 +20,7 @@ if($data=$r[data]){                          //raport istnieje   $r[10]
                     else{ImageString($dest,0,13,30,$def,$k_txt);}
                     } 
                else{         // % zagrody
-                    $flaga =  imagecreatefrompng("dan.PNG");
+                    $flaga =  imagecreatefromgif("dan.gif");
                      imagecopy($dest, $flaga , 12, 29, 0, 0, 17,10);
                     $k_txt = ImageColorAllocate($dest,204,0,0);
                     $def=intval($def/1900).'0%';
@@ -51,6 +51,7 @@ if($data=$r[data]){                          //raport istnieje   $r[10]
                     ImageString($dest,0,40,30,$zw,$k_txt);
                   }
               }
+
 
 }
 ?>

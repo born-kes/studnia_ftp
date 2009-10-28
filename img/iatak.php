@@ -18,7 +18,7 @@ $k_txt = ImageColorAllocate($dest,244,240,24); //¿ó³ty
     $f=intval($odliczanie[1]);//.'min';
     $e = 'min';}
 
-$flaga =  imagecreatefrompng("ata.png");
+$flaga =  imagecreatefromgif("ata.gif");
 imagecopy($dest, $flaga , 5, 0, 0, 0, 11,11);
 $k_txt_ = ImageColorAllocate($dest,244,240,24); //¿ó³ty
 

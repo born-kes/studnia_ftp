@@ -25,7 +25,7 @@ function mennu()
      '<tr><td background="tlo_menu.PNG" width="753" height="154" valign="bottom" >'+
        '<table class="menu nowrap" width="753" id="menu" cellpadding="45" cellspacing="10">'+
        '<tbody><tr id="menu_row">'+
-       '<td><a href="../logowanie/logout.php">wyloguj</a><br>'+
+       '<td><a href="../indexout.php">wyloguj</a><br>'+
       '<td>Profil<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="operacje/minuta.php" target="ramka">Minutnik</a></td></tr>'+
