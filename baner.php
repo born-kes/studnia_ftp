@@ -1,0 +1,1 @@
+<table><tr><td><a href="http://www.szu.pl" target="_blank"><img src="http://szu.pl/grafika/szu114x50.gif" border="0" alt="bazy danych MySQL, konta pocztowe, konta WWW, parkowanie domen"></a></td></tr><table>

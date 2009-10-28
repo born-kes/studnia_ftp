@@ -13,6 +13,98 @@ if(document.addEventListener)
 else
 	document.onmousemove = watchMouse;
 
+
+
+function map_popup(typ, title, user, mur, data, pik, mie, axe, ar, zw, lk, kar, ck, tar, kat, ry, sz, opis)
+{
+	
+        setText(gid("info_title"), title);	
+	if(data != 'NULL') {
+		setText(gid("info_data"), data);
+		gid("info_data_on").style.display = '';
+		gid("info_data_off").style.display = 'none';
+		gid("info_wor_a").style.display = '';
+		gid("info_wor_b").style.display = '';
+		gid("info_wor_c").style.display = '';
+		gid("info_wor_d").style.display = '';
+
+        setText(gid("info_wor_pik"), pik);
+        setText(gid("info_wor_mie"), mie);
+        setText(gid("info_wor_axe"), axe);
+        setText(gid("info_wor_ar"), ar);
+        setText(gid("info_wor_tar"), tar);
+        setText(gid("info_wor_ry"), ry);
+
+        setText(gid("info_wor_zw"), zw);
+        setText(gid("info_wor_lk"), lk);
+        setText(gid("info_wor_kar"), kar);
+        setText(gid("info_wor_ck"), ck);
+        setText(gid("info_wor_kat"), kat);
+        setText(gid("info_wor_sz"), sz);
+
+	}
+	else {
+		gid("info_data_on").style.display = 'none';
+		gid("info_data_off").style.display = '';
+		gid("info_wor_a").style.display = 'none';
+		gid("info_wor_b").style.display = 'none';
+		gid("info_wor_c").style.display = 'none';
+		gid("info_wor_d").style.display = 'none';
+	}
+
+	if(user != 'NULL') {
+		setText(gid("info_user"), user);
+		gid("info_user_on").style.display = '';
+		gid("info_user_off").style.display = 'none';
+	}
+	else {
+		gid("info_user_on").style.display = 'none';
+		gid("info_user_off").style.display = '';
+	}
+        setText(gid("info_mur"), mur);
+	setText(gid("info_typ"), typ);		
+
+        if(opis != 'NULL') {
+		setText(gid("info_opis"), opis);
+		gid("info_opis_on").style.display = '';
+		gid("info_opis_off").style.display = 'none';
+	}
+	else {
+		gid("info_opis_on").style.display = 'none';
+		gid("info_opis_off").style.display = '';
+	}
+
+	map_move();
+	var info = gid("info");
+	info.style.visibility = "visible";
+}
+
+function map_kill() {
+	var info = document.getElementById("info");
+	info.style.visibility = "hidden";
+	if(extra_info_timeout != null) {
+		window.clearTimeout(extra_info_timeout);
+	}
+}
+
+function xProcess(xelement, yelement) {
+	xvalue = gid(xelement).value;
+	yvalue = gid(yelement).value;
+
+	if(xvalue.indexOf("|") != -1) {
+		xypart = xvalue.split("|");
+		x = parseInt(xypart[0]);
+		y = parseInt(xypart[1]);
+
+		gid(xelement).value = x;
+		gid(yelement).value = y;
+		return;
+	}
+
+	if(xvalue.length == 3 && yvalue.length == 0)
+		gid(yelement).focus();
+}
+
 function watchMouse(e) {
 	if(e) {
 		mx = e.clientX;
@@ -87,13 +179,13 @@ function startTimer() {
 		}
 	}
 
-	startResTicker('wood');
-	startResTicker('stone');
-	startResTicker('iron');
+//	startResTicker('wood');
+//	startResTicker('stone');
+//	startResTicker('iron');
 
 	window.setInterval("tick()", 1000);
 }
-
+/*
 function startResTicker(resName) {
 	var element = document.getElementById(resName);
 	var start = parseInt(element.firstChild.nodeValue);
@@ -106,7 +198,7 @@ function startResTicker(resName) {
 	res['max'] = max;
 	res['prod'] = prod;
 	resis[resName] = res;
-}
+}*/
 
 function tickRes(res) {
 	var resName = res['name'];
@@ -217,6 +309,16 @@ function selectAll(form, checked) {
 	}
 }
 
+function selectAllata(form, checked) {
+	var spans = document.getElementsByTagName("span");
+
+	for(var i=0; i<form.length; i++) {
+		var span = spans[i];
+		if(span.className == "ata") {
+		form.elements[i].checked = checked;}
+	}
+}
+
 /**
  * Im Adelshof für alle Dörfer Nichts/Maximum auswählen
  */
@@ -238,6 +340,9 @@ function selectAllMax(form, textMax, textNothing) {
 	anchor.firstChild.nodeValue = max ? textMax : textNothing;
 	anchor = document.getElementById('select_anchor_bottom');
 	anchor.firstChild.nodeValue = max ? textMax : textNothing;
+
+
+
 
 	changeBunches(form);
 }
@@ -268,91 +373,7 @@ function setText(element, text) {
 old_extra_text = null;
 extra_info_timeout = null;
 map_info_data = new Object();
-function map_popup(title, bonus_image, bonus_text, points, owner, ally, village_groups, moral, village_id, source_id) {
-	setText(gid("info_title"), title);
-	
-	var info_bonus_image = gid("info_bonus_image");
-	var info_bonus_text = gid("info_bonus_text");
-	if(bonus_image != '') {
-		info_bonus_image.firstChild.src = bonus_image;
-		info_bonus_text.firstChild.firstChild.innerHTML = bonus_text;
-		info_bonus_image.style.display = '';
-		info_bonus_text.style.display = '';
-	}
-	else {
-		info_bonus_image.style.display = 'none';
-		info_bonus_text.style.display = 'none';
-	}
-	
-	setText(gid("info_points"), points);
-	if(owner != null) {
-		setText(gid("info_owner"), owner);
-		gid("info_owner_row").style.display = '';
-		gid("info_left_row").style.display = 'none';
-	}
-	else {
-		gid("info_owner_row").style.display = 'none';
-		gid("info_left_row").style.display = '';
-	}
-	
-	if(ally != null) {
-		gid("info_ally_row").style.display = '';
-		setText(gid("info_ally"), ally);
-	}
-	else {
-		gid("info_ally_row").style.display = 'none';
-	}
-	
-	if(village_groups) {
-		gid("info_village_groups_row").style.display = '';
-		setText(gid("info_village_groups"), village_groups);
-	} else {
-		gid("info_village_groups_row").style.display = 'none';
-	}
-	
-	if(moral && gid('map_popup_moral') && gid('map_popup_moral').checked) {
-		gid("info_moral_row").style.display = '';
-		setText(gid("info_moral"), moral + '%');
-	} else {
-		gid("info_moral_row").style.display = 'none';
-	}
-	
-	var show_info = village_id != false &&
-		(gid('map_popup_res').checked ||
-		gid('map_popup_pop').checked ||
-		gid('map_popup_trader').checked ||
-		gid('map_popup_units').checked ||
-		gid('map_popup_units_times').checked);
-	
-	if(show_info) {
-		gid('info_extra_info').style.display = '';
-		if(old_extra_text == null) {
-			old_extra_text = gid('info_extra_info').firstChild.firstChild.nodeValue;
-		} else {
-			gid('info_extra_info').firstChild.innerHTML = old_extra_text;
-		}
-		if(map_info_data[village_id] == null) {
-			extra_info_timeout = window.setTimeout("map_info_get(" + village_id + ", " + source_id + ")", 500);
-		} else {
-			map_info(village_id);
-		}
-		
-	} else {
-		gid('info_extra_info').style.display = 'none';
-	}
 
-	map_move();
-	var info = gid("info");
-	info.style.visibility = "visible";
-}
-
-function map_kill() {
-	var info = document.getElementById("info");
-	info.style.visibility = "hidden";
-	if(extra_info_timeout != null) {
-		window.clearTimeout(extra_info_timeout);
-	}
-}
 
 function map_move() {
 	var info_content = $("info_content"); // gid() nicht möglich, da sonst IE7 kein Element zurück gibt.
@@ -375,6 +396,7 @@ function map_move() {
 	if(margin_right > popup_size.width + 5) {  
 		info.style.left = mx + 5 + "px";
 	} else {
+
 		info.style.left = window_width - popup_size.width + "px";  
 	}
 	
@@ -392,11 +414,6 @@ function map_info_get(village_id, source_id)
 	}
 
 	var map_info_callback = new Object();
-
-
-
-
-
 	map_info_callback.complete = function(req) {
 		var village_data = new Object();
 		var village = req.responseXML.firstChild;
@@ -748,6 +765,13 @@ function resizeIGMField(type)
 function editToggle(label, edit) {
 	gid(edit).style.display = '';
 	gid(label).style.display = 'none';
+	gid("ok_ok").style.display = '';
+  if(label=="wor_on"){
+	gid("wor0_on").style.display = 'none';
+	gid("wor1_on").style.display = 'none';
+	gid("wor1_off").style.display = '';
+
+}
 }
 
 function urlEncode(string) {
@@ -820,4 +844,9 @@ function _(t) {
 	} else {
 		return t;
 	}
+}
+
+function displayWindow(url, width, height) {
+        var Win = window.open(url,"displayWindow",'width=' + width + ',height=' + height + ',resizable=yes,scrollbars=yes,moveTo=yes' );
+        windows.('300','300');
 }
