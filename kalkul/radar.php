@@ -3,8 +3,12 @@
 <script src="../js/ts_picker.js" type="text/javascript"></script>
 <style type="text/css">
 <!--
+BODY {background: #F7EED3;}
+a:link	{ font-weight:bold; color: #804000; text-decoration:none; }
+a:visited	{  font-weight:bold; color: #804000; text-decoration:none; }
+a:active	{  font-weight:bold; color: #0082BE; text-decoration:none; }
+a:hover { font-weight:bold; color: #0082BE; text-decoration:none; }
 
-  BODY {background: #F7EED3;}
 table.main { background-color:#F7EED3; border:0px solid #804000;}
 table.ba { border-bottom:0px;}
 table.main td{font-size:11px;}
@@ -13,8 +17,6 @@ table.main tr.row th{font-size:11px;}
 table.main tr.row td { background-color:#006600; background-image:none; color:#F1EBDD;}    //DED3B9
 table.main tr.row td.hidden { color:#333366; }
 tr.center td { text-align:center; }
-
-
 -->
 </style></head>
 <body><?php
@@ -27,7 +29,12 @@ if($_GET==NULL && $_POST==NULL){echo 'Brak Danych do obliczen';exit();}
        }
 if($_POST!=NULL)
 {$vi=$_POST[id];
-if($_POST[czas1]==NULL){echo 'wybierz date';exit();}
+if($_POST[czas1]==NULL){
+echo 'Data nie wybrana wiêc zak³adam 4 godziny.';
+$mk_ruznica = 14400;     // ile czasu ma wojsko na marsz...}
+}else{
+$mk_ruznica = mkczas_pl($_POST[czas1])-mktime();     // ile czasu ma wojsko na marsz...
+}
 $cos = 9;//$_POST[wojsko];              // predkosc maszru
 
 $gracz = $_POST[gracz];             // gracz którego atakujemy
@@ -41,15 +48,15 @@ $zap= " SELECT  name AS n_wsi, w.id AS id_wsi,x,y,pik,mie,axe,luk,zw,lk,kl,ck,sz
   FROM ws_all w
 LEFT JOIN ws_mobile wm ON wm.id = w.id
   WHERE player = '$gracz'";
-$mk_ruznica = mkczas_pl($_POST[czas1])-mktime();     // ile czasu ma wojsko na marsz...
+
 
 // $mxo = $max_odleglosc = intval($mk_ruznica/(11*60));
                // z jak daleka maja isc wojska
 
       if($_POST[co]=='sz'){$zap.=$p."sz>0";$mxo=intval($mk_ruznica/(35*60));if($mxo>70){$mxo=70;}}
-  elseif($_POST[co]=='off'){$zap.=$p." (axe>0 OR lk>0  OR kl>0  OR ck>0)";$mxo=intval($mk_ruznica/(10*60));}
-  elseif($_POST[co]=='def'){$zap.=$p." (pik>0 OR luk>0 OR mie>0 OR ck>0)";$mxo=intval($mk_ruznica/(11*60));}
-  elseif($_POST[co]=='zw'){$zap.=$p. " (zw>100)";$mxo=intval($mk_ruznica/(9*60));}
+  elseif($_POST[co]=='off'){$zap.=$p." (axe>0 OR lk>0  OR kl>0  OR ck>0)";$mxo=intval($mk_ruznica/(10*60));if($mxo>200){$mxo=200;}}
+  elseif($_POST[co]=='def'){$zap.=$p." (pik>0 OR luk>0 OR mie>0 OR ck>0)";$mxo=intval($mk_ruznica/(11*60));if($mxo>200){$mxo=200;}}
+  elseif($_POST[co]=='zw'){$zap.=$p. " (zw>100)";$mxo=intval($mk_ruznica/(9*60));if($mxo>200){$mxo=200;}}
       if($_POST[co]!=NULL){
     $odx= $xy_ob[0]-$mxo;          $dox= $xy_ob[0]+$mxo;
     $ody= $xy_ob[1]-$mxo;          $doy= $xy_ob[1]+$mxo;
@@ -200,7 +207,7 @@ else{        //http://pl5.plemiona.pl/game.php?village=66132&amp;screen=info_vil
      $zap1 = "SELECT id FROM `list_user` Where name='".$_SESSION[zalogowany]."'";//gracz którym jeste¶
 
 connection();$wynik = @mysql_query($zap);if($r = mysql_fetch_array($wynik)){echo '<input type="hidden" name="xy" value="'.$r[x].'|'.$r[y].'" />';}destructor();
-connection();$wynik1 = @mysql_query($zap1);if($r = mysql_fetch_array($wynik1)){echo '<input type="hidden" name="gracz" value="'.$r[player].'" />';}destructor();
+connection();$wynik1 = @mysql_query($zap1);if($r = mysql_fetch_array($wynik1)){echo '<input type="hidden" name="gracz" value="'.$r[id].'" />';}destructor();
 echo '<input type="hidden" name="id" value="'.$id.'" />';
 }
  ?>

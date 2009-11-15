@@ -4,7 +4,7 @@
 function connection() {
     $mysql_server = "my40.szu.pl";
     $mysql_admin = "bornkesws";
-    $mysql_pass = "allken208";
+    $mysql_pass = "lo5ksgol208";
     $mysql_db = "bornkesws";
     
     @mysql_connect($mysql_server, $mysql_admin, $mysql_pass)
