@@ -39,14 +39,14 @@ function show_calendar(str_target, str_datetime) {
 		"<table cellspacing=\"1\" cellpadding=\"3\" border=\"0\" width=\"100%\">\n"+
 		"<tr>\n	<td bgcolor=\"#4682B4\"><a href=\"javascript:window.opener.show_calendar('"+
 		str_target+"', '"+ dt2dtstr(dt_prev_month)+"'+document.cal.time.value);\">"+
-		"<img src=\"../img/prev.gif\" width=\"16\" height=\"16\" border=\"0\""+
+		"<img src=\"..img/prev.gif\" width=\"16\" height=\"16\" border=\"0\""+
 		" alt=\"previous month\"></a></td>\n"+
 		"	<td bgcolor=\"#4682B4\" colspan=\"5\">"+
 		"<font color=\"white\" face=\"tahoma, verdana\" size=\"2\">"
 		+arr_months[dt_datetime.getMonth()]+" "+dt_datetime.getFullYear()+"</font></td>\n"+
 		"	<td bgcolor=\"#4682B4\" align=\"right\"><a href=\"javascript:window.opener.show_calendar('"
 		+str_target+"', '"+dt2dtstr(dt_next_month)+"'+document.cal.time.value);\">"+
-		"<img src=\"../img/next.gif\" width=\"16\" height=\"16\" border=\"0\""+
+		"<img src=\"..img/next.gif\" width=\"16\" height=\"16\" border=\"0\""+
 		" alt=\"next month\"></a></td>\n</tr>\n"
 	);
 
@@ -111,16 +111,16 @@ function show_calendar(str_target, str_datetime) {
 }
 // datetime parsing and formatting routimes. modify them if you wish other datetime format
 function str2dt (str_datetime) {
-	var re_date = /^(\d+)\.(\d+)\.(\d+)\s+(\d+)\:(\d+)\:(\d+)$/;
+	var re_date = /^(\d+)\-(\d+)\-(\d+)\s+(\d+)\:(\d+)\:(\d+)$/;
 	if (!re_date.exec(str_datetime))
 		return alert("Invalid Datetime format: "+ str_datetime);
 	return (new Date (RegExp.$3, RegExp.$2-1, RegExp.$1, RegExp.$4, RegExp.$5, RegExp.$6));
 }
 function dt2dtstr (dt_datetime) {
 	return (new String (
-			dt_datetime.getDate()+"."+(dt_datetime.getMonth()+1)+"."+dt_datetime.getFullYear()+" "));
+			dt_datetime.getFullYear()+"-"+(dt_datetime.getMonth()+1)+"-"+dt_datetime.getDate()+" "));
 }
 function dt2tmstr (dt_datetime) {
-	return (new String ('8:00:00'));
-}/*dt_datetime.getHours()+":"+dt_datetime.getMinutes()+":"+dt_datetime.getSeconds()*/
-
+	return (new String (
+			dt_datetime.getHours()+":"+dt_datetime.getMinutes()+":"+dt_datetime.getSeconds()));
+}

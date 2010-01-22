@@ -56,7 +56,7 @@ $query .= "
 $query .= "     WHERE `id`='$wid'; ";
 //echo $query;
   connection();
-   if(!@mysql_query($query)){echo "b³±d zapisu<br>";}else{$licz++;}
+   if(!@mysql_query($query)){echo "b³±d zapisu<br>";}else{$licz++;echo $query.'<br>';}
  @destructor();
 }
 //$query=substr($query,0,-1).")";

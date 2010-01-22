@@ -21,16 +21,16 @@ tr.center td { text-align:center; }
 //if(!isSet($_COOKIE['wtyk'])){
 
 
-    if($_GET['xy']   !=NULL){ $xy = explode("|",xy_wioski($_GET['xy']));
+    if($_GET['xy']   !=NULL){ $xy = explode("|",($_GET['xy']));//xy_wioski
     
     if($_GET['w']    !=NULL){ $wg = explode(",",$_GET['w']); }   // Wojsko Get  foreach($wojo_get as $w){echo $w.':';} }
     if($_GET['Mur']  !=NULL&&$_GET['Mur']!='undefined'){ $wm = intval($_GET['Mur']); }              //Wioska Typ
     if($_GET['typ']  !=NULL){ $wt = $_GET['typ']; }              //Wioska Typ
     if($_GET['data'] !=NULL){ $data = mkczas_pl($_GET['data'])-$godzina_zero; }
 
-        $zap ="SELECT id FROM `ws_all` WHERE x=".$xy[0]." AND y=".$xy[1]."";
+        $zap ="SELECT id FROM `ws_all` WHERE x=".($xy[0])." AND y=".($xy[1])."";//intval
 connection();
-$wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}else{exit();}
+$wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}else{echo $zap;exit();}
 destructor();
 
 if($_POST[sql]!==NULL)

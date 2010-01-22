@@ -14,6 +14,7 @@ if(!isSet($_SESSION['zalogowany'])){
 }
 else{
   unset($_SESSION['zalogowany']);
+  unset($_SESSION['id']);
   unset($_SESSION);
   $komunikat = "Wylogowanie prawidlowe!";
 }

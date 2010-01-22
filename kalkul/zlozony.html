@@ -1,0 +1,85 @@
+<table cellpadding="0" cellspacing="0">
+<tbody><tr>
+  <td id="suwak" style="border-style: dotted; background-color: rgb(173, 87, 0);"><form name="form" action="operacje/cal_zlozony_0.php" method="post" target="ramka">
+  <table>
+  <tbody><tr>
+    <th>Agresor</th>
+  </tr>
+  <tr>
+    <td>Nazwa Gracza</td>
+  </tr>
+  <tr>
+    <td><input name="agracz" value="" size="14" type="text"></td>
+  </tr>
+  <tr>
+    <td>Typ Wioski</td>
+  </tr>
+  <tr>
+    <td><select name="typ_a"><option value=""></option><option value="0">brak 
+typu</option><option value="1">wioska off</option><option value="2">wioska 
+def</option><option value="3">Zwiad</option><option value="4">wioska 
+LK</option><option value="5">wioska CK</option><option value="6">do 
+rozbudowy</option></select></td>
+  </tr>
+  <tr>
+    <td id="siea"><b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy',0),'a_map_go');on('map0');iss='a_';">Okolica 
+</b>/ <b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy',0),'a_map_go');"> 
+Recznie </b></td>
+  </tr>
+  <tr>
+    <td id="a_map_go"></td>
+  </tr>
+  <tr>
+    <td><hr></td>
+  </tr>
+  <tr>
+    <th>Obronca</th>
+  </tr>
+  <tr>
+    <td>Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on('sieo');" type="radio"><br>Plemie 
+<input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on('sieo');" type="radio"><br>Wioska 
+<input name="ofiarra" onclick="loading('xxx|yyy'+input_xy(''),'kogo_go');off('sieo');loading('','o_map_go');" type="radio"><br></td>
+  </tr>
+  <tr>
+    <td id="kogo_go"></td>
+  </tr>
+  <tr>
+    <td id="sieo"><b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy',0),'o_map_go');on('map0');iss='o_';">Okolica 
+</b>/ <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy',0),'o_map_go');"> 
+Recznie </b></td>
+  </tr>
+  <tr>
+    <td id="o_map_go"></td>
+  </tr>
+  <tr>
+    <td><hr></td>
+  </tr>
+  <tr>
+    <td>Wojsko</td>
+  </tr>
+  <tr>
+    <td><input value=" &lt; " name="B2" onclick="backward()" type="button"><img src="img/1.PNG" name="photoslider" alt=" "><input value=" &gt; " name="B1" onclick="forward()" type="button"><input value="9" name="wojsko" id="wojsko" type="hidden"></td>
+  </tr>
+  <tr>
+    <td>Godzina Ataku</td>
+  </tr>
+  <tr>
+    <td><input name="czas1" value="" size="22" type="text"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);"><img src="img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
+  </tr>
+  <tr>
+    <td>Okno wysylane atakow</td>
+  </tr>
+  <tr>
+    <td>Tak <input name="okno_atak" value="" onclick="loading(' od '+input('od_h','16')+' do '+input('do_h','21'),'czas_start');" type="radio"> 
+Nie <input name="okno_atak" value="" onclick="loading('','czas_start');" type="radio"></td>
+  </tr>
+  <tr>
+    <td><span id="czas_start"></span></td>
+  </tr>
+  <tr>
+    <td><input value=" Wykonaj " type="submit"></td>
+  </tr>
+  </tbody></table>
+  </form></td>
+</tr>
+</tbody></table>

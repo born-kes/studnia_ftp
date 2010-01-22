@@ -35,7 +35,7 @@ else{echo '<h4>Brak daty ataku</h4>';}
 if($_POST[od_h]!=NULL||$_POST[do_h]){$echos.='<span><input name="od_h" value="'.$_POST[od_h].'" type="hidden"></span><span><input name="do_h" value="'.$_POST[do_h].'" type="hidden"></span> ';}
 
 echo'<TABLE><tr><td  valign ="top">';
-if($d==1){   agresor($zap1,$atakujacy);}else{echo 'Agresor nie okreslony'; exit();}
+if($d==1){  agresor($zap1,$atakujacy);}else{echo 'Agresor nie okreslony'; exit();}
 
 echo'</td><td valign ="top">';
 

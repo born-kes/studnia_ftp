@@ -1,4 +1,4 @@
-<?PHP include_once('../serwer.php');
+<BR><BR><BR><?PHP include_once('../serwer.php');
 
     if($_GET[p]!==NULL)
 {$pass=$_GET[p];}

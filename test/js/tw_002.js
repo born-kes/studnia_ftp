@@ -492,3 +492,4 @@ function registerEvents()        //ustalanie na starcie procesow mapy
     }
 }
 
+registerEvents();

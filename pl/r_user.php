@@ -1,7 +1,7 @@
 <?PHP
    connection();
 $Zik="SELECT w.x,w.y,w.points, w.name,a.tag as allay ,a.tag, p.name as Gracz
-     FROM village w ,list_user p, list_plemie a
+     FROM ws_all w ,list_user p, list_plemie a
      WHERE w.player = p.id  AND p.ally = a.id
       And w.id ='$zap'";
      $wyni = @mysql_query($Zik);

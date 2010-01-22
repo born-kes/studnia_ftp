@@ -8,6 +8,13 @@
 <table align="center">
 <TR><TD>
 <?php  include('../connection.php');
+if(isSet($_SESSION['id'])){ $id_zalogowany= $_SESSION['id'];}
+else{ $user=$_SESSION['zalogowany'];
+  connection();
+     $wynik = mysql_query("SELECT `id` FROM `list_user` WHERE name='$user'")or die('Blad zapytania');
+       if($r = mysql_fetch_row($wynik)){$_SESSION['id']=$r[0];}
+  destructor();
+}
 $id_zalogowany=$_SESSION['id'];   $minu=@array_keys($_POST['minu']);
 for($i=0; $i<count($minu);$i++){  
 
@@ -20,7 +27,7 @@ $opiss=urldecode($opis[3]);
 
 
 echo '<img src="../img/dodaj.PNG"> '.$opiss.' o godzinie '.$data.'<BR>';
-$into = "Insert Into `Minutnik` Values('','$opis[0]','$id_zalogowany','$opis[3]','$w_atak','$w_obro');";
+$into = "Insert Into `list_zadan` Values('','$opis[0]','$id_zalogowany','$opis[3]','$w_atak','$w_obro');";
  connection(); 
 @mysql_query($into); 
 destructor();}

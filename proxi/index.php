@@ -1,4 +1,6 @@
-<?PHP include_once('../connection.php');?>
+..<?PHP include_once('../connection.php'); 
+if($_SESSION['zalogowany']!='9oKESi'){exit();}
+?>
 wpisz jako url w proxi.<br />
 http://bornkes.w.szu.pl/proxi/plus.php?p=ff<br />
 <table border="1">
@@ -31,7 +33,7 @@ $zap="
 SELECT u.id,u.name AS login, u.haslo2, p.ip, p.name, wz 
 FROM `list_user` u, `list_proxi` p 
 Where u.nr_proxi=p.id
-  AND u.haslo2 != '' 
+  AND (u.haslo2 != '' OR u.name='olalu')
 ORDER BY u.name ASC ;";
 
 $wynik = mysql_query($zap);

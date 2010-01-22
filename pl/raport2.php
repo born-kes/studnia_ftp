@@ -1,5 +1,4 @@
-<?php
-$sesjon_GET = "pl/raport2.php"; include('../connection.php');
+<?php include('../connection.php');
  ?><html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" href="../img/stamm.css?1251209421">
@@ -47,8 +46,8 @@ function kukocIsNumeric($txt) {
 
   if($_GET[id]!=NULL){ $zap =$_GET[id];}else
   if($_GET[xy]!=NULL){
-       $xy = explode("|",xy_wioski($_GET['xy']));
-          $zap ="SELECT id FROM `ws_all` WHERE x=".$xy[0]." AND y=".$xy[1].";";
+       $xy = explode("|",$_GET['xy']);
+          $zap ="SELECT id FROM `ws_all` WHERE x='".$xy[0]."' AND y='".$xy[1]."';";
 connection();
 $wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}
   destructor();

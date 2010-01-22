@@ -1,4 +1,8 @@
-<?PHP include('connection.php'); $xy = explode("|", $_GET[xy]); ?><html>
+<?PHP include('connection.php');//echo '<h1>ERROR</h1>';
+    if($_GET[xy]!=Null){$xy = explode("|", $_GET[xy]);}
+elseif($_GET[_xy]!=Null){$xy = explode("|", $_GET[_xy]);}
+else    {echo 'brak xxx|yyy';exit();}
+  ?><html>
 <head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">          
            <script src="js/tw_002.js" type="text/javascript"></script>
            <script type="text/javascript">
@@ -27,9 +31,9 @@ tr.center td { text-align:center; }
     <tr>
 	<td>
 
-	    <img id="map" src="img/00a.php?s=111&xy=<?PHP echo $_GET[xy]; ?>" alt="{map}">
+	    <img id="map" src="img/00a.php?s=<?PHP echo ($_GET[s]); ?>&xy=<?PHP echo $xy[0]."|".$xy[1]; ?>" alt="{map}">
 	</td>
-<td rowspan="10" valign="top"><iframe id="rapo" style="border:0pt;" width="100%" height="350"></iframe><BR>
+<td rowspan="10" valign="top"><BR>
 <img src="img/legenda.JPG" ></td>
     </tr>
 <tr style="display:none"><td>
@@ -40,5 +44,6 @@ tr.center td { text-align:center; }
 <img src="img/rd.gif" style="width: 4px; height: 1px; position: absolute; display: block; left: 426px; top: 914px;" id="rd_bottom" alt="">
 </td></tr>
 </tbody></table>
+<div style="position:fixed; top:150px; right:10px;"><iframe id="rapo" style="border:1pt solid #804000;" width="100%" height="350"></iframe></div>
 </body>
   </html>

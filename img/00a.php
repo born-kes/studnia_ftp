@@ -29,52 +29,49 @@ if($id_gracz==0){return 'sz';}
 elseif($id_gracz==$moje_id){ return 'ja';}
 
 switch($id_plemie){
-case 47716:
-    return 'so';       //@~HW~@
-case  48588:
-   return 'po';       //NWO
-case  51473:
-   return 'po';       //TK
-case  422:
-   return 'aa';       //RedRub
-case  4469:
-   return 'aa';       //~ZP~
-case  5416:
-   return 'aa';       //JEJ
-case  23185:
-   return 'aa';       //-MAD-
-case  23660:
-   return 'aa';       //-BAE-
-case  26084:
-   return 'aa';       //ZCR
-case  50650:
-   return 'aa';       //SmAp
-case  51091:
-   return 'aa';       //NA
-case  50811:
-   return 'my';       //-SNRG-
-//case 0:
-//break;
-default:
-   return 'in';          // inne
+case 23660:	return 'my';       //-BAE-
+	//Sojusze
+case 4469:	return 'so';	//~ZP~
+case 11183:	return 'so';	//&#1769;-MZ-&#1769;
+case 23185:	return 'so';	//=MAD=
+case 51349:	return 'so';	//ZC
+case 51415:	return 'so';	//BM
+case 51472:	return 'so';	//DEVILS	
+case 51732:	return 'so';	//SmAp
+
+    	//PON
+case 51308:	 return 'po';	 //PALS
+
+	//Wrogowie
+case 422:	return 'aa';	//RedRub
+case 898:	return 'aa';	//**MI**
+case 13245:	return 'aa';	//C M
+case 48588:	return 'aa';	//NWO
+case 51306:	return 'aa';	//ZKG
+case 51667:	return 'aa';	//PaL
+case 51724:	return 'aa';	//HERO
+case 50811:	return 'aa';	//SNRG
+
+	//inne
+default:	return 'in';	// inne
 break;             }
 }
 
 $obrazek = ImageCreate($sz+1,$sz+1);  $tlo = ImageColorAllocate($obrazek,73,103,21);
 
 $kolor  = ImageColorAllocate($obrazek ,48,73,14);
-$szp=4;for($i=1 ;$i<$s+2; $i++){ImageRectangle($obrazek ,$szp,0,$szp,$sz,$kolor); $szp+=$wi;}    //Pionowe
+$szp=0;for($i=1 ;$i<$s+2; $i++){ImageRectangle($obrazek ,$szp,0,$szp,$sz,$kolor); $szp+=$wi;}    //Pionowe
 $szp=0;for($i=1 ;$i<$s+2; $i++){ImageRectangle($obrazek ,-1,$szp,$sz+1,$szp,$kolor); $szp+=$wi;} //Poziome
 
 $wies = ImageCreate($wi-1,$wi-1);
 
- function xy($x,$y) { global $wi;   $x=($x*$wi)-4;   $y=($y*$wi)-8;   return array ($x,$y); }
+ function xy($x,$y) { global $wi;   $x=($x*$wi)+1;   $y=($y*$wi)-8;   return array ($x,$y); }
 
-$oko = intval($s/2)+1;
+$oko = intval($s/2);
 $xy = explode("|", $_GET[xy]);
 $x1=$xy[0]-$oko; $x2=$xy[0]+$oko;
-$y1=$xy[1]-$oko; $y2=$xy[1]+$oko;
-$zap="SELECT w.x,w.y, p.id AS id_User, a.id AS id_plemie, wr.status, wm.typ
+$y1=$xy[1]-$oko-1; $y2=$xy[1]+$oko-1;
+$zap="SELECT w.x,w.y, p.id AS id_User, a.id AS id_plemie, wr.status, wm.typ,wm.sz
 FROM ws_all w, list_user p, list_plemie a
 LEFT JOIN ws_raport wr ON wr.id = w.id
 LEFT JOIN ws_mobile wm ON wm.id = w.id
@@ -95,11 +92,14 @@ $gracz =ImageCreate($wi-1,$wi-1);
 $g1 = ImageColorAllocate($gracz ,240,200,0);
 $inna=ImageCreate($wi-1,$wi-1);
 $i1 = ImageColorAllocate($inna,160,  0,  0);
+$sojusz=ImageCreate($wi-1,$wi-1);
+$s1 = ImageColorAllocate($sojusz,0,  128,  255);
 
 
 $pusta = ImageColorAllocate($obrazek ,152,152,152);
 $whit =  ImageColorAllocate($obrazek ,254,254,254);
 $def =   ImageColorAllocate($obrazek ,2  ,2  ,2);
+$sz  =   ImageColorAllocate($obrazek ,250  ,234  ,251);
 
  //if($r[data]!=NULL && $r[data]!=0){$rap=1;}
  //  $flaga=wws($r[status],0,$r[typ]);
@@ -109,6 +109,7 @@ $def =   ImageColorAllocate($obrazek ,2  ,2  ,2);
    $xyz=xy($r[x]-$x1,$r[y]-$y1);
 if($kto=='ja'){ imagecopy($obrazek , $gracz ,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
 elseif($kto=='my'){ imagecopy($obrazek , $nasze ,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
+elseif($kto=='so'){ imagecopy($obrazek , $sojusz,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
 elseif($kto=='aa'){ imagecopy($obrazek , $wroga ,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
 elseif($kto=='sz'){ imagecopy($obrazek , $opuszczone ,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
 else{ imagecopy($obrazek , $inna ,$xyz[0] , $xyz[1], 0, 0, $wi-1,$wi-1);}
@@ -123,6 +124,7 @@ $By[2]=$By[0]+intval($Wi/2);
 $Bx[3]=$Bx[0]+intval($Wi/3);
 $By[3]=$By[0]+intval($Wi/3);
 $Bw=intval($Wi/4)+1;
+  if($r[sz]>0){  ImageRectangle($obrazek ,$Bx[0],$By[0],$Bx[1],$By[0]+1,$sz);}
 
   if($r[status]==0||$r[status]==NULL){}
 /*Nie Broniona*/if($r[status]==1){

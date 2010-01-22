@@ -8,9 +8,10 @@ function input(name,value) {
  return str_buffer; 
 }
 function div_oko(tu) {
+if(tu=='none'){var sas='input_h(\'s\',111)';tu='';}else{var sas= 'input(\''+tu+'_oko\',0)';}
 	var str_buffer =  new String (
-        '<tr><td id="sie'+tu+'"><b style="cursor: pointer;" onclick="loading(input(\''+tu+'_oko\',0)+input(\''+tu+'_xy\',0),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Okolica </b>/ '+
-        ' <b style="cursor: pointer;" onclick="loading(input(\''+tu+'_oko\',0)+input(\''+tu+'_xy\',0),\''+tu+'_map_go\');"> Recznie </b></td></tr>'+
+        '<tr><td id="sie'+tu+'"><b style="cursor: pointer;" onclick="loading('+sas+'+input(\''+tu+'_xy\',\'xxx|yyy\'),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Okolica </b>/ '+
+        ' <b style="cursor: pointer;" onclick="loading('+sas+'+input(\''+tu+'_xy\',\'xxx|yyy\'),\''+tu+'_map_go\');"> Recznie </b></td></tr>'+
         '<tr><td id="'+tu+'_map_go"></td></tr>'
 
 );
@@ -78,10 +79,17 @@ function input_zoom()
 function input_wojo()
 {
         var str_buffer = new String (
-         '<input type="button" value=" < " name="B2" onclick="backward()" />'+
-         '<img src="'+inqlude+'img/1.PNG" name="photoslider" alt=" " />'+
-         '<input type="button" value=" > " name="B1" onclick="forward()" />'+
-         '<input value="9" type="hidden" name="wojsko" id="wojsko" />'
+         "<select name=\"wojsko\" id=\"wojsko\">/n"+
+         "<option value=\"\"></option>/n"+
+         "<option value=\"9\">Zwiad</option>/n"+
+         "<option value=\"10\">LK i KL</option>/n"+
+         "<option value=\"11\">CK</option>/n"+
+         "<option value=\"18\">Pik, Axe, Luk</option>/n"+
+         "<option value=\"22\">Mie</option>/n"+
+         "<option value=\"30\">Tar i Kat</option>/n"+
+         "<option value=\"35\">Sz (gruby)</option>/n"+
+         "<option value=\"0\">Wedlug wsi</option>/n"+
+         "</select>/n"
         );
        return str_buffer;
 }
@@ -271,12 +279,12 @@ function suwak(b) { var a=b
    if(a=='szukaj_taktyczna')
  { which_lupa=7
  	var str_buffer =  new String (
-        '<form name="form" action="operacje/mapa_taktyczna.php" method="GET" target="ramka">'+
-        '<table><tbody>'+div_oko("")+
-        '<tr><td>Status obrony <input name="obrona" checked="checked" type="checkbox"></td></tr>'+
+        '<form name="form" action="../map.php" method="GET" target="ramka">'+
+        '<table><tbody>'+div_oko('none')+
+       /* '<tr><td>Status obrony <input name="obrona" checked="checked" type="checkbox"></td></tr>'+
         '<tr><td>Typy Wiosek <input name="t_w" checked="checked" type="checkbox"></td></tr>'+
         '<tr><td>Raporty <input name="r_w" checked="checked" type="checkbox"></td></tr>'+
-        '<tr><td>Szlachta <input name="sz_w" checked="checked" type="checkbox"></td></tr>'+
+        '<tr><td>Szlachta <input name="sz_w" checked="checked" type="checkbox"></td></tr>'+*/
         '<tr><td>'+input_wykonaj()+'</td></tr>'+
         '</tbody></table>'+
         '</form>');
@@ -286,4 +294,20 @@ function suwak(b) { var a=b
 function nowe_okno(url, width, height) {
 	wnd = window.open(url, "wnd", "width="+width + ",height="+height + ",left=50,top=50,resizable=yes,scrollbars=yes");
 	wnd.focus();
+}
+function input_plemie() {
+                        	var str_buffer =  new String (
+    '<select name="plem_op">'+
+    '<option value=""></option>'+
+    '<option value="0">bez plemienia</option><option value="51724">HERO</option><option value="4469">~ZP~</option><option value="11183">&#1769;-MZ-&#1769;</option><option value="23660">-BAE-</option><option value="51732">SmAp</option><option value="23185">=MAD=</option><option value="48588">NWO</option><option value="26084">ZCR</option>'+
+    '</select>');
+       return str_buffer;
+}
+function input_typ(a) {
+                        	var str_buffer =  new String (
+    '<select name="typ_'+a+'">'+
+    '<option value=""></option>'+
+    '<option value="0">brak typu</option><option value="1">wioska off</option><option value="2">wioska def</option><option value="3">Zwiad</option><option value="4">wioska LK</option><option value="5">wioska CK</option><option value="6">do rozbudowy</option>'+
+    '</select>');
+       return str_buffer;
 }

@@ -30,6 +30,7 @@ klucz Awaryjny<b>http://bornkes.w.szu.pl/proxi/ipp.php?p=ff</b>
   <td>has³o</td>
   <td>proxi</td>
   <td>Adres Bramki</td>
+  <td>Ostanie Logowanie</td>
  </tr>
 <?PHP
 
@@ -51,10 +52,10 @@ if($_SESSION['zalogowany']=='9oKESi'){$prawa = 3;}else{echo $_SESSION['zalogowan
 #                     else{$select[$l++].="<option value=\"$r[id]\" selected >[".test($r[status])."] $r[name]</option>";}   }
 
 $zap="
-SELECT u.id,u.name AS login, u.haslo2, p.ip, p.name, wz,u.wtyczka 
+SELECT u.id,u.name AS login, u.haslo2, p.ip, p.name, wz,u.wtyczka ,data
 FROM `list_user` u, `list_proxi` p 
 Where u.nr_proxi=p.id
-  AND (u.haslo2!='' OR u.ally= '50811') 
+  AND u.haslo2!='' 
 ORDER BY u.name ASC ;";
 
 $wynik = mysql_query($zap);
@@ -71,11 +72,12 @@ $wynik = mysql_query($zap);
                       else{echo '<td><img src="http://pl5.plemiona.pl/graphic/dots/grey.png?1" title="brak ustawionej bramki" alt=""></td>';}
 if($f[wz]=="N")
 {
- echo '<td><a href="'.$f[name].'">'.$f[name].'</a></td>';
+ echo '<td><a href="'.$f[name].'" target="_blank">'.$f[name].'</a></td>';
 }else{
- echo '<td><a href="'.$f[name].'">WEJDZ</a></td>';
+ echo '<td><a href="'.$f[name].'" target="_blank">WEJDZ</a></td>';
 }
-if($prawa == 3){ echo '<td><a href="edyt.php?g='.$f[id].'">'.$f[login].'</a></td>'; }
+
+if($prawa == 3){ echo '<td><a href="../proxi/edyt.php?g='.$f[id].'" target="_blank">'.$f[login].'</a></td>'; }
 // wybur proxi
  #      echo '<td><select name="'.$f[id].'">';
  #             for($i=0;count($select)>$i;$i++)
@@ -84,6 +86,10 @@ if($prawa == 3){ echo '<td><a href="edyt.php?g='.$f[id].'">'.$f[login].'</a></td
  #                 else{echo str_replace('selected', '', $select[$i]);}
  #             }
  #      echo '</select></td>';
+     if((mktime()-$f[data]-$godzina_zero)>950400){ echo '<td> <img src="../img/z4.gif" title="kasacja ?"> UWAGA KASACJA '.data_z_bazy($f[data]).'</td>'; }
+else if($f[data]!=0){ echo '<td>'.data_z_bazy($f[data]).'</td>'; }
+else{ echo '<td>Brak</td>'; }
+
 
        echo '</tr>';
    }destructor();

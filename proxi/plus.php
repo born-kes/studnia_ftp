@@ -1,4 +1,4 @@
-<?PHP include_once('../www/connection.php');?>
+<?PHP include_once('table.php');exit();?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
@@ -18,7 +18,7 @@ function haslo($limit)
   if ($pas===$_GET[p])
     {
       echo '<frameset cols="170,*">
-	<frame frameborder="0" marginwidth="5" marginheight="5"  src="ipp.php?p='.$_GET[p].'" name="ma" />
+	<frame frameborder="0" marginwidth="5" marginheight="5"  src="ip.php?p='.$_GET[p].'" name="ma" />
 	<frame frameborder="0" marginwidth="7" marginheight="0"  name="sec" />
 </frameset>';}
 else

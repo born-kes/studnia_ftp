@@ -26,6 +26,7 @@ if($_POST[typ_]!=NULL){  $zap.=$and."v.typ=".$_POST[typ_]; }
 
 if($_POST[_gracz]!=NULL) { $zap.=$and."t.name='".$_POST[_gracz]."' ORDER BY v.name" ;}
 
+if($_GET[_gracz]!=NULL) { $zap.=$and."t.name='".$_GET[_gracz]."' ORDER BY v.name" ;}
 
 if($zap==NULL){ echo"<h1>BRAK DANYCH</h1>";   exit();}
 

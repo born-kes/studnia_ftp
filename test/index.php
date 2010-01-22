@@ -2,15 +2,16 @@
 <head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
            <link rel="stylesheet" type="text/css" href="stamm1201718544.css">
            <script src="js/menu.js" type="text/javascript"></script>
-           <script src="js/suwak.js" type="text/javascript"></script>
+           <script src="js/suwak.js?2" type="text/javascript"></script>
            <script src="js/ts_picker.js" type="text/javascript"></script>
            <script src="js/tw_002.js" type="text/javascript"></script>
            <script type="text/javascript">
+var login_user ='<?PHP echo $_SESSION['zalogowany']; ?>';
            var center_x=550; var center_y=700; var zoom=2; var static='http://static.twmaps.org';
             inqlude=''; var iss='k';
 function gmap(text){
 	gid( iss+'xy' ).value = text;
-	gid( iss+'oko' ).value = gid( 'zoom_h' ).value;
+	//gid( iss+'oko' ).value = gid( 'zoom_h' ).value;
 }
 function input_plemie() {
                         	var str_buffer =  new String (

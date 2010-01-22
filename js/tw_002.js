@@ -310,7 +310,7 @@ function MapClick(e)
 		//var v_x=421;
 		//var v_y=368;
                 var sURL = "../village_data.php?vx="+v_x+"&vy="+v_y;
-	//	alert(v_x+"|"+v_y+" - "+sURL);
+		//alert(v_x+"|"+v_y+" - "+sURL);
 getElement('rapo').src=static+'?xy='+v_x+"|"+v_y;
 /*
                oHTTP.open('GET', sURL, true);

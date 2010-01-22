@@ -8,7 +8,7 @@ function suwakk()
      '<table cellpadding="0" cellspacing="0"><tr><td id="suwak" style="display:none;background-color: #AD5700; border-style: dotted;">'+
      '<table><tr><td></td></tr><tr><td>XXXXXXXXXXXXXX</td></tr></table>'+
      '</td><td valign="top" style="border-left-color: maroon;">'+
-     '<img src="img/grip.gif" onclick="javascript:show_suwak()" /></td></tr></table></div>'+
+     '<img src="http://www.bornkes.w.szu.pl/test/img/grip.gif" onclick="javascript:show_suwak()" /></td></tr></table></div>'+
      '');
        return str_buffer;
 }
@@ -25,17 +25,16 @@ function mennu()
      '<tr><td background="tlo_menu.PNG" width="753" height="154" valign="bottom" >'+
        '<table class="menu nowrap" width="753" id="menu" cellpadding="45" cellspacing="10">'+
        '<tbody><tr id="menu_row">'+
-       '<td><a href="../indexout.php">wyloguj</a><br>'+
+       '<td><a href="../indexout.php">wyloguj '+login_user+'</a><br>'+
       '<td>Profil<br>'+
        '<table cellspacing="4"><tbody>'+
-       '<tr><td><a href="operacje/minuta.php" target="ramka">Minutnik</a></td></tr>'+
+       '<tr><td><a href="../rada/minutnik.php" target="ramka">Minutnik</a></td></tr>'+
        '</tbody></table></td>'+
 
        '<td>Konwertuj<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="operacje/edt_typ.php" target="ramka">Typów wiosek</a></td></tr>'+
-       '<tr><td><a href="kr/" target="ramka">raportów</a></td></tr>'+
-       '</tbody></table></td>'+
+        '</tbody></table></td>'+
        '<td>Kalkulatory<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="javascript:loading_text(suwak(\'kalkulator_prostu\'));on(\'suwak\');">Prosty</a></td></tr>'+

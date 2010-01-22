@@ -4,12 +4,12 @@ include_once(dirname(dirname(__FILE__)) . '/connection.php');
 if($_POST==NULL){
 echo'<form name="form" action="" method="post" target="ramka">
 <table border="1" cellspacing="1" cellpadding="2" bgcolor="#00aa66" align="center">
-<caption>Filtr wiosek - typy + Wojsko</caption>
+<caption>Filtr wiosek - typy</caption>
 <TR><td>Wybierz Typ/Grupe do jakiej naleza wioski
      <SELECT name="n_typ" ><option value=""></option>';
          for($licz=0; $licz<count($rodzaje); $licz++)
-        {      echo'<option value="'.$licz.'">'.$rodzaje[$licz].'</option>';}
-echo'</SELECT> + Wojska <input type="checkbox" name="wo" id="wo" value="1" /></td>
+        {      echo'<option value="'.$licz.'">'.$rodzaje[$licz].'</option>';}//+ Wojska <input type="checkbox" name="wo" id="wo" value="1" />
+echo'</SELECT> </td>
 </TR>
 <TR><TD  align="center"><textarea id="query" name="query" rows="8" cols="80%"></textarea></TD></TR>	
 <TR><TD align="center"><input type="submit" value="Konwertuj" style="margin-top: 5px;"/></TD></TR>

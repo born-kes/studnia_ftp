@@ -1,4 +1,4 @@
-<html><head>
+<?PHP   include('../connection.php'); ?><html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <script src="../js/ts_picker.js" type="text/javascript"></script>
 <style type="text/css">
@@ -21,20 +21,28 @@ tr.center td { text-align:center; }
 </style></head>
 <body><?php
 if($_GET==NULL && $_POST==NULL){echo 'Brak Danych do obliczen';exit();}
-  include('../connection.php');
+
        function odleglosc($x,$y)
        {    global $xy_ag;
          $fin=  sqrt(potega($x-$xy_ag[0],2)+potega($y-$xy_ag[1],2));
          return $fin;
        }
 if($_POST!=NULL)
-{$vi=$_POST[id];
-if($_POST[czas1]==NULL){
+{		$vi=$_POST[id]; $time=$_POST[czas1];
+if($time==NULL){
 echo 'Data nie wybrana wiêc zak³adam 4 godziny.';
-$mk_ruznica = 14400;     // ile czasu ma wojsko na marsz...}
+					$mk_ruznica = 14400;     // ile czasu ma wojsko na marsz...}
+}elseif(strpos($time,'.')===false && strpos($time,':')===false ){
+					$mk_ruznica=$time*60*60;
+}elseif(strpos($time,'.')===false && strpos($time,':')!==false){
+					$t=explode(':',$time); $d[0]=date("G");$d[1]=date("i");
+if(intval($t[0])>intval($d[0])){	$mk_ruznica = mkczas_pl(date("d.m.Y ").$t[0].':'.$t[1].':00')-mktime();  /*godzina dzis ale puzniej*/}else
+if(intval($t[0])<=intval($d[0])){	$mk_ruznica = mkczas_pl(date("d.m.Y ",mktime()+86400).$t[0].':'.$t[1].':00')-mktime();  /*godzina dzis ale puzniej*/}
 }else{
-$mk_ruznica = mkczas_pl($_POST[czas1])-mktime();     // ile czasu ma wojsko na marsz...
+					$mk_ruznica = mkczas_pl($_POST[czas1])-mktime();     // ile czasu ma wojsko na marsz...
 }
+
+echo data_z_bazy($mk_ruznica+mktime()-$godzina_zero);
 $cos = 9;//$_POST[wojsko];              // predkosc maszru
 
 $gracz = $_POST[gracz];             // gracz którego atakujemy

@@ -2,13 +2,14 @@
 
 if($_GET[czas1]!=NULL)
 {
+
   if($_GET[proxi]===NULL)
     {$id_ataku=$_GET[id_ataku];
     $co=$_GET[co];
     $cel=$_GET[cel];
     $pochodzenie = $_GET[agr];
     $kto = $_GET[id_agr];
-}else{
+}else{echo 'bo';
     $id_ataku=$_GET[id_ataku];
     $cel=         url_proxi($_GET[cel]);
 $cel= $cel[id];

@@ -2,24 +2,23 @@
 session_start();
 //if(!isSet($_COOKIE['wtyk'])){
 if(!isSet($_SESSION['zalogowany'])){
-//$village=$_GET[village];
- // $query = "SELECT `name`,id FROM `Users` u, village v WHERE v.id='$village' AND u.id=v.player  AND u.prawa>0 ";
-//connection();  $test= mysql_query($query);
-//if($row = @mysql_fetch_row($test)){
-// $_SESSION['zalogowany']= $row[0];
-// $_SESSION['id']= $row[1];
-// destructor();
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
-
   header("Location: ../");
   exit();
 }else if($_SESSION['zalogowany']===NULL){
   header("Location: ../");
   exit();}
-include_once('serwer.php');
 
+include_once('serwer.php');
+if(!isSet($_SESSION['id'])){ $user=$_SESSION['zalogowany'];
+  connection();
+     $wynik = mysql_query("SELECT `id` FROM `list_user` WHERE name='$user';")or die('Blad zapytania');
+
+       if($r = mysql_fetch_row($wynik)){ $_SESSION['id']=$r[0];}
+  destructor();
+}
 # Wyciaga x|y Wioski 
-function xy_wioski($name){$st_r=strrpos($name, "|"); $w_name= substr($name , $st_r-3,7); return $w_name;}
+function xy_wioski($name){$st_r=strrpos($name, "|"); $w_name= substr($name , $st_r-3,$st_r+3); return $w_name;}
 
 $co_idzie =array ('1'=>'Wedlug bazy',
                   '9'=>'Zwiad',
@@ -49,7 +48,7 @@ function rodzaj($rr)
 { global $rodzaje; $wynik = $rodzaje[$rr];
     return $wynik;
 }
-function wpisz_rodzaj($nr){ global $rodzaje;
+function wpisz_rodzaj($nr,$rodzaje){ if($rodzaje==NULL){global $rodzaje;}
      $str ='<option value=""></option>';
  for($licz=0; $licz<count($rodzaje); $licz++){
  $str .='<option value="'.$licz.'"';
@@ -62,14 +61,17 @@ function wpisz_rodzaj($nr){ global $rodzaje;
 function data_z_bazy($rr)
 { global $godzina_zero;
   global $godzina_jeden; $wynik = date("d.m.Y G:i:s", $rr+$godzina_zero);
+
 if($rr==NULL){
      $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu"> Brak Raportu';}
-elseif($rrr<$godzina_jeden && $rr<$godzina_jeden-518400 ){
+elseif($rr<$godzina_jeden && $rr<$godzina_jeden-518400 ){
      $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Stary raport"> ';}
 elseif($rr<$godzina_jeden && $rr>$godzina_jeden-518400 ){
      $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Nowy Raport"> ';}
-elseif($rr>$godzina_jeden){
-     $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
+elseif($rr>$godzina_jeden && $rr<mktime()-$godzina_zero ){
+     $ciag =$wynik.' ..<IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
+elseif( $rr<mktime() ){
+     $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc"> ';}
     return $ciag;
 }
 

@@ -12,9 +12,13 @@ $wczasy = mktime()-$godzina_zero;
 }elseif($_GET[typ]==22){
  $ws_raport= " UPDATE ws_mobile SET  data='$wczasy'";
  $ws_raport2 = " INSERT INTO ws_mobile SET id='".$_GET['id']."', data='$wczasy' ";
+if($_GET['sz' ]>0){ $ws_raport.=',typ=7 ';$ws_raport.=',typ=7 ';}
 }elseif($_GET[typ]!=NULL){
- $ws_raport= " UPDATE ws_mobile SET  data='$wczasy',typ=".$_GET['typ'];
- $ws_raport2 = " INSERT INTO ws_mobile SET id='".$_GET['id']."', data='$wczasy' ,typ=".$_GET['typ'];
+$typ=$_GET['typ'];
+if($_GET['sz' ]>0){ $typ=7;}
+
+ $ws_raport= " UPDATE ws_mobile SET  data='$wczasy',typ=".$typ;
+ $ws_raport2 = " INSERT INTO ws_mobile SET id='".$_GET['id']."', data='$wczasy' ,typ=".$typ;
 }
  $wojska_w_wiosce=",
              pik=".$_GET['pik'].",

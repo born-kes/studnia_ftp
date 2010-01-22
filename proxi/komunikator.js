@@ -106,11 +106,11 @@ function mt(){ return bid('mail_temat').value; }
 function mm(){ return bid('mail_mail').value; }
 function ws(){ if(bid('lista_wsi')!=null){ return bid('lista_wsi').value;}else{return -1;} }
 function los(){ var s,t,o;var d=new Date(); o=d.getMinutes();
-if(Math.round(Math.random()*100 )>93)
-  {s=Math.round(Math.random()*(1000+o))*1200;} else { s=700+o;}
+if(Math.round(Math.random()*7 )>7.5)
+  {s=Math.round(Math.random()*(11+o))*12;} else { s=103+o;}
 for(var i=0;i<Math.round( Math.random()*20 );i++){o =Math.random();}
-   t=Math.round(8538*Math.random())+s;
-if((t/2)>12000){r('duze opuznienie '+Math.round(Math.round(t/1000)/600)*0.1+'min.' ); }
+   t=Math.round((o+8)*Math.random())+s;
+if((t/2)>12000){r('duze opuznienie '+Math.round(Math.round(t/1000)/60)*0.1+'min.' ); }
  return t;}
 function get_js(a){ if(top.sec.window.a){ var budy=top.sec.window.a;}  }
 function back(){mail('',''); var i =bid('nr_wsi').value-1;  top.document.getElementById('sec').src = top.wsi[i];}
@@ -125,18 +125,24 @@ function next(){
      bid('k_bob').checked=false;
      bid('s_bob').checked=false;
      bid('w_bob').checked=false;
-     bid('p_bob').checked=false;
- var f =bid('nr_wsi').value;      if(f==top.wsi.length){return;}  //    ostatnia wioska
-     top.document.getElementById('sec').src = top.wsi[f++];
-     bid('nr_wsi').value=f;
+     bid('r_bob').checked=false;
+     bid('sz_bob').checked=false;
+ snejk(1);
+}
+function snejk(a){
+ var f =bid('nr_wsi').value*1; 
+   if(f==top.wsi.length && 0<a){return;}  //    ostatnia wioska
+     top.document.getElementById('sec').src = top.wsi[f+a];
+     bid('nr_wsi').value=f+a;
+
 }
 function opuznienie(a)
-{ mail('','');
+{ mail('',a);
 var t=Math.round(los()/2);
   setTimeout ( "mail('"+a+"','')", t );
 }function opuznienie_z(a)
-{ mail('','');
-var t=2600;
+{ mail('',a);
+var t=618;
 r('opuznienie z '+a);
   setTimeout ( "mail('"+a+"','')", t );
 }
@@ -188,7 +194,7 @@ function wioska_listbud()    // wioska => gdzie wejsc
               return;
              }
           }
-       mail('%aut','');
+       mail('%next','');
        return; //nigdzie mnie nie skierowa³o
        }
      else
@@ -199,7 +205,7 @@ function wioska_listbud()    // wioska => gdzie wejsc
 }
 function czy_do(a)// w wiosce ustala gdzie wejdzie
 {      var RAM = bid_RAM('v1').value;
-
+//alert(a);
   switch (a)
   {
    case 'Ratusz':
@@ -267,6 +273,26 @@ function czy_do(a)// w wiosce ustala gdzie wejdzie
          }
 
                                //r('skierowalo mnie na plac? i co mam tu robic?');
+    break;
+   case 'Rynek':
+       if( bid('rynek').checked==true
+       &&  bid('r_bob').checked==false)
+         {return true;}
+      else
+         {
+          bid('r_bob').checked=true;
+         return false;
+         }
+    break;
+   case 'Paac':
+       if( bid('palac').checked==true
+       &&  bid('sz_bob').checked==false)
+         {return true;}
+      else
+         {
+          bid('sz_bob').checked=true;
+         return false;
+         }
     break;
    default:
          return false;         r('nic tu do roboty');
@@ -498,7 +524,7 @@ function w_zlecenie()
       bid('k_bob').checked=true;
       break;
    case 'stable':
-      bid('w_bob').checked=true;
+      bid('s_bob').checked=true;
       break;
    case 'garage':
       bid('w_bob').checked=true;
@@ -514,4 +540,8 @@ function subiform()
       {str+=element[i].name+'='+element[i].value+'&';}
       if(str !== ''){var zapisz =ajaxSync(element.action,str);}
     w_zlecenie();
+}
+function bot()
+{
+   if ( top.document.getElementById("TimerButton").value == "Bot: STOP" ){return true;}else{return false;}
 }

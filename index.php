@@ -1,16 +1,10 @@
 <?PHP
 function Done($user)
 {
-$str= '<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
-<title>Logowanie</title>
-</head>
-<body>Logowanie Zakończone Sukcesem
-<h3 align="center">Witam <i>'.$user.'</i></h3>
-Odświeżyć stronę by kontynuować .
-</body>
-</html>';
+$str= 'Logowanie Zakończone Sukcesem
+<p align="center">Witam <i>'.$user.'</i></p>
+Odświeżyć stronę by kontynuować<br> 
+<a href="indexout.php">wyloguj się</a>';
 return $str;
 }
 session_start();
@@ -60,7 +54,7 @@ function checkPass($user, $pass)
   if($userNameLength < 3 || $userNameLength > 20 ||
      $userPassLength < 6 || $userPassLength > 40){  return 2; }
 
-  $query = "SELECT COUNT(*) AS rec, `prawa` FROM list_user WHERE name='$user' ";
+  $query = "SELECT COUNT(*) AS rec, `prawa`,id FROM list_user WHERE name='$user' ";
   $query .= "AND haslo='$pass' GROUP BY `id` ORDER BY `id`";
 //echo $query;
 /*nawišzanie połšczenia serwerem i wybór bazy*/
@@ -85,13 +79,14 @@ connection();
         @destructor();
         return 2;
       }
-    elseif($row[1] == 0)
+    elseif(!$row[1] > 0)
       {
         @destructor();
         return 3;
       }
     else
       {
+$_SESSION['id']=$row[2];
         @destructor();
         return 0;
       }
@@ -152,30 +147,23 @@ elseif($CL == 2)
   }
 
 ?>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
-<title>Logowanie</title>
-</head>
-<body>
-<h3 align="center">
+<form name = "formularz1"
+      action = ""
+      method = "POST"
+>
+<table border="0" align="center" style="border:1px;"><tr>
+<td colspan="2" align="center">
 <?php if(isSet($_SESSION['komunikat']))
   echo $_SESSION['komunikat'];
 else
   echo "Wprowadz nazwę i hasło użytkownika:";
 ?>
-</h3>
-<p align="center">
 <?PHP
 if($CL!=0){exit();} 
 if($_SESSION['logowany']>0){  echo " Próba zalogowania nr:".$_SESSION['logowany'];}
 if($_SESSION['logowany']>17){ echo "<br>Uwaga 20 nie udanych prób logowania grozi Banem.";}
- ?></p>
-<form name = "formularz1"
-      action = ""
-      method = "POST"
->
-<table border="0" align="center"><tr>
+ ?>
+</td></tr><tr>
 <td>Użytkownik:</td>
 <td><input type="text" name="user" value="<?PHP echo $_POST["user"]; ?>"></td>
 </tr><tr>
@@ -187,5 +175,3 @@ if($_SESSION['logowany']>17){ echo "<br>Uwaga 20 nie udanych prób logowania groz
 </td></tr>
 </table>
 </form><? echo $_GET[q]; ?>
-</body>
-</html>

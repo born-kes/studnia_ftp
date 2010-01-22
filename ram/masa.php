@@ -1,5 +1,5 @@
-<?PHP include_once('../serwer.php');
-function url_proxi($str)
+<?PHP 
+/*function url_proxi($str)
 {  $str=str_replace('amp;','',base64_decode($str));
    $str= explode("?",$str);
    $str= explode("&",$str[1]);
@@ -17,8 +17,9 @@ function GET($str,$nide)
   }
 }
 $url = explode('=',$_POST['href']);
-echo base64_decode($url[1]).'<br>';
 $url = url_proxi($url[1]);
-echo  $url['village'];
-//foreach($url as $u => $f){echo $u.' '.$f; }
+//echo base64_decode($url[1]).'<br>';
+//echo  $url['village'];
+//foreach($url as $u => $f){echo $u.' '.$f; }*/
+include('budowa.php');
 ?>

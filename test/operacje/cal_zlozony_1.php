@@ -17,7 +17,7 @@ function getEl(id){
  with(d)var e=g?g(id):a?a[id]:l[id]
  if(!e.style)e.style=e;return e
 }
-function menuGo(){ 
+function menuGo(){
  oBy=(szybkosc*oBy+celY)/(szybkosc+1)
  getEl('flMenu').style.top=Math.round(oBy)
  if(Math.round(oBy)!=celY)anim=setTimeout("menuGo()",20)
@@ -35,7 +35,7 @@ function initMenu(){
 }
 
 
-function ile_gdzie_poszlo(form) 
+function ile_gdzie_poszlo(form)
 {
 	var k = Array();
 
@@ -68,11 +68,20 @@ $obr=@array_keys($_POST['obr']);
 
       <table border=1 class="vis"><tr class="units_there"><td>Nazwa</td><td>X | Y</td><td>';
  if($_POST[wojsko]==0){echo'Szlachta</td><td>';}    echo'Atakowana</td></tr><tr>';
-        $query='Select id , name , x , y, wolny,sz FROM village Where id IN (';        $quert=$query;
+        $query='Select w.id , w.name , w.x , w.y ,
+   m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz
+
+FROM ws_all w
+LEFT JOIN ws_mobile m
+  ON m.id=w.id
+  Where w.id IN (';
+
+
 
 for($i=0; $i<count($ata);$i++){$query.=$_POST['ata'][$ata[$i]]; $query.=',';}
-$query=substr($query,0,-1).") ORDER BY `sz` DESC";
+$query=substr($query,0,-1).") ";
 
+$quert='Select id , name , x , y FROM ws_all Where id IN (';
 for($g=0; $g<count($obr);$g++){$quert.=$_POST['obr'][$obr[$g]]; $quert.=",";}
 $quert=substr($quert,0,-1).")"; $l=0;
 $ile_gdzie='<tr><th nowrap >Wojska w domu</th><td id="cel_0" nowrap ></td></tr>';
@@ -80,6 +89,8 @@ $ile_gdzie='<tr><th nowrap >Wojska w domu</th><td id="cel_0" nowrap ></td></tr>'
   connection();  $wynik = @mysql_query($query);
 
   while($f = @mysql_fetch_array($wynik)) {
+$f[wolny]=jaki_czas_marszu($f[pik],$f[mie],$f[axe],$f[luk],$f[zw],$f[lk],$f[kl],$f[ck],$f[tar],$f[kat],$f[ry],$f[sz]);
+
 if($_POST[czas1]!=NULL){       $g_dotarcia = mkczas_pl($_POST[czas1]); }                           //godzina dotarcia do celu
 else{echo 'Brak daty ataku';}
 $selec ='<select name="obr[]" onchange="ile_gdzie_poszlo(document.forms[\'vil\'])">';
@@ -89,7 +100,7 @@ if($g>1){$selec .='<option value="0">Zostaje w domu</option>';}
        while($r = mysql_fetch_array($wynik_obr))
        {
 if($l==0){$ile_co[++$jk]=$r[0];
-$ile_gdzie.='<tr><th nowrap >'.$r[1].' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
+$ile_gdzie.='<tr><th nowrap >'.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
 }
         $odleglosc=sqrt(potega($f[2]-$r[2],2)+potega($f[3]-$r[3],2));
 
@@ -103,12 +114,12 @@ $ile_gdzie.='<tr><th nowrap >'.$r[1].' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$
             if($_POST[do_h]!=NULL&&$okno_czas>$_POST[do_h]){/*maxymalna odleglost => czas do ataku/têpo */destructor(); continue;}
                  $hx=$g_dotarcia-$g_wyslania;
                  $h= date("d.m.Y G:i:s",$hx);
-        $selec .= '<option value="'.$r[0].'">'.$h.' => '.$r[1].' ('.$r[2].'|'.$r[3].')</option>';$is++;
+        $selec .= '<option value="'.$r[0].'">'.$h.' => '.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</option>';$is++;
         }  destructor();
 $l++;
         $selec .="</select>";
 if($is>0){
-echo"<tr><td>$f[1]</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[0]\" type=\"hidden\"></td><td>";
+echo"<tr><td>".urldecode($f[1])."</td><td>$f[2]|$f[3]<input name=\"ata[]\" value=\"$f[0]\" type=\"hidden\"></td><td>";
 
  if($_POST[wojsko]==0 && $f[sz]!=NULL){echo $f[sz].'</td><td>';}elseif($_POST[wojsko]==0){echo'</td><td>';}
 

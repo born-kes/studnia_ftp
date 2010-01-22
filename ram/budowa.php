@@ -1,6 +1,12 @@
-<?php include('../serwer.php'); include('wzor.php');
+<?php include('../connection.php'); include('wzor.php');
                                         // http://www.bornkes.w.szu.pl/ram/budowa.php?user=282701&w_id=54580
- $user = $_GET[user];
+  if($_GET[user]!=NULL){ $user = $_GET[user];  }
+else{ $user = $_POST[user]; 
+; }
+
+
+
+
  $ec =mktime()-$godzina_zero;
 
 // pytanie a taki na gracza
@@ -31,7 +37,7 @@ function szkolenie($a,$b,$c)
              return null;
              break;
    case '1': //off
-              if($a[koszary]>2)
+              if($a[koszary]>2 && $c >1)
                 $string = ' axe ';
               if($a[stajnie]>4 && $c >200)
                 $string = ' kl lk ';
@@ -41,19 +47,19 @@ function szkolenie($a,$b,$c)
              return $string;
              break;
    case '2':    // def
-              if($a[koszary]>2)
+              if($a[koszary]>2 && $c >1)
                 $string = ' pik mie luk ';
               if($a[stajnie]>9 && $a[kuznia]>14 && $c >200)
                 $string = 'zw ck ';
              return $string;
              break;
    case '3':    // zw
-              if($a[stajnie]>4)
+              if($a[stajnie]>4 && $c >2)
                 $string = ' zw ';
              return $string;
              break;
    case '4':  //lk
-              if($a[stajnie]>5 && $a[kuznia]>5)
+              if($a[stajnie]>5 && $a[kuznia]>5 && $c >4)
                 $string = 'lk kl ';
             return $string;
             break;
@@ -78,21 +84,30 @@ global $budowa; foreach($poziom as $v => $y){
 return $string;
 }
 
-if( $_GET[id]!=NULL){
- $w_id= $_GET[id];
+if( $_GET[id]!=NULL){  $w_id= $_GET[id];  }
+else{ 
+$url = explode('=',$_POST['href']);
+$url = url_proxi($url[1]);
+$w_id = $url['village']; }
 
-$zap="SELECT b.ratusz, b.koszary, b.stajnie, b.warsztat, b.palac, b.kuznia, b.plac, b.piedestal, b.rynek, b.tartak, b.cegielnia, b.huta, b.zagroda, b.spichlerz, b.schowek, b.mur, b.status, b.ludzie, m.typ 
+if($w_id!=NULL){
+$zap="
+SELECT b.ratusz, b.koszary, b.stajnie, b.warsztat, b.palac, b.kuznia, b.plac, b.piedestal, b.rynek, b.tartak, b.cegielnia, b.huta, b.zagroda, b.spichlerz, b.schowek, b.mur, b.status, b.ludzie,
+ m.typ, COUNT( a.cel ) AS `ataki` 
 FROM ws_all w
 LEFT JOIN `budy` `b`      ON b.id=w.id
 LEFT JOIN `ws_mobile` `m` ON m.id=w.id
-Where b.id= $w_id";
+LEFT JOIN `list_ataki` a  ON a.`cel` = w.id AND a.`godz`> $ec
+Where b.id= $w_id
+GROUP BY a.cel
+ORDER BY a.cel DESC";
 //echo $zap.'<br>';
 
      connection();
        if(!$wynik=@mysql_query($zap))
        {echo 'error id'; destructor();}
 if($nowy = @mysql_fetch_array($wynik)){
-
+$w_ataki            = $nowy['ataki'];
 $budowa["ratusz"]   = $nowy[0];
 $budowa["koszary"]  = $nowy[1];
 $budowa["stajnie"]  = $nowy[2];
@@ -117,17 +132,20 @@ $typ=$nowy[typ];
 destructor();
 
 }
+$rodzaj_budy=4;
 
-
+echo '<input name="href" id="href" value="'.$_POST['href'].'" type="hidden">';
+echo '<input name="nr_wsi" id="nr_wsi" value="" type="hidden">';
 
 //                          ratusz lv
 $li=0;
-echo '<input name="id_wsi_baza" id="id_wsi_baza" value="'.$_GET[id].'" size="5" type="text">';
+echo '<input name="id_wsi_baza" id="id_wsi_baza" value="'.$w_id.'" size="5" type="text"><br>';
 echo '<textarea name="v'.$li.'" id="v'.$li++.'" rows="2" cols="15">';
 if(test_budowy($wzor[0],$ludzie)!=null ){echo test_budowy($wzor[0],$ludzie);}else{echo test_budowy(poziom_budowy($rodzaj_budy),$ludzie);}
-echo '</textarea>';
-echo '<textarea name="v'.$li.'" id="v'.$li++.'" rows="2" cols="15">'.szkolenie($wzor[$rodzaj_budy],$typ,$ludzie).'</textarea>';
-echo '<input name="ataki_player" id="ataki_player" value="'.$ataki.'" size="5" type="text">';
+echo '</textarea><br>';
+echo '<textarea name="v'.$li.'" id="v'.$li++.'" rows="2" cols="15">'.szkolenie($wzor[$rodzaj_budy],$typ,$ludzie).'</textarea><br>';
+echo '<input name="ataki_player" id="ataki_player" value="'.$ataki.'" size="5" type="text"><br>';
+echo '<input name="w_ataki" id="w_ataki" value="'.$w_ataki.'" size="5" type="text"><br>';
 
 
 //ataki?
