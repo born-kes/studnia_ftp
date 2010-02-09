@@ -8,7 +8,7 @@ echo'<TABLE border="1" class="vis"><caption>'.urldecode($name).'</caption>
 <td>Punkty</td>
 <td><span class="ataa"><input name="alla"  class="selectAata"  type="checkbox" onclick="selectAllata(this.form, this.checked)" >all</span></TD>
 </tr>';
-echo $zap;
+//echo $zap;
 connection();
 
  $wynik1 = mysql_query($zap)or die($zap.'B³±d zapytania');
@@ -61,7 +61,7 @@ FROM `ws_all` w, list_user t, ws_mobile m
 WHERE w.player = t.id AND m.id=w.id";
 $d=0;
    if( $atakujacy!=NULL)
-    {$zap1.=$and."t.name='$atakujacy' ";  $d=1;}else{$d=0;}
+    {$zap1.=$and."(t.name='$atakujacy' OR  t.name='".$_POST[agracz]."')";  $d=1;}else{$d=0;}
    if($_POST[typ_a]!=NULL)
     {$zap1.=$and."m.typ='$_POST[typ_a]' ";  $d=1;}else{/*Typ niema znaczenia*/}
    if($_POST[a_oko]!=NULL&&$_POST[a_xy]!=NULL)
@@ -113,6 +113,7 @@ FROM `ws_all` w, list_user t
       LEFT JOIN ws_raport r
        ON r.id=w.id
 WHERE w.player = t.id
+AND w.points >5000 
 ";
 
     if($_POST[plem_op]!=NULL)

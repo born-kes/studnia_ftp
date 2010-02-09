@@ -1,6 +1,6 @@
 <?php include('../connection.php');//<script src="../js/scriptt.js" type="text/javascript"></script>
       include('../hello/id.php');
-if($_GET[wersja]==$name){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3>';exit();}
+if(strpos($_GET[wersja],$name)!==false){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3>';exit();}
 //<script type="text/javascript">
 //			var pageTracker = _gat._getTracker("UA-1427236-2");
 //			pageTracker._trackPageview();
@@ -30,15 +30,15 @@ tr.center td { text-align:center; }
 -->
 </style>
 <body>
-<h3 align="center"><b style="color: rgb(255, 0, 0);" >Jest ju¿ nowsza wtyczka:</b> wersja <?PHP echo $name; ?></h3>
-mo¿esz j± pobraæ <a href="../hello/<?PHP echo $name; ?>.xpi"  id="ff">tutaj </a>
+<h3 align="center"><b style="color: rgb(255, 0, 0);" >Jest ju¿ nowsza wtyczka:</b> wersja Hello_Studnia <?PHP echo $name; ?></h3>
+mo¿esz j± pobraæ <a href="../hello/Hello_Studnia<?PHP echo $name; ?>.xpi"  id="ff">tutaj </a>
 <h4> Instalacja</h4>
 Dzia³a pod <b>Mozilla Firefox 3.5 </b>(niestety)<br>
  Chcia³em by by³a jak najprostsza w instalacji,<br>
 wiêc jest to ca³y pakiet w jednym pliku.<br><br>
 
  Krok 1<br>
- Kliknij <a href="../hello/<?PHP echo $name; ?>.xpi">tutaj </a> by pobraæ wtyczkê.<br><br>
+ Kliknij <a href="../hello/Hello_Studnia<?PHP echo $name; ?>.xpi">tutaj </a> by pobraæ wtyczkê.<br><br>
  Krok 2<br>
  Mo¿esz go "otworzyæ za pomoc±" <b>FireFox</b> (wybieraj±c go z listy)<br>
  Albo<br> Zapiaæ na dysku i przeci±gnij go do Otwartego okna 'FireFoxa,<br>

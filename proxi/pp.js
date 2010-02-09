@@ -1,3 +1,5 @@
+var proxi_str = top.document.getElementById('sec');
+
 /*
 ##########################
 #     Gdzie jestem ??    #
@@ -87,7 +89,7 @@ else
 */ function aut()
 {var link = gN(document.getElementById('menu_row2'),'a');
 if(plaut(link[0])!=='Przegldy'){alert('error przy aut');aut();return;}
- top.document.getElementById('sec').src =link[0].href;
+ proxi_str.src =link[0].href;
 }/*
 ##########################
 # Lista Wiosek
@@ -142,7 +144,7 @@ else if( wyciagaj("vis",2) ){    var przybycia=wyciagaj("vis",2) ;}
       {
          budynki_co[i] = plaut(budynki[i]);
          budynki_lv[i] = budynki[i].href;
-i++;
+//i++;                                      //w³±czyæ gdy jest premium
       }
 // wysy³am maila ¿e jestem w wiosce
 opuznienie_z('%w wiosce');
@@ -163,7 +165,7 @@ else {alert('nic'); return; }
   // wejdz w info o ataku// => info istnieje// => licz_przybycia jest mniejsze od ilo¶ci przybyæ
    else if(top.RAM.window.przybycia && bid_RAM('nr_wsi')<top.RAM.window.przybycia.length)
    { bid_RAM('nr_wsi').value= Math.round( bid_RAM('nr_wsi') )+1 ;
-     top.document.getElementById('sec').src = top.RAM.window.przybycia[bid_RAM('nr_wsi')-1];
+     proxi_str.src = top.RAM.window.przybycia[bid_RAM('nr_wsi')-1];
    }
     else{ mail('%aut',''); }
 /*wyjdz z wioski*/
@@ -219,7 +221,7 @@ var i =monety.length-1;
  if(i>0)
       {
 if(monety[i].innerHTML.indexOf('Wybij monet')>-1)
-  { top.document.getElementById('sec').src=monety[i];}
+  { proxi_str.src=monety[i];}
 else{   opuznienie('%next');}
       }
   else
@@ -257,10 +259,32 @@ linki.onkeyup = xProcess;
      if( GET('mode')!='other_offer' )
 {
     var linkix= wyciagaj("vis",0);
-top.document.getElementById('sec').src =linkix[2].href
+proxi_str.src =linkix[2].href
 
 }else{
+var wood,stone,iron,kupcy ,czym_handlujemy;
+
   all = document.evaluate('//table[@class="vis"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
+     if(all.snapshotItem(1)){
+
+      table = all.snapshotItem(1);
+ kupcy = gN(table,'th')[0].innerHTML.split(" ")[1].split("/");   //  alert(kupcy[0] );
+
+if(kupcy[0]*1 < 19){ mail('%next',''); }
+    kupcy = Math.floor(kupcy[0] /10); // tyle ofert mo¿emy przyj±æ
+    wood = Math.floor(gid("wood") .innerHTML/10000); // surowców starczy na tyle ofert
+    stone =Math.floor(gid("stone").innerHTML/10000);
+    iron = Math.floor(gid("iron") .innerHTML/10000);
+ if(wood > kupcy){wood = kupcy;}
+ if(stone > kupcy){stone = kupcy;}
+ if(iron > kupcy){iron = kupcy;}
+
+
+
+//alert(kupcy+" x " +wood+":"+stone+":"+iron);
+}                                              // oferty które mogê skupiæ z wioski
+
+
      if(all.snapshotItem(4)){
    table = all.snapshotItem(4);
  var oferty = gN(table,'tr');
@@ -279,28 +303,61 @@ var tdd;
       {
          if( oferty[i].innerHTML.indexOf(r_kto)==-1 )
          {
-           oferty[i].innerHTML='<td></td><td></td><td></td><td></td><td></td><td></td><td></td>';i--;
-         }i++;
+           oferty[i].innerHTML='<th colspan="7" />';i--;
+         }else{
+ var tdd = gN(oferty[i],'td');
+var ofert_na_rynku = dels(tdd[6].innerHTML);
+/*  kupcy  wood  stone  iron  ofert_na_rynku  */
 
-         
+     if(tdd[1].innerHTML.indexOf('title="Glina"')>-1)
+     { if(stone<ofert_na_rynku){oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+stone+'"');}
+       else           {oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+ofert_na_rynku+'"');}
+     }
+else if(tdd[1].innerHTML.indexOf('title="Drewno"')>-1)
+     { if(wood<ofert_na_rynku){oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+wood+'"');}
+       else         {oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+ofert_na_rynku+'"');}
+     }
+else if(tdd[1].innerHTML.indexOf('elazo"')>-1)
+     { if(iron<ofert_na_rynku){oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+iron+'"');}
+       else         {oferty[i].innerHTML = podmiana(oferty[i].innerHTML ,'value="1"','value="'+ofert_na_rynku+'"');}
+     }
+
+       }
+         i++;
       }
-
-
- var form = gN(document,'form');
            table.innerHTML+='<tr><th colspan="4">Oferty Nie od '+r_kto+' sa ukryte</th></tr>';
+
+                             } // koniec edycji ofert
+
  var form = gN(document,'form');
-if(form.length>2)
-   { top.sec.document.forms[2].submit();}
+
+     if(form.length>2){ top.sec.document.forms[2].submit();}
+else if(wood*1 > 1 || stone*1 > 1 || iron*1 > 1)
+   {
+
+     if(all.snapshotItem(3))
+     {
+       table = all.snapshotItem(3);
+        var strony = gN(table,'a'); 
+        var strong= dels(gN(table,'strong')[0].innerHTML)*1; // strona na której jeste¶my  alert(strong);
+
+         for (var i=0; i< strony .length ; i++ )  // petla zmienia strony a¿ do ostatniej
+        {
+           if(strong<dels(strony[i].innerHTML)*1)
+              { proxi_str.src = strony[i].href; break;}
+        }
+ if(strong>dels(strony[strony.length-1].innerHTML)*1)
+              { alert('Przeszukano wszystkie oferty, koniec Pracy. Dziekuje'); }
+      } // koniec edycji zmiany strony ofert na rynku
+
+   }
 else
-   {     opuznienie('%next'); }
+   { opuznienie('%next'); }
+                      
+} // konec poleceñ dla "obecne oferty"
+
+} // koniec poleceñ dla rynku
 
 
-alert(top.sec.document.forms[2].elements[0].name );
-// vis 3 (lista stron)
-// vis 4 oferty (tr)
-                             }
-}
-
-}
 window.setInterval("sprawdzanie_skrzynki()",94);
 startTimer();

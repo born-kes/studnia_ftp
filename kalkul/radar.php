@@ -45,11 +45,25 @@ if(intval($t[0])<=intval($d[0])){	$mk_ruznica = mkczas_pl(date("d.m.Y ",mktime()
 echo data_z_bazy($mk_ruznica+mktime()-$godzina_zero);
 $cos = 9;//$_POST[wojsko];              // predkosc maszru
 
-$gracz = $_POST[gracz];             // gracz którego atakujemy
+if($_POST[gracz]==null && $_POST[t]!=null)
+{ $gracz = $_POST[t]; $t='t='.$_POST[t].'&';}
+elseif($_POST[gracz]!=null && $_POST[t]==null)
+{ $gracz = $_POST[gracz];}             // gracz którego atakujemy
+else
+{echo 'Nie wiem kim jeste¶'; exit();}
 
-$xy_ag = explode("|",$_POST[xy]);   // wioska wysy³ajaca wojsko          => id wioski
+     $zap = "SELECT x,y FROM `ws_all` Where id='".$_POST[xy]."';";//wioska
 
-$xy_ob = explode("|",$_POST[xy]);  // wioska do której ma dotrzec       => id Wioski
+connection();$wynik = @mysql_query($zap);
+if($r = mysql_fetch_array($wynik))
+{
+$xy_ag[0]=$xy_ob[0]=$r[x];// wioska wysy³ajaca wojsko          => id wioski
+$xy_ag[1]=$xy_ob[1]=$r[y];// wioska do której ma dotrzec       => id Wioski
+}destructor();
+
+//$xy_ag = explode("|",$_POST[xy]);   
+
+//$xy_ob = explode("|",$_POST[xy]);  
 
 $p=" AND ";
 $zap= " SELECT  name AS n_wsi, w.id AS id_wsi,x,y,pik,mie,axe,luk,zw,lk,kl,ck,sz
@@ -198,7 +212,7 @@ for($i=0;count($Dane[odleglosc])>$i;$i++)
   echo '</td><td>';
        echo $Dane[wojsko][$i];
   echo '</td><td>';//http://pl5.plemiona.pl/game.php?village=55713&screen=place&mode=command&target=56386
-       echo '<a href="http://pl5.plemiona.pl/game.php?village='.$Dane[id_wsi][$i].'&screen=place&mode=command&target='.$vi.'" target="_blank" >'.urldecode($Dane[name][$i]).' ('.$Dane[kordy][$i].')</a>';
+       echo '<a href="http://pl5.plemiona.pl/game.php?'.$t.'village='.$Dane[id_wsi][$i].'&screen=place&mode=command&target='.$vi.'" target="_blank" >'.urldecode($Dane[name][$i]).' ('.$Dane[kordy][$i].')</a>';
   echo '</td><td>';//echo ;
        echo date("d.m.y G:i:s",$mk_ruznica-$Dane[odleglosc][$i]+mktime());
   echo '</td></tr>';

@@ -6,6 +6,7 @@
 <script src="../js/ts_picker.js" type="text/javascript"></script>
 </head>
 <body>
+<?PHP if($_GET[t]!=null){echo '<h1>Wykryto Zastêpstwo</h1>'; $t='t='.$_GET[t].'&'; } ?>
 <table align="center">
 <tbody><tr ><td height="70">
 <?PHP
@@ -90,8 +91,8 @@ if($mktt>0){      echo ' <span class="timer"> '.$pdata.' </span> ';
 }else{ echo ' <b><span class="warn" >Odliczanie skonczone</span></b> ';}
 
 echo ' </th><td width="1%"> </td><td width="63%"> <a href="javascript:popup_scroll(\'minutnik_menu.php?id='.$r[id].'\',250,250)">'.urldecode($r[3]).'</a> </td><td width="1%"></td>';
- if($r[4]!=0 && $r[5]!=0&&$r[4]!=NULL && $r[5]!=NULL){echo '<td><a href="http://pl5.plemiona.pl/game.php?village='.$r[4].'&amp;screen=place&amp;mode=command&amp;target='.$r[5].'" target="_parent/ramka">wyslij wojska</a></td>'; }else{echo '<td></td>';}
-echo'<td width="6%"> <a href="?usun='.$r[0].'&str='.$_GET[str].'"> USUN </a></td></tr>
+ if($r[4]!=0 && $r[5]!=0&&$r[4]!=NULL && $r[5]!=NULL){echo '<td><a href="http://pl5.plemiona.pl/game.php?'.$t.'village='.$r[4].'&amp;screen=place&amp;mode=command&amp;target='.$r[5].'" target="_parent/ramka">wyslij wojska</a></td>'; }else{echo '<td></td>';}
+echo'<td width="6%"> <a href="?'.$t.'usun='.$r[0].'&str='.$_GET[str].'"> USUN </a></td></tr>
 <tr/>';
 }                    destructor();
 

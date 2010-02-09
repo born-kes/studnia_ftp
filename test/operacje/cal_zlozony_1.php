@@ -4,40 +4,8 @@
 <script src="../js/mootools.js" type="text/javascript"></script>
 <script src="../js/menu.js" type="text/javascript"></script>
 <script type="text/javascript">
-cpfl='**********P³ywaj±ca warstwa (v0.8)***********=        '+
-'written by Bogdan Blaszczak,                               '+
-'homepage http://www.blatek.board.pl                        '
-
-gora=60
-reakcja=700
-szybkosc=8
-
-function Namiar(t){celY=t;if(!anim)menuGo()}
-function getEl(id){
- with(d)var e=g?g(id):a?a[id]:l[id]
- if(!e.style)e.style=e;return e
-}
-function menuGo(){
- oBy=(szybkosc*oBy+celY)/(szybkosc+1)
- getEl('flMenu').style.top=Math.round(oBy)
- if(Math.round(oBy)!=celY)anim=setTimeout("menuGo()",20)
- else anim=0
-}
-function scrLay() {
- var pYoff=(d.a&&!window.opera)?document.body.scrollTop:window.pageYOffset
- if(parseInt(getEl('flMenu').style.top)!=pYoff+gora)Namiar(pYoff+gora)
-}
-function initMenu(){
- function st(t,h){var s='';for(var i=0;i<t.length;i++)s+=h.substr(t[i],1);return s}
- d=document,d.l=d.layers,d.a=d.all,d.g=d.getElementById
- eval(st([114,65,63,45,119,114,22,21,81,142,70,56,115,45,30],cpfl))
- setInterval('scrLay()',reakcja)
-}
-
-
 function ile_gdzie_poszlo(form)
-{
-	var k = Array();
+{ 	var k = Array();
 
 for(var s=0; s<ile_co.length; s++){k[s]=0;}
 	for(var i=0; i<form.length; i++) {
@@ -49,15 +17,22 @@ for(var j=0; j<ile_co.length; j++)
   }
                                           }
                                            }
-for(var s=0; s<ile_co.length; s++){loading('x '+ k[s] ,"cel_"+s );}
+for(var s=0; s<ile_co.length; s++)
+{
+if(k[s]==0){off("wiersz_"+s );}else{on("wiersz_"+s );}
+loading('x '+ k[s] ,"cel_"+s ); 
+}
         /*alert("cel_"+s);*/
 }
-
+function ukryj() {
+	var style = document.getElementById("inline_popup").style;
+	style.display = (style.display == 'none' ? 'block' : 'none');
+}
 </script>
 
 </head>
 <body onload="initMenu()">
-<table class="main" align="center"><TR><TD>
+<table class="main" align="right"><TR><TD>
 <form enctype="multipart/form-data" action="3.php" name="vil"  method="POST"><br>
 <?php
   include('../connection.php');
@@ -84,7 +59,7 @@ $query=substr($query,0,-1).") ";
 $quert='Select id , name , x , y FROM ws_all Where id IN (';
 for($g=0; $g<count($obr);$g++){$quert.=$_POST['obr'][$obr[$g]]; $quert.=",";}
 $quert=substr($quert,0,-1).")"; $l=0;
-$ile_gdzie='<tr><th nowrap >Wojska w domu</th><td id="cel_0" nowrap ></td></tr>';
+$ile_gdzie='<tr><td nowrap >Wojska w domu (nigdzie nie skierowane)</td><td id="cel_0" nowrap ></td></tr><tr id="wiersz_0" />';
 
   connection();  $wynik = @mysql_query($query);
 
@@ -100,7 +75,7 @@ if($g>1){$selec .='<option value="0">Zostaje w domu</option>';}
        while($r = mysql_fetch_array($wynik_obr))
        {
 if($l==0){$ile_co[++$jk]=$r[0];
-$ile_gdzie.='<tr><th nowrap >'.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
+$ile_gdzie.='<tr id="wiersz_'.$jk.'" ><th nowrap >'.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
 }
         $odleglosc=sqrt(potega($f[2]-$r[2],2)+potega($f[3]-$r[3],2));
 
@@ -132,9 +107,12 @@ echo $selec."</td></tr>"; }
 </td><td>
 </td></tr></table>
 
-<script type="text/javascript">var ile_co= Array(0<?PHP foreach($ile_co as $v){echo ','.$v;} ?>);</script>
-
-<div id="flMenu" style="position: absolute; width: 80px; top: 288px; left: 10px;">
-<table class="vis" border=1 width="200"><tr><th><table class="main"  width="100%"><?PHP echo $ile_gdzie; ?></table></th></tr></table>
+<script type="text/javascript">var ile_co= Array(0<?PHP foreach($ile_co as $v){echo ','.$v;} ?>);
+</script>
+<div style="width: 200px; height:17px; position: fixed; display: block; left: 33px; top: 0px; ">
+<b><a align="right" href="javascript:ukryj();">[ UKRYJ / ODKRYJ ]</a></b>
 </div>
-<script type="text/javascript">ile_gdzie_poszlo(document.forms['vil']) ;</script></form>
+<div id="inline_popup" style="width: 400px; height:510px; position: fixed; display: block; left: 33px; top: 23px; ">
+  <div id="inline_popup_main" style="width: 390px;">   <table class="vis" border=1 width="200"><tr><th><table class="main"  width="100%"><?PHP echo $ile_gdzie; ?></table></th></tr></table></div>
+</div>
+<script type="text/javascript"> ile_gdzie_poszlo(document.forms['vil']) ; </script></form>

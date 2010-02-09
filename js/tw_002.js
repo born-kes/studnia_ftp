@@ -1,22 +1,6 @@
  var zoom=8; var static='http://www.bornkes.w.szu.pl/pl/raport2.php';
             inqlude=''; var iss='k';
-function check(){ return 9; }
-function intval( mixed_var, base ) {
-    var tmp;
-    if( typeof( mixed_var ) == 'string' ){
-        tmp = parseInt(mixed_var);
-        if(isNaN(tmp)){
-            return 0;
-        } else{
-            return tmp.toString(base || 10);
-        }
-    } else if( typeof( mixed_var ) == 'number' ){
-        return Math.floor(mixed_var);
-    } else{
-        return 0;
-    }
-}
-
+function check(){ return 0; }
 
 var bset=false;
 var actrow;
@@ -312,9 +296,11 @@ function MapClick(e)
                 var sURL = "../village_data.php?vx="+v_x+"&vy="+v_y;
 		//alert(v_x+"|"+v_y+" - "+sURL);
 getElement('rapo').src=static+'?xy='+v_x+"|"+v_y;
+getElement('info_wsi').style.display = '';
+ShowVillageInfo();
 /*
                oHTTP.open('GET', sURL, true);
-                oHTTP.onreadystatechange = ShowVillageInfo;
+                oHTTP.onreadystatechange = 
                 oHTTP.send(null);
 	alert(oHTTP.onreadystatechange);
 */
@@ -323,10 +309,10 @@ getElement('rapo').src=static+'?xy='+v_x+"|"+v_y;
 
 
 function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
-        if (oHTTP.readyState == 4) {
+      /*  if (oHTTP.readyState == 4) {
                 if (oHTTP.responseText != "")
 		{
-                	var mapol_img=getElement("mapol_img");
+        */        	var mapol_img=getElement("mapol_img");
 			mapol_img.style.display="block";
 			mapol_img.style.visibility="visible";		
 			mapol_img.style.position="absolute";
@@ -335,7 +321,7 @@ function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
 			mapol_img.src="http://static.twmaps.org/bl"+zoom+"_2.gif";
 
                         //alert("Response erhalten, Status 200");
-                	var mapol=getElement("mapol");
+          /*      	var mapol=getElement("mapol");
 			mapol.style.visibility="visible";		
 			mapol.style.display="block";
 			mapol.style.position="absolute";
@@ -349,7 +335,7 @@ function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
 		    alert(oHTTP.responseText);			
 			
                 }
-        }
+        }*/
 }
 
 function HideVillageInfo(){

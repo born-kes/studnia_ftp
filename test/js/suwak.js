@@ -8,9 +8,9 @@ function input(name,value) {
  return str_buffer; 
 }
 function div_oko(tu) {
-if(tu=='none'){var sas='input_h(\'s\',111)';tu='';}else{var sas= 'input(\''+tu+'_oko\',0)';}
+if(tu=='none'){var sas='input_h(\'_oko\',0)'+ '+' +'input_h(\'s\',111)';tu='';}else{var sas= 'input(\''+tu+'_oko\',0)';}
 	var str_buffer =  new String (
-        '<tr><td id="sie'+tu+'"><b style="cursor: pointer;" onclick="loading('+sas+'+input(\''+tu+'_xy\',\'xxx|yyy\'),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Okolica </b>/ '+
+        '<tr><td id="sie'+tu+'">Okolica:<br><b style="cursor: pointer;" onclick="loading('+sas+'+input(\''+tu+'_xy\',\'xxx|yyy\'),\''+tu+'_map_go\');on(\'map0\');iss=\''+tu+'_\';">Mapa </b>/ '+
         ' <b style="cursor: pointer;" onclick="loading('+sas+'+input(\''+tu+'_xy\',\'xxx|yyy\'),\''+tu+'_map_go\');"> Recznie </b></td></tr>'+
         '<tr><td id="'+tu+'_map_go"></td></tr>'
 
@@ -79,17 +79,17 @@ function input_zoom()
 function input_wojo()
 {
         var str_buffer = new String (
-         "<select name=\"wojsko\" id=\"wojsko\">/n"+
-         "<option value=\"\"></option>/n"+
-         "<option value=\"9\">Zwiad</option>/n"+
-         "<option value=\"10\">LK i KL</option>/n"+
-         "<option value=\"11\">CK</option>/n"+
-         "<option value=\"18\">Pik, Axe, Luk</option>/n"+
-         "<option value=\"22\">Mie</option>/n"+
-         "<option value=\"30\">Tar i Kat</option>/n"+
-         "<option value=\"35\">Sz (gruby)</option>/n"+
-         "<option value=\"0\">Wedlug wsi</option>/n"+
-         "</select>/n"
+         "<select name=\"wojsko\" id=\"wojsko\">\n"+
+         "<option value=\"\"></option>\n"+
+         "<option value=\"9\">Zwiad</option>\n"+
+         "<option value=\"10\">LK i KL</option>\n"+
+         "<option value=\"11\">CK</option>\n"+
+         "<option value=\"18\">Pik, Axe, Luk</option>\n"+
+         "<option value=\"22\">Mie</option>\n"+
+         "<option value=\"30\">Tar i Kat</option>\n"+
+         "<option value=\"35\">Sz (gruby)</option>\n"+
+         "<option value=\"0\">Wedlug wsi</option>\n"+
+         "</select>\n"
         );
        return str_buffer;
 }
@@ -247,7 +247,7 @@ function suwak(b) { var a=b
         '<tr><td>Typ Wioski</td></tr>'+
         '<tr><td>'+input_typ("a")+'</td></tr>'+div_oko("a")+
 
-        '<tr><td><hr></td></tr><tr><th>Obronca</th></tr>'+
+        '<tr><td><hr></td></tr><tr><th>Cel Ataku</th></tr>'+
         '<tr><td>'+
         'Gracz <input type="radio" name="ofiarra" onclick="loading(input_name(\'o\'),\'kogo_go\');on(\'sieo\');" /><br />'+
         'Plemie <input type="radio" name="ofiarra" onclick="loading(input_plemie(),\'kogo_go\');on(\'sieo\');" /><br />'+
@@ -255,7 +255,7 @@ function suwak(b) { var a=b
         '</td></tr>'+
         '<tr><td id="kogo_go"></td></tr>'+div_oko("o")+
         '<tr><td><hr></td></tr>'+
-        '<tr><td>Wojsko</td></tr>'+
+        '<tr><td>Wojsko (tempo marszu)</td></tr>'+
         '<tr><td>'+input_wojo()+'</td></tr>'+
         '<tr><td>Godzina Ataku</td></tr>'+
         '<tr><td>'+input_czas()+'</td></tr>'+

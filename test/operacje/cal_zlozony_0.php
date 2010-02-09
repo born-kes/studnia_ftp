@@ -1,7 +1,7 @@
 <?php    include('../connection.php');	  include('zaplecze/cal_zlozony_0.php');  ?>
 <html><head>
-<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />
-<link rel="stylesheet" type="text/css" href="../img/stamm1201718544.css">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="stamm.css">
 <script language="JavaScript">
 function selectAllata(form, checked) {
 	var spans = document.getElementsByTagName("span");

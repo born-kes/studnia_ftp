@@ -278,8 +278,8 @@ position:relative;
 }
 #inline_popup_main{
 	overflow:auto;
-	height:300px;
-	width:288px;
+	height:500px;
+	width:295px;
 	background-image: url('../graphic/background/content.jpg');
 	padding:3px;
 }

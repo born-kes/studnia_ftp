@@ -45,7 +45,9 @@ function dels(s) {
 s = s.replace(new RegExp("[^\\d|]+","g"),"");
 //s = s.replace(new RegExp(",","g"),"");
  return s;}
-
+function podmiana(a,b,c) {
+a = a.replace(b,c);
+return a; }
 function Explode(str)
 {  var tablica = new Array(); var u=0;
    url=str.split("?");

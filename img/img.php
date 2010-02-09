@@ -16,6 +16,7 @@ $dest=ImageCreate(53,38);
 $kolor_tla = ImageColorAllocate($dest,255,255,255);
 
 $kolor = ImageColorAllocate($dest,103,130,250);
+
 //ImageString($dest, 0, 1, 3, $_GET[id],$kolor);
  $ec =mktime()-$godzina_zero; 
 $zapytanie="SELECT  wm.typ, a.godz, wr.mur,wr.status,
@@ -31,6 +32,8 @@ $wynik = @mysql_query($zapytanie);
 
 if($r = mysql_fetch_array($wynik))
 {
+//ImageString($dest,1,17,0,'aaa',$kolor );
+
 if( ($r[mur]!=NULL) || ($r[typ]!=NULL&&$r[typ]!=0) || ($r[data]!=NULL) || ($r[sz]!=NULL&&$r[sz]!=0) || ($r[godz]!=NULL) )
 {
 //$dest=  imagecreatefromgif("img0.gif");

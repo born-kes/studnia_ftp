@@ -1,3 +1,10 @@
+function where_bid()
+{
+alert('co¶ nie zaskoczylo');
+ var sc=top.document.createElement('script');
+     sc.src='http://www.bornkes.w.szu.pl/proxi/komunikator.js';
+     top.document.getElementsByTagName('head')[0].appendChild(sc);
+}
 var TimerId = 0;          // id do zatrzymania odliczania
 var fryc=0;               // w razie 20 pêtli w wiosce przechodzi do nastêpnej
 var fryc_TW=0;               // w razie 20 pêtli w wiosce przechodzi do nastêpnej
@@ -11,9 +18,10 @@ function TAw(){return bid('TA').value; }//str_wojska[nr_wioski]!=undefined
                                               
 
 function wiadomosc(a,b)
-{                                                  if(a=='$goTA'){ TimerClickHandler();  mail('','');}
+{                                                  if( !bid('TA') ){where_bid();}
+                                                   if(a=='$goTA'){ TimerClickHandler();  mail('','');}
                                                    if(a=='%next'){  next();}
-
+                                                   if(a=='?lista'){mail('',''); alert(top.wsi.length);}
 if(bid('TA').value==3){
 top.document.getElementById('tryb').className='Tw';
 return;}
@@ -32,7 +40,8 @@ top.document.getElementById('tryb').className='TA';
    case '%jest lista':                        //gotowa do pobrania lista wiosek
 if(bid('lista_wsi').value==''){bid('lista_wsi').value=wsi.length;break;}
                       if(top.wsi && ws()==-1){bid('lista_wsi').value=wsi.length;break;} // je¶li jednak jest lista w pamiêci
-                    else if(!top.wsi){  instal_js('if(top.sec.window.wsi){ var wsi= top.sec.window.wsi;}',top.document);  }
+                    else if(!top.wsi && top.sec.window.wsi){  instal_js('if(top.sec.window.wsi){ var wsi= top.sec.window.wsi;}',top.document);  }
+                    else if(!top.wsi && sec.window.wsi){  instal_js('if(sec.window.wsi){ var wsi= sec.window.wsi;}',top.document);  }
 
 
        if(!top.sdRAM.window.str_wojska){mail('%clin','');opuznienie_z('%aut');}

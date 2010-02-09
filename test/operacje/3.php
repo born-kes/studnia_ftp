@@ -5,12 +5,14 @@
 <script src="../js/mootools.js" type="text/javascript"></script>
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head>
-<body><br />
+<body><br /><form enctype="multipart/form-data" action="4.php" method="post">
+
 <table class="vis" align="center">
-<tr class="units_there"><td>
-<form enctype="multipart/form-data" action="4.php" method="post">
+<tr class="units_there">
+<td>Data i godzina ataku : <b><?php echo $_POST[czas1]; ?></b></td>
+<td colspan="4" />
+<td colspan="2">login:<input type="text" name="ktos" value="<?php echo $_SESSION['zalogowany']; ?>" size="5" /></td></tr> 
 <?php 
-echo 'Data i godzina ataku : <b>'. $_POST[czas1] .'</b>'; 
 $ata=@array_keys($_POST['ata']);
 $obr=@array_keys($_POST['obr']);
 
@@ -67,9 +69,11 @@ if($_POST[wojsko]!=null && $_POST[wojsko]!=0){$co_go=$co_idzie[$_POST[wojsko]];}
 $czas=przeliczenie($szll);
 
 $mktt=mkczas_pl($_POST[czas1])-$szll;  //czas wys³ania ataku
-$plac='<a href="http://pl5.plemiona.pl/game.php?village='.$atakire[id].'&screen=place&mode=command&target='.$obrona[id].'" target="_parent/ramka" >wyslij wojska</a>';
+$plac='http://pl5.plemiona.pl/game.php?village='.$atakire[id].'&screen=place&mode=command&target='.$obrona[id];
 $notatka = ($mktt-$godzina_zero)."|".$atakire[id].'|'.$obrona[id].'|'.urlencode("atak <b>".$co_go."</b> na godzine <i>$_POST[czas1]</i> "); //.urlencode($plac);
 
+$bb_code .=date("d-m-Y G:i:s ",$mktt).'atak z [village]'.$atakire[x_y].'[/village] '.$co_go.' [village]'.$obrona[xy].'[/village] wejdz na [url='.$plac.']Plac[/url]
+';
 
 echo'<tr>
 <td>'.$atakire[name].' ('.$atakire[x_y].')</td>
@@ -81,7 +85,7 @@ echo'<tr>
 <td align ="right">
 <input name="minu[]" value="'.$notatka.'" type="checkbox">
 </td>
-<th>'.$plac.'</th></tr>';}
+<th><a href="'.$plac.'" target="_parent/ramka" >wyslij wojska</a></th></tr>';}
 ?>
 <tr><td colspan="5" class="selected"> </td><td class="units_there"><input value="Dodaj" type="submit"></td></tr></table>
-</form>
+</form><br /> <h1>BB-Code</h1><textarea name="" rows="20" cols="130" class="vis" align="center"><?PHP echo $bb_code;?></textarea>

@@ -21,6 +21,7 @@ $k_txt = ImageColorAllocate($dest,244,240,24); //¿ó³ty
 $flaga =  imagecreatefromgif("ata.gif");
 imagecopy($dest, $flaga , 5, 0, 0, 0, 11,11);
 $k_txt_ = ImageColorAllocate($dest,244,240,24); //¿ó³ty
+    $e = 'dni';
 
 
 ImageString($dest,1,17,0,$a,$k_txt_);

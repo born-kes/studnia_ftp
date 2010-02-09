@@ -1,4 +1,4 @@
-<?PHP   include('../connection.php'); if($_GET==NULL && $_POST==NULL){echo 'Brak Danych do obliczen';exit();} 
+<?PHP   include('../connection.php'); if($_GET==NULL && $_POST==NULL){echo 'Brak Danych do obliczen';exit();}
 ?><html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <script src="../js/ts_picker.js" type="text/javascript"></script>
@@ -28,14 +28,16 @@ tr.center td { text-align:center; }
 -->
 </style></head>
 <body><?php echo '<form name="form" action="radar.php" method="POST">';
-       $id= $_GET[id];$vi=$_GET[village];
-     $zap = "SELECT x,y FROM `ws_all` Where id='$id'";//wioska
 
-     $zap1 = "SELECT id FROM `list_user` Where name='".$_SESSION[zalogowany]."'";//gracz którym jeste¶
+echo '<input type="hidden" name="xy" value="'.$_GET[id].'" />';
+echo '<input type="hidden" name="id" value="'.$_GET[village].'" />';
 
-connection();$wynik = @mysql_query($zap);if($r = mysql_fetch_array($wynik)){echo '<input type="hidden" name="xy" value="'.$r[x].'|'.$r[y].'" />';}destructor();
-connection();$wynik1 = @mysql_query($zap1);if($r = mysql_fetch_array($wynik1)){echo '<input type="hidden" name="gracz" value="'.$r[id].'" />';}destructor();
-echo '<input type="hidden" name="id" value="'.$id.'" />';
+if($_GET[t]==null)
+    { echo '<input type="hidden" name="gracz" value="'.$_SESSION['id'].'" />'; }
+else
+    { echo '<input type="hidden" name="t" value="'.$_GET[t].'" />'; }
+
+
 
  ?>
 <table class="main" align="center">

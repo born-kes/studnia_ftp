@@ -2,7 +2,12 @@ var bset=false;
 var actrow;
 
 function selecturl(s) {
-	var gourl = s.options[s.selectedIndex].value;	document.images.map.src = gourl;
+	var v = s.options[s.selectedIndex].value;
+
+ document.images.map.src = static + '?id=' + s_hex[v];
+ center_x=s_x[v]; 
+ center_y=s_y[v]; 
+ zoom =s_zoom[v];
 }
 function getElement(id)
 {
@@ -293,7 +298,8 @@ function MapClick(e)
 	//	alert(v_x+"|"+v_y+" - "+sURL);
 	gmap(v_x+"|"+v_y);
 
-off('map0');/*
+off('map0');
+ShowVillageInfo(); /*  KES
                oHTTP.open('GET', sURL, true);
                 oHTTP.onreadystatechange = ShowVillageInfo;
                 oHTTP.send(null);
@@ -304,9 +310,9 @@ off('map0');/*
 
 
 function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
-        if (oHTTP.readyState == 4) {
+       /* if (oHTTP.readyState == 4) {
                 if (oHTTP.responseText != "")
-		{
+		{*/
                 	var mapol_img=getElement("mapol_img");
 			mapol_img.style.display="block";
 			mapol_img.style.visibility="visible";		
@@ -314,8 +320,8 @@ function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
 			mapol_img.style.left=m_x-2+"px";
 			mapol_img.style.top=m_y-2+"px";
 			mapol_img.src="http://static.twmaps.org/bl"+zoom+"_2.gif";
-
-                        //alert("Response erhalten, Status 200");
+//alert('jestem');
+           /*             //alert("Response erhalten, Status 200");
                 	var mapol=getElement("mapol");
 			mapol.style.visibility="visible";		
 			mapol.style.display="block";
@@ -330,7 +336,7 @@ function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
 		    alert(oHTTP.responseText);			
 			
                 }
-        }
+        }*/
 }
 
 function HideVillageInfo(){
@@ -393,7 +399,7 @@ function GetVillageCoords(e)               // pobiera polozenie kursora
 
 function MapMouseMove(e)                 // kursor myszy na mapie
 {
-    if (zoom>=2)
+    if (zoom!==null)//>=2 poprawka
     {
 	var c_x=Math.floor(center_x-(500/(zoom+1)));
 	var c_y=Math.floor(center_y-(500/(zoom+1)));
@@ -478,7 +484,8 @@ function MapMouseOut(e)        //ukrywa kursor po opuszczeniu mapy
 
 function registerEvents()        //ustalanie na starcie procesow mapy
 {
-    var map = getElement('map');
+   // var map = getElement('map');// KES modyfikacja
+    var map = gid('map');
     if (window.addEventListener)
     {
 	map.addEventListener('mouseup',MapClick,false);

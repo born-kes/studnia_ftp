@@ -132,7 +132,7 @@ $typ=$nowy[typ];
 destructor();
 
 }
-$rodzaj_budy=4;
+$rodzaj_budy=5;
 
 echo '<input name="href" id="href" value="'.$_POST['href'].'" type="hidden">';
 echo '<input name="nr_wsi" id="nr_wsi" value="" type="hidden">';

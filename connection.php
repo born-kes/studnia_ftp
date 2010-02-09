@@ -10,7 +10,8 @@ if(!isSet($_SESSION['zalogowany'])){
   exit();}
 
 include_once('serwer.php');
-if(!isSet($_SESSION['id'])){ $user=$_SESSION['zalogowany'];
+if(!isSet($_SESSION['id']) || $_SESSION['id']==null|| count($_SESSION['id'])>1){
+ $user=$_SESSION['zalogowany'];
   connection();
      $wynik = mysql_query("SELECT `id` FROM `list_user` WHERE name='$user';")or die('Blad zapytania');
 
@@ -69,7 +70,7 @@ elseif($rr<$godzina_jeden && $rr<$godzina_jeden-518400 ){
 elseif($rr<$godzina_jeden && $rr>$godzina_jeden-518400 ){
      $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Nowy Raport"> ';}
 elseif($rr>$godzina_jeden && $rr<mktime()-$godzina_zero ){
-     $ciag =$wynik.' ..<IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
+     $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
 elseif( $rr<mktime() ){
      $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc"> ';}
     return $ciag;
@@ -175,4 +176,39 @@ function url_proxi($str)
    }
    return $url;
 }
+function map_color($id_gracz,$id_plemie)
+{  global $moje_id;
+if($id_gracz==0){return 'sz';}
+elseif($id_gracz==$moje_id){ return 'ja';}
+
+switch($id_plemie){
+case 23660:	return 'my';       //-BAE-
+	//Sojusze
+case 4469:	return 'so';	//~ZP~
+case 11183:	return 'so';	//&#1769;-MZ-&#1769;
+case 23185:	return 'so';	//=MAD=
+case 51349:	return 'so';	//ZC
+case 51415:	return 'so';	//BM
+case 51472:	return 'so';	//DEVILS	
+case 51732:	return 'so';	//SmAp
+
+    	//PON
+case 51308:	 return 'po';	 //PALS
+
+	//Wrogowie
+case 422:	return 'aa';	//RedRub
+case 898:	return 'aa';	//**MI**
+case 13245:	return 'aa';	//C M
+case 48588:	return 'aa';	//NWO
+case 51306:	return 'aa';	//ZKG
+case 51667:	return 'aa';	//PaL
+case 51724:	return 'aa';	//HERO
+case 50811:	return 'aa';	//SNRG
+
+	//inne
+default:	return 'in';	// inne
+break;             }
+}
+
+
 ?>
