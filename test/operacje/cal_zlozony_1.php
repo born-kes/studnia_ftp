@@ -3,7 +3,13 @@
 <link rel="stylesheet" type="text/css" href="stamm.css">
 <script src="../js/mootools.js" type="text/javascript"></script>
 <script src="../js/menu.js" type="text/javascript"></script>
-<script type="text/javascript">
+<style type="text/css">
+<!--
+
+.red {background-color: red; color: rgb(250, 250, 250); }
+
+-->
+</style><script type="text/javascript">
 function ile_gdzie_poszlo(form)
 { 	var k = Array();
 
@@ -28,12 +34,63 @@ function ukryj() {
 	var style = document.getElementById("inline_popup").style;
 	style.display = (style.display == 'none' ? 'block' : 'none');
 }
+function blokowanie_opcji(id)
+{var form = document.forms[0];
+
+  for(var i=2; i<form.length-1; i++)
+  {i++;//przewijanie selektów
+	var select = form.elements[i];
+	if(select.selectedIndex != null)
+	{
+		for(var j=0; j<select.options.length; j++)
+		{//przewijanie options
+		var optio = select.options[j];
+		  if(optio.value==id)
+		  {
+		      if(select.value != id)
+		      //{optio.style.display = (optio.style.display == 'none' ? '' : 'none');}
+		      {optio.disabled = (optio.disabled == 'tak' ? '' : 'tak');}
+		      //else{ optio.style.display = '';}
+		      else{optio.disabled = '';}
+		       break;
+		  }
+		}
+	}
+  }
+ 
+}
+function podswietlanie_opcji(id)
+{var form = document.forms[0];
+
+  for(var i=2; i<form.length-1; i++)
+  {i++;//przewijanie selektów
+	var select = form.elements[i];
+	if(select.selectedIndex != null)
+	{
+if(select.value != id){
+
+		for(var j=0; j<select.options.length; j++)
+		{//przewijanie options
+		var optio = select.options[j];
+		  if(optio.value==id)
+		{optio.className='red';}
+		  else
+		{optio.className='';}
+
+		}
+			}
+			//else
+			//{select.className='red';}
+	}
+  }
+ 
+}
 </script>
 
 </head>
 <body onload="initMenu()">
+<form enctype="multipart/form-data" action="3.php" name="vil"  method="POST">
 <table class="main" align="right"><TR><TD>
-<form enctype="multipart/form-data" action="3.php" name="vil"  method="POST"><br>
 <?php
   include('../connection.php');
 $ata=@array_keys($_POST['ata']);
@@ -75,7 +132,7 @@ if($g>1){$selec .='<option value="0">Zostaje w domu</option>';}
        while($r = mysql_fetch_array($wynik_obr))
        {
 if($l==0){$ile_co[++$jk]=$r[0];
-$ile_gdzie.='<tr id="wiersz_'.$jk.'" ><th nowrap >'.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th></tr>';
+$ile_gdzie.='<tr id="wiersz_'.$jk.'" ><th nowrap >'.urldecode($r[1]).' ('.$r[2].'|'.$r[3].')</th><th id="cel_'.$jk.'" nowrap ></th><td nowrap ><input type="checkbox" title="blokuj" onclick="blokowanie_opcji('.$r[id].')"><input type="radio" name="Podswietl" title="Podswietl" onclick="podswietlanie_opcji('.$r[id].')" /></td></tr>';
 }
         $odleglosc=sqrt(potega($f[2]-$r[2],2)+potega($f[3]-$r[3],2));
 
@@ -106,7 +163,7 @@ echo $selec."</td></tr>"; }
 <input value="Dalej" type="submit">
 </td><td>
 </td></tr></table>
-
+</form>
 <script type="text/javascript">var ile_co= Array(0<?PHP foreach($ile_co as $v){echo ','.$v;} ?>);
 </script>
 <div style="width: 200px; height:17px; position: fixed; display: block; left: 33px; top: 0px; ">
@@ -115,4 +172,4 @@ echo $selec."</td></tr>"; }
 <div id="inline_popup" style="width: 400px; height:510px; position: fixed; display: block; left: 33px; top: 23px; ">
   <div id="inline_popup_main" style="width: 390px;">   <table class="vis" border=1 width="200"><tr><th><table class="main"  width="100%"><?PHP echo $ile_gdzie; ?></table></th></tr></table></div>
 </div>
-<script type="text/javascript"> ile_gdzie_poszlo(document.forms['vil']) ; </script></form>
+<script type="text/javascript"> ile_gdzie_poszlo(document.forms['vil']) ; </script>

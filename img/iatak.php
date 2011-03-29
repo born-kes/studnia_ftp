@@ -1,5 +1,5 @@
 <?PHP
-//a => ilosc atakow
+//*/a => ilosc atakow
 $a= mysql_num_rows($wynik);
   $mktt =  $r[godz]+$godzina_zero-mktime();
 $odliczanie =explode(":", przeliczenie($mktt));
@@ -7,25 +7,25 @@ $odliczanie =explode(":", przeliczenie($mktt));
 
 if($odliczanie[0]>24){             // wiecej niz 24 godziny
     $f =intval($odliczanie[0]/24);//.'Godz';
-    $e = 'dni';
-$k_txt = ImageColorAllocate($dest,4,2,2); //czarny
+  if($f==1){$e='dzien';}else{ $e = 'dni'; }
+$k_txt_a = $k_txt_zie; //czarny
 }elseif($odliczanie[0]>=1){         // wiecej niz 1 godzina
     $f =intval($odliczanie[0]);//.'Godz';
     $e = 'godz';
-$k_txt = ImageColorAllocate($dest,204,200,200); //bialy
+$k_txt_a = $k_txt_red; //szary
             }else{                 // mniej ni¿ godzina
-$k_txt = ImageColorAllocate($dest,244,240,24); //¿ó³ty
+$k_txt_a = $k_txt_yo; //¿ó³ty
     $f=intval($odliczanie[1]);//.'min';
     $e = 'min';}
 
-$flaga =  imagecreatefromgif("ata.gif");
-imagecopy($dest, $flaga , 5, 0, 0, 0, 11,11);
-$k_txt_ = ImageColorAllocate($dest,244,240,24); //¿ó³ty
-    $e = 'dni';
+                    $flaga_a =  imagecreatefromgif("ata.gif");
+imagecopy($dest, $flaga_a, 5+$x_0+28, 0+$y_0+5, 0+$x_0-4, 0+$y_0, 12,12);
+$k_txt_ = $k_txt_yo; //¿ó³ty
+//    $e = 'dni';
 
-
-ImageString($dest,1,17,0,$a,$k_txt_);
-ImageString($dest,3,5,13,$f,$k_txt);
-ImageString($dest,0,23,17,$e,$k_txt);
-
+if($a>9){$as_ = -5;}else{$as_ = 0;}
+ImageString($dest,1,17+$x_0+28+$as_,0+$y_0,$a,$k_txt_); // ilo¶æ ataków
+ImageString($dest,3,5+$x_0,13+$y_0,$f,$k_txt_a);  // odliczanie
+ImageString($dest,0,23+$x_0,17+$y_0,$e,$k_txt_a);   // slowo
+//*/
 ?>

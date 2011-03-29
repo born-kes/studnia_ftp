@@ -72,7 +72,7 @@ $mktt=mkczas_pl($_POST[czas1])-$szll;  //czas wys³ania ataku
 $plac='http://pl5.plemiona.pl/game.php?village='.$atakire[id].'&screen=place&mode=command&target='.$obrona[id];
 $notatka = ($mktt-$godzina_zero)."|".$atakire[id].'|'.$obrona[id].'|'.urlencode("atak <b>".$co_go."</b> na godzine <i>$_POST[czas1]</i> "); //.urlencode($plac);
 
-$bb_code .=date("d-m-Y G:i:s ",$mktt).'atak z [village]'.$atakire[x_y].'[/village] '.$co_go.' [village]'.$obrona[xy].'[/village] wejdz na [url='.$plac.']Plac[/url]
+$bb_code .=date("d-m-Y G:i:s ",$mktt).'atak z [coord]'.$atakire[x_y].'[/coord] '.$co_go.' [coord]'.$obrona[xy].'[/coord] wejdz na [url='.$plac.']Plac[/url]
 ';
 
 echo'<tr>

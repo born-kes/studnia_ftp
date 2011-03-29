@@ -73,7 +73,7 @@ tr.center td { text-align:center; }
  <tr>
   <td>(<i> '.$r[name].' </i>)</td>
   <td><b>'.$r[Rekordow].'</b> x </td>
-  <td><a href="javascript:show_suwak(\'w'.$r[cel].'\');"> '.$r[x].' | '.$r[y].' </a></td>
+  <td><a href="javascript:show_suwak(\'w'.$r[cel].'\');"> '.$r[x].'|'.$r[y].' </a><a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=map&amp;x='.$r[x].'&y='.$r[y].'" target="_blank"><img src="http://pl5.plemiona.pl/graphic/map_center.png" alt="Scentruj mapê" title="Scentruj mapê"></a></td>
   <td>%stroi_'.$r[cel].'</td>
  </tr>';
  }
@@ -82,10 +82,17 @@ tr.center td { text-align:center; }
        $storing0 = str_replace('%stor_'.$names, $storing, $storing0);
 
 //  $storing.='</td><td valign="top">';
-
-  $zap ="SELECT  a.`cel` , v.x, v.y, a.godz, t.name
+/*stary zap
+  $zap ="SELECT  a.`cel` , v.x, v.y, a.godz, t.name,a.kto
        FROM list_ataki a, ws_all v, list_user t
-       WHERE a.`cel` = v.id
+       WHERE a.`pochodzenie` = v.id
+       AND t.id = a.kto
+       AND a.godz>$ec
+       ORDER BY a.cel ASC";   //echo $zap;
+  */
+  $zap ="SELECT  a.`cel` , v.x, v.y, a.godz, t.name,a.kto
+       FROM list_ataki a, ws_all v, list_user t
+       WHERE a.`pochodzenie` = v.id
        AND t.id = a.kto
        AND a.godz>$ec
        ORDER BY a.cel ASC";   //echo $zap;
@@ -105,8 +112,8 @@ tr.center td { text-align:center; }
  $stor.='
  <tr>
   <td> </td>
-  <td> '.$r[x].' | '.$r[y].' </td>
-  <td><b><=</b>(<i> '.$r[name].' </i>)</td>
+  <td><b><--</b> <a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=map&x='.$r[x].'&y='.$r[y].'" target="_blank">'.$r[x].'|'.$r[y].' </a></td>
+  <td>(<i> <a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=info_player&id='.$r[kto].'" target="_blank">'.urldecode($r[name]).' </a></i>)</td>
   <td> '.data_z_bazy($r[godz]).' </td>
  </tr>';}
   destructor();

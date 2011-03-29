@@ -29,6 +29,7 @@ function mennu()
       '<td>Profil<br>'+
        '<table cellspacing="4"><tbody>'+
        '<tr><td><a href="../rada/minutnik.php" target="ramka">Minutnik</a></td></tr>'+
+       '<tr><td><a href="operacje/edt_typ.php" target="ramka">Typów wiosek</a></td></tr>'+
        '</tbody></table></td>'+
 
        '<td>Konwertuj<br>'+

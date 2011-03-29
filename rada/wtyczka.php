@@ -1,6 +1,6 @@
 <?php include('../connection.php');//<script src="../js/scriptt.js" type="text/javascript"></script>
       include('../hello/id.php');
-if(strpos($_GET[wersja],$name)!==false){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3>';exit();}
+if(strpos($_GET[wersja],$name)!==false){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3><a href="../hello/Hello_Studnia'.$name.'.xpi"  id="ff">tutaj </a>';exit();}
 //<script type="text/javascript">
 //			var pageTracker = _gat._getTracker("UA-1427236-2");
 //			pageTracker._trackPageview();
@@ -44,13 +44,13 @@ wiêc jest to ca³y pakiet w jednym pliku.<br><br>
  Albo<br> Zapiaæ na dysku i przeci±gnij go do Otwartego okna 'FireFoxa,<br>
  tak jak by¶ go przenosi³.<br><br>
  Krok 3<br>
- Zobaczysz komunikat o instalacyji i po 5 sekundach mo¿esz go zainstalowaæ.<br><br>
+ Zobaczysz komunikat o instalacji i po 5 sekundach mo¿esz go zainstalowaæ.<br><br>
  Krok 4<br>
  Uruchom ponownie przegl±darkê, by aktywowaæ wtyczkê.<br><br>
  Krok 5<br>
  Ciesz siê Now± Wtyczk±<br><br><br><br>
 
 
-A wstyczka dla Proxi jest <a href="../hello/wtykProxi.xpi">tutaj </a> instaluje siê tak samo.
+A wtyczka dla Proxi jest <a href="../hello/wtykProxi.xpi">tutaj </a> instaluje siê tak samo.
 </body>
 </html>

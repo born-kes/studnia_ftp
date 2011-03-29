@@ -7,6 +7,7 @@ td		{ font-size:9pt; }
 table.main { background-color:#F1EBDD; border:1px solid #804000;border-bottom:1px;}
 table.main td{font-size:9px;}
 table.main th{font-size:9px;}
+th{ font-size:9pt; text-align: left; font-weight:bold; background-color:#DFCCA6; }
 table.main tr.row th{font-size:9px;}
 table.news { background-color:#F1EBDD; text-align:left;}
 .in_border { background-color:#F1EBDD; }

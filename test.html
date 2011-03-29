@@ -1,0 +1,546 @@
+<link rel="stylesheet" type="text/css" href="stamm1201718544.css">
+<style type="text/css">
+<!--
+// input { background-color:#F1EBDD; background-image:url(http://pl5.plemiona.pl/graphic/background/content.jpg); border:1px solid #804000;}
+// .inpu { background-color:#F1EBDD; background-image:url(http://pl5.plemiona.pl/graphic/background/content.jpg); border:1px solid #804000;}
+ .red {color:#FF0000;}
+-->
+</style>
+<script language="JavaScript">
+<!--
+ var ratusz =  new Array(0,  5,  6,  7,  8,  9, 11, 13, 15, 18, 21, 24, 28, 33, 38, 45, 53, 62, 72, 84, 99,116,135,158,185,216,253,296,347,406,475);
+ var koszary = new Array(0,  7,  8, 10, 11, 13, 15, 18, 21, 25, 29, 34, 39, 46, 54, 63, 74, 86,101,118,138,162,189,221,259,303);
+ var stajnie = new Array(0,  8,  9, 11, 13, 15, 18, 21, 24, 28, 33, 38, 45, 53, 62, 72, 84, 99,115,135,158);
+ var warsztat= new Array(0,  8,  9, 11, 13, 15, 18, 21, 24, 28, 33, 38, 45, 53, 62, 72);
+ var palac   = new Array(0, 80);
+ var kuznia  = new Array(0, 20, 23, 27, 32, 37, 44, 51, 60, 70, 82, 96,112,132,154,180,211,247,289,338,395);
+ var plac    = new Array(0,0);
+ var piedesta= new Array(0, 10);
+ var rynek   = new Array(0, 20, 23, 27, 32, 37, 44, 51, 60, 70, 82, 96,112,132,154,180,211,247,289,338,395,462,541,633,740,866);
+ var tartak  = new Array(0,  5,  6,  7,  8,  9, 10, 12, 14, 16, 18, 21, 24, 28, 33, 38, 43, 50, 58, 67, 77, 89,103,119,138,159,183,212,245,283,326);
+ var cegielni= new Array(0, 10, 11, 13, 15, 17, 19, 22, 25, 29, 33, 37, 42, 48, 55, 63, 71, 81, 93,106,121,137,157,179,204,232,265,302,344,392,447);
+ var huta    = new Array(0, 10, 12, 14, 16, 19, 22, 26, 30, 35, 41, 48, 56, 66, 77, 90,105,123,144,169,197,231,270,316,370,433,507,593,693,811,949);
+ var zagroda = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+ var schowek = new Array(0,  2,  2,  3,  3,  4,  4,  5,  6,  7,  8);
+ var mur     = new Array(0,  5,  6,  7,  8,  9, 11, 13, 15, 18, 21, 24, 28, 33, 38, 45, 53, 62, 72, 84, 99);
+
+ var ratusz_pkt  = new Array(0,10,12,14,17,21,25,30,36,43,52,62,74,89,107,128,154,185,222,266,319,383,460,552,662,795,954,1145,1374,1648,1978);
+ var koszary_pkt = new Array(0,16,19,23,28,33,40,48,57,69,83,99,119,143,171,205,247,296,355,426,511,613,736,883,1060,1272);
+ var stajnie_pkt = new Array(0,20,24,29,35,41,50,60,72,86,103,124,149,178,214,257,308,370,444,532,639);
+ var warsztat_pkt= new Array(0,24,29,35,41,50,60,72,86,103,124,149,178,214,257,308);
+ var palac_pkt   = new Array(0,512);
+ var kuznia_pkt  = new Array(0,19,23,27,33,39,47,57,68,82,98,118,141,169,203,244,293,351,422,506,607);
+ var plac_pkt    = new Array(0,0);
+ var piedesta_pkt= new Array(0,24);
+ var rynek_pkt   = new Array(0,10,12,14,17,21,25,30,36,43,52,62,74,89,107,128,154,185,222,266,319,383,460,552,662,795);
+ var tartak_pkt  = new Array(0,6,7,9,10,12,15,18,21,26,31,37,45,53,64,77,92,111,133,160,192,230,276,331,397,477,572,687,824,989,1187);
+ var cegielni_pkt= new Array(0,6,7,9,10,12,15,18,21,26,31,37,45,53,64,77,92,111,133,160,192,230,276,331,397,477,572,687,824,989,1187);
+ var huta_pkt    = new Array(0,6,7,9,10,12,15,18,21,26,31,37,45,53,64,77,92,111,133,160,192,230,276,331,397,477,572,687,824,989,1187);
+ var zagroda_pkt = new Array(0,5,6,7,9,10,12,15,18,21,26,31,37,45,53,64,77,92,111,133,160,192,230,276,331,397,477,572,687,824,989);
+ var spichlez_pkt= new Array(0,6,7,9,10,12,15,18,21,26,31,37,45,53,64,77,92,111,133,160,192,230,276,331,397,477,572,687,824,989,1187);
+ var schowek_pkt = new Array(0,5,6,7,9,10,12,15,18,21,26);
+ var mur_pkt     = new Array(0,8,10,12,14,17,20,24,29,34,41,50,59,71,86,103,123,148,177,213,256);
+
+ var pik= new Array('?:?',0,'10:42',642 ,'10:06',606 ,'9:31',571 ,'8:59',539 ,'8:29',509 ,'8:00',480 ,'7:33',453 ,'7:07',427 ,'6:43',403 ,'6:20',380 ,'5:59',359 ,'5:38',338 ,'5:19',319 ,'5:01',301 ,'4:44',284 ,'4:28',268 ,'4:13',253 ,'3:59',239 ,'3:45',225 ,'3:33',213 ,'3:21',201 ,'3:09',189 ,'?:?',0 ,'?:?',0 ,'2:39',159);
+ var mie= new Array('?:?',0,'15:44',944,'14:50',890,'14:00',840,'13:13',793,'12:28',748,'11:45',705,'11:06',666,'10:28',628,'9:52',592,'9:19',559,'8:47',527,'8:17',497,'7:49',469,'7:23',443,'6:58',418,'6:34',394,'6:12',372,'5:51',351,'5:31',331,'5:12',312,'5:55',355,'4:38',278,'?:?',0,'?:?',0,'3:53',233);
+ var axe= new Array('?:?',0,'13:51',831,'13:04',784,'12:19',739,'11:38',698,'10:58',658,'10:21',621,'9:46',586,'9:13',553,'8:41',521,'8:12',492,'7:44',464,'7:18',438,'06:53',413,'06:30',390,'6:08',368,'5:47',347,'5:27',327,'5:09',	309,'4:51',	291,'4:35',	275,'4:19',	259,'4:05',245,'?:?',0,'?:?',0,'3:26',206);
+ var luk= new Array('?:?',0,'18:53',1133,'17:48',1068,'16:48',1008,'15:51',951,'14:57',897,'14:06',846,'13:19',799,'12:33',753,'11:51',711,'11:11',671,'10:33',633,'9:57',597,'9:23',563,'8:51',531,'8:21',501,'7:53',473,'7:26',446,'7:01',421,'6:37',397,'6:15',375,'5:53',353,'5:34',334,'?:?',0,'?:?',0,'4:40',280);
+ var zw = new Array('?:?',0,'9:27',567 ,'8:54',534 ,'8:24',504 ,'7:56',476 ,'7:29',449 ,'7:03',423 ,'6:40',400 ,'6:17',377 ,'5:56',356 ,'5:36',336 ,'5:17',317 ,'4:59',299 ,'4:42',282 ,'4:42',282 ,'4:11',251 ,'3:57',237 ,'3:34',214 ,'3:31',211 ,'3:19',199 ,'3:08',188);
+ var lk = new Array('?:?',0,'18:53',1133,'17:48',1068,'16:48',1008,'15:51',951,'14:57',897,'14:06',846,'13:19',799,'12:33',753,'11:51',711,'11:11',671,'10:33',633,'9:57',597,'9:23',563,'9:23',563,'8:21',501,'7:53',473,'7:26',446,'7:01',421,'6:37',397,'6:15',375);
+ var kl = new Array('?:?',0,'28:19',1699,'26:42',1602,'25:12',1512,'23:46',1426,'22:26',1346,'21:09',1269,'19:58',1198,'18:50',1130,'17:46',1066,'16:46',1006,'15:49',949,'14:55',895,'14:4',844,'14:4',844,'12:32',752,'11:49',709,'11:9',669,'10:31',631,'9:55',595,'9:22',562);
+ var ck = new Array('?:?',0,'37:45',2265,'35:36',2136,'33:36',2016,'31:42',1902,'29:54',1794,'28:12',1692,'26:37',1597,'25:06',1506,'23:41',1421,'22:21',1341,'21:05',1265,'19:53',1193,'18:46',1126,'18:46',1126,'16:42',1002,'15:45',945,'14:52',892,'14:01',841,'13:14',794,'12:29',749);
+ var kat= new Array('?:?',0, '75:29',4529, '71:12',4272, '67:11',4031, '63:23',3803, '59:47',3587, '56:24',3384, '53:13',3193, '50:12',3012, '47:22',2842, '44:41',2681, '?:?',0, '39:46',2386, '37:31',2251,'?:?',0, '33:23',2003);
+ var tar= new Array('?:?',0,'50:19',3019 ,'47:28',2848 ,'44:47',2687 ,'42:15',2535 ,'39:52',2392 ,'37:36',2256 ,'35:29',2129 ,'33:28',2008 ,'31:35',1895 ,'29:47',1787 ,'?:?',0 ,'26:31',1591 ,'25:01',1501 ,'?:?',0 ,'22:16',1336);
+ var mur_procent = new Array (1,1.04,1.08,1.12,1.16,1.20,1.24,1.29,1.34,1.39,1.44,1.49,1.55,1.60,1.66,1.72,1.79,1.85,1.92,1.99,2.07);
+	var unitsy = {
+		// [wood,stone,iron,  atak, ob.piech  ob.lk  ob.kl]
+		pik: 	[ 50,	 30, 	 10, 	 10,	 15,	45,	 20 ],
+		mie: 	[ 30,	 30, 	 70, 	 25,	 50,	15,	 40 ],
+		axe: 	[ 60,	 30, 	 40, 	 40,	 10,	 5,	 10 ],
+		luk: 	[ 100,	 30, 	 60, 	 15,	 50,	40,	  5 ],
+		zw: 	[ 50,	 50, 	 20, 	  0,	  2,	 1,	  2 ],
+		lk: 	[125,	 100,	250, 	130,	 30,	40,	 30 ],
+		kl: 	[250,	 100,	150, 	120,	 40,	30,	 50 ],
+		ck: 	[200,	 150,	600, 	150,	200,	80,	180 ],
+		tar: 	[300,	 200,	200, 	  2,	 20,	50,	 20 ],
+		kat: 	[320,	 400,	100, 	100,	100,	50,	100 ]
+	};
+	
+ var ludz = new Array(0,240,281,329,386,452,530,622,729,854,1002,1174,1376,1613,1891,2216,2598,3045,3569,4183,4904,5748,6737,7896,9255,10848,12715,14904,17469,20476,24000)
+ var koszary_surowce  = new Array(0,0,0);
+ var stajnia_surowce  = new Array(0,0,0);
+ var warsztat_surowce = new Array(0,0,0);
+
+function gid(id) { return document.getElementById(id); }
+function test(a,b,b1,c){    // jak opisac wyjatki ??
+if(c && (gid(a).value==null || gid(a).value==0)){ gid(a+'_s').innerHTML = 'Minimalny Lv 1'; gid(a).value=1; }
+else if(gid(a).value==null || gid(a).value<0){ gid(a+'_s').innerHTML = 'Minimalny Lv 0'; gid(a).value=0; }
+else if(gid(a).value>b.length-1){               gid(a+'_s').innerHTML = 'Maksymalny Lv '+ (b.length-1); gid(a).value=b.length-1;}
+else {gid(a+'_s').innerHTML ='';}
+suma_pkt += b[gid(a).value];
+suma_zag += b1[gid(a).value];
+}
+  var suma_zag=0;
+  var suma_pkt=0;
+function formatTime(time) {
+	// Wieder aufsplitten
+	var hours = Math.floor(time/3600)%24;
+	var dni = (Math.floor(time/3600) - hours)/24;
+	var minutes = Math.floor(time/60) % 60;
+	var seconds = time % 60;
+
+	var timeString = "";
+	if(dni != 0)
+	timeString += dni + " dni ";
+	if(hours > 1 || dni!=0)
+	timeString += hours + ":";
+
+	if(minutes < 10)
+		timeString += "0";
+	timeString += minutes + ":";
+	if(seconds < 10)
+		timeString += "0";
+	timeString += seconds;
+	
+	return timeString;
+
+}
+function suma()
+{
+ suma_zag=0;
+ suma_pkt=0;
+ test('ratusz'   ,ratusz_pkt   ,ratusz   ,true);
+
+ test('koszary'  ,koszary_pkt  ,koszary  ,false);
+gid('lv_koszar').innerHTML = 'Koszary lv. <b>'+gid('koszary').value+'</b>';
+ test('stajnie'  ,stajnie_pkt  ,stajnie  ,false);
+gid('lv_stajnia').innerHTML= 'Stajnia lv. <b>'+gid('stajnie').value+'</b>';
+ test('warsztat' ,warsztat_pkt ,warsztat ,false);
+gid('lv_warsztat').innerHTML='Warsztat lv. <b>'+ gid('warsztat').value+'</b>';
+ test('palac'    ,palac_pkt    ,palac    ,false);
+ test('kuznia'   ,kuznia_pkt   ,kuznia   ,false);
+ test('plac'     ,plac_pkt     ,plac     ,false);
+ test('piedesta' ,piedesta_pkt ,piedesta ,false);
+ test('rynek'    ,rynek_pkt    ,rynek    ,false);
+ test('tartak'   ,tartak_pkt   ,tartak   ,false);
+ test('cegielni' ,cegielni_pkt ,cegielni ,false);
+ test('huta'     ,huta_pkt     ,huta     ,false);
+ test('zagroda'  ,zagroda_pkt  ,zagroda  ,true);
+ test('spichlez' ,spichlez_pkt ,zagroda  ,true);
+ test('schowek'  ,schowek_pkt  ,schowek  ,false);
+ test('mur'      ,mur_pkt      ,mur      ,false);
+
+gid('suma_pkt').innerHTML =ThousandSeparator(suma_pkt) ;
+gid('_zag').innerHTML =ThousandSeparator(ludz[gid('zagroda').value]) ;
+gid('suma_zag').innerHTML ='-'+ThousandSeparator(suma_zag) ;
+wojsko();
+}
+function uni(name,co)
+{
+  var ile = gid(name).value * unitsy[name][co]; return ile;
+}
+
+function wojsko()
+{   var v,zagrody;
+
+      v = gid('koszary').value ;
+  gid('t_pik').innerHTML = pik[v*2]; //gid('pik').value
+  gid('t_mie').innerHTML = mie[v*2];//gid('mie').value
+  gid('t_axe').innerHTML = axe[v*2];//gid('axe').value
+  gid('t_luk').innerHTML = luk[v*2];//gid('luk').value
+
+    gid('Koszary_fin').innerHTML = '<table>'+
+    '<tr><td>Drewno:</td><td align="right">'+ ThousandSeparator(uni('pik',0)+ uni('mie',0) + uni('axe',0)+ uni('luk',0))+
+    '<tr><td>Glina: </td><td align="right">'+ ThousandSeparator(uni('pik',1)+ uni('mie',1) + uni('axe',1)+ uni('luk',1))+
+    '<tr><td>Zelazo:</td><td align="right">'+ ThousandSeparator(uni('pik',2)+ uni('mie',2) + uni('axe',2)+ uni('luk',2))+
+    '<tr><td>Zagroda: </td><td align="right">'+ ThousandSeparator((gid('pik').value*1 )+(gid('mie').value *1 ) + (gid('axe').value *1)+ (gid('luk').value *1))+
+    '<tr><td>Czas:  </td><td align="right">'+formatTime((gid('pik').value *pik[v*2+1])+ (gid('mie').value *mie[v*2+1]) + (gid('axe').value *axe[v*2+1])+ (gid('luk').value *luk[v*2+1]))+
+    's.</td></tr></table>';
+      v = gid('stajnie').value
+  gid('t_zw').innerHTML = zw[v*2];
+  gid('t_lk').innerHTML = lk[v*2];
+  gid('t_kl').innerHTML = kl[v*2];
+  gid('t_ck').innerHTML = ck[v*2];
+    gid('Stajnia_fin').innerHTML = '<table>'+
+    '<tr><td>Drewno:</td><td align="right">'+ ThousandSeparator(uni('zw',0)+ uni('lk',0) +uni('kl',0)+uni('ck',0))+
+    '<tr><td>Glina: </td><td align="right">'+ ThousandSeparator(uni('zw',1)+ uni('lk',1) +uni('kl',1)+uni('ck',1))+
+    '<tr><td>Zelazo:</td><td align="right">'+ ThousandSeparator(uni('zw',2)+ uni('lk',2) +uni('kl',2)+uni('ck',2))+
+    '<tr><td>Zagroda:</td><td align="right">'+ ThousandSeparator((gid('zw').value *2)+        (gid('lk').value *4) +         (gid('kl').value *5)+         (gid('ck').value *6))+
+    '<tr><td>Czas:  </td><td align="right">'+ formatTime((gid('zw').value *zw[v*2+1])+ (gid('lk').value *lk[v*2+1]) + (gid('kl').value *kl[v*2+1])+ (gid('ck').value *ck[v*2+1]))+
+    '</td></tr></table>';
+
+       v = gid('warsztat').value
+  gid('t_tar').innerHTML = tar[v*2];
+  gid('t_kat').innerHTML = kat[v*2];
+    gid('Warsztat_fin').innerHTML = '<table>'+
+    '<tr><td><img src="http://pl5.plemiona.pl/graphic/holz.png?1" alt=""> Drewno:</td><td align="right">'+ ThousandSeparator(uni('tar',0)+uni('kat',0) )+
+    '<tr><td><img src="http://pl5.plemiona.pl/graphic/lehm.png?1" alt=""> Glina: </td><td align="right">'+ ThousandSeparator(uni('tar',1)+uni('kat',1) )+
+    '<tr><td><img src="http://pl5.plemiona.pl/graphic/eisen.png?1" alt=""> Zelazo:</td><td align="right">'+ ThousandSeparator(uni('tar',2)+uni('kat',2) )+
+    '<tr><td><img src="http://pl5.plemiona.pl/graphic/face.png?1" alt=""> Zagroda:</td><td align="right">'+ ThousandSeparator((gid('tar').value *5)+        (gid('kat').value *8) )+
+    '<tr><td>Czas:  </td><td align="right">'+ formatTime((gid('tar').value *tar[v*2+1])+ (gid('kat').value *kat[v*2+1]))+
+    's.</td></tr></table>';
+
+     zagrody =(gid('zw').value *2)+(gid('lk').value *4)+(gid('kl').value *5)+(gid('ck').value *6)+(gid('pik').value*1 )+ (gid('mie').value*1 ) + (gid('axe').value *1)+ (gid('luk').value *1)+(gid('tar').value *5)+(gid('kat').value *8)
+ // Obrona =   Piechota Kawaleria £uki
+   gid('o_p').innerHTML= ThousandSeparator(uni('pik',4)+ uni('mie',4) + uni('axe',4)+ uni('luk',4)+ uni('zw',4)+ uni('lk',4) +uni('kl',4)+uni('ck',4)+ uni('tar',4)+uni('kat',4));
+   gid('o_k').innerHTML= ThousandSeparator(uni('pik',5)+ uni('mie',5) + uni('axe',5)+ uni('luk',5)+ uni('zw',5)+ uni('lk',5) +uni('kl',5)+uni('ck',5)+ uni('tar',5)+uni('kat',5));
+   gid('o_l').innerHTML= ThousandSeparator(uni('pik',6)+ uni('mie',6) + uni('axe',6)+ uni('luk',6)+ uni('zw',6)+ uni('lk',6) +uni('kl',6)+uni('ck',6)+ uni('tar',6)+uni('kat',6));
+
+   gid('om_p').innerHTML= ThousandSeparator((uni('pik',4)+ uni('mie',4) + uni('axe',4)+ uni('luk',4)+ uni('zw',4)+ uni('lk',4) +uni('kl',4)+uni('ck',4)+ uni('tar',4)+uni('kat',4))*mur_procent[gid('mur').value]);
+   gid('om_k').innerHTML= ThousandSeparator((uni('pik',5)+ uni('mie',5) + uni('axe',5)+ uni('luk',5)+ uni('zw',5)+ uni('lk',5) +uni('kl',5)+uni('ck',5)+ uni('tar',5)+uni('kat',5))*mur_procent[gid('mur').value]);
+   gid('om_l').innerHTML= ThousandSeparator((uni('pik',6)+ uni('mie',6) + uni('axe',6)+ uni('luk',6)+ uni('zw',6)+ uni('lk',6) +uni('kl',6)+uni('ck',6)+ uni('tar',6)+uni('kat',6))*mur_procent[gid('mur').value]);
+   gid('mur_procent').innerHTML= ( mur_procent[gid('mur').value] )*10*10 +'&nbsp;&nbsp;&nbsp;&nbsp;';
+
+   gid('a_p').innerHTML= ThousandSeparator(uni('pik',3)+ uni('mie',3) + uni('axe',3));// uni('tar',3)+uni('kat',3));
+   gid('a_k').innerHTML= ThousandSeparator(uni('zw',3)+ uni('lk',3) +uni('ck',3));
+   gid('a_l').innerHTML= ThousandSeparator(uni('luk',3)+uni('kl',3));
+
+     if(gid('morale').value=='')gid('morale').value=100;
+else if(gid('morale').value<30)gid('morale').value=30;
+else if(gid('morale').value>100)gid('morale').value=100;
+//else if(gid('morale').value>100)gid('morale').value=100;
+var morale = gid('morale').value*0.01;
+     if(gid('szczescie').value=='')gid('szczescie').value=0;
+else if(gid('szczescie').value<-25)gid('szczescie').value=-25;
+else if(gid('szczescie').value>25)gid('szczescie').value=25;
+var szczescie = gid('szczescie').value*0.01;
+
+   gid('am_p').innerHTML= ThousandSeparator((uni('pik',3)+ uni('mie',3)*morale + uni('axe',3))+(uni('pik',3)+ uni('mie',3) + uni('axe',3))*morale*szczescie);
+   gid('am_k').innerHTML= ThousandSeparator((uni('zw',3)+ uni('lk',3) +uni('ck',3))*morale+(uni('zw',3)+ uni('lk',3) +uni('ck',3))*morale*szczescie);
+   gid('am_l').innerHTML= ThousandSeparator((uni('luk',3)+uni('kl',3))*morale +(uni('luk',3)+uni('kl',3))*morale*szczescie);
+
+  gid('rekrutacja_zag').innerHTML = '-'+ThousandSeparator(zagrody);
+  if((ludz[gid('zagroda').value] - suma_zag - zagrody)<0 ){ var b='<b class="red">'; }else{var b='';};
+gid('suma_zag_w').innerHTML = b+ThousandSeparator(ludz[gid('zagroda').value] - suma_zag - zagrody) ;
+
+}
+//################
+function ThousandSeparator(Value)
+{
+     // Separator Length. Here this is thousand separator
+     var separatorLength = 3;
+     var OriginalValue=Value;
+     var TempValue = "" + OriginalValue;
+     var NewValue = "";
+
+
+      // store digits before decimal
+      var dStr;
+
+      // Add decimal point if it is not there
+      if (TempValue.indexOf(".")==-1)
+     {
+           TempValue+="."
+     }
+
+    dStr=TempValue.substr(0,TempValue.indexOf("."));
+
+
+   if(dStr.length > separatorLength)
+  {
+        // Logic of separation
+       while( dStr.length > separatorLength)
+      {
+              NewValue = " " + dStr.substr(dStr.length - separatorLength) + NewValue;
+             dStr = dStr.substr(0,dStr.length - separatorLength);
+       }
+       NewValue = dStr + NewValue;
+   }
+   else
+  {
+       NewValue = dStr;
+   }
+   // Add decimal part
+   NewValue = NewValue;
+    // Show Final value
+    return NewValue;
+  }
+  //-->
+</script>
+
+
+<table border="0">
+<tr valign="top">
+  <td width="10" /><td>
+  <table class="main">
+  <tr>
+    <th colspan="2"> Budynki: </th>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/main.png" alt="Ratusz" title="Ratusz"> Ratusz </td>
+    <td>lv. <input id="ratusz" type="text" value="1" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="ratusz_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/barracks.png" alt="Koszary" title="Koszary"> Koszary </td>
+    <td>lv. <input id="koszary" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="koszary_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/stable.png" alt="Stajnia" title="Stajnia"> Stajnia </td>
+    <td>lv. <input id="stajnie" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="stajnie_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/garage.png" alt="Warsztat" title="Warsztat"> Warsztat</td>
+    <td>lv. <input id="warsztat" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="warsztat_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/snob.png" alt="Pa³ac" title="Pa³ac"> Pa³ac </td>
+    <td>lv. <input id="palac" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="palac_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/smith.png" alt="Ku¼nia" title="Ku¼nia"> Ku¼nia </td>
+    <td>lv. <input id="kuznia" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="kuznia_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/place.png" alt="Plac" title="Plac"> Plac </td>
+    <td>lv. <input id="plac" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="plac_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/statue.png" alt="Piedesta³" title="Piedesta³"> Piedestal </td>
+    <td>lv. <input id="piedesta" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="piedesta_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/market.png" alt="Rynek" title="Rynek"> Rynek </td>
+    <td>lv. <input id="rynek" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="rynek_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/wood.png" alt="Tartak" title="Tartak"> Tartak </td>
+    <td>lv. <input id="tartak" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="tartak_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/stone.png" alt="Cegielnia" title="Cegielnia"> Cegielnia </td>
+    <td>lv. <input id="cegielni" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="cegielni_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/iron.png" alt="Huta ¿elaza" title="Huta ¿elaza"> Huta ¯elaza </td>
+    <td>lv. <input id="huta" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="huta_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/farm.png" alt="Zagroda" title="Zagroda"> Zagroda </td>
+    <td>lv. <input id="zagroda" type="text" value="1" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="zagroda_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/storage.png" alt="Spichlerz" title="Spichlerz"> Spichlerz </td>
+    <td>lv. <input id="spichlez" type="text" value="1" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="spichlez_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/hide.png" alt="Schowek" title="Schowek"> Schowek </td>
+    <td>lv. <input id="schowek" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="schowek_s" class="red" colspan="2"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/wall.png" alt="Mur obronny" title="Mur obronny"> Mur </td>
+    <td>lv. <input id="mur" type="text" value="0" size="1" onchange="suma();" /> </td>
+  </tr>
+   <tr>
+    <td id="mur_s" class="red" colspan="2"> </td>
+  </tr>
+  </table>
+  </td>
+  <td>
+  <table class="vis">
+  <tr>
+    <th colspan="2"> Rekrutacja </th>
+  </tr>
+  <tr>
+    <th colspan="2"> <hr> </th>
+  </tr><tr><td>
+    <table>
+    <tr>
+      <td colspan="3" class="red" id="lv_koszar"> Koszary lv </td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_spear.png?1" alt=""> Pikinierzy </td>
+      <td>(<span id="t_pik"></span>)</td>
+      <td> <input type="text" id="pik" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_sword.png?1" alt=""> Miecznicy </td>
+      <td>(<span id="t_mie"></span>)</td>
+      <td> <input type="text" id="mie" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_axe.png?1" alt=""> Topornicy </td>
+      <td>(<span id="t_axe"></span>)</td>
+      <td> <input type="text" id="axe" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_archer.png?1" alt=""> £ucznicy </td>
+      <td>(<span id="t_luk"></span>)</td>
+      <td> <input type="text" id="luk" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    </table>
+    </td>
+    <td id="Koszary_fin"></td>
+  </tr>
+  <tr>
+    <th colspan="4"> <hr> </th>
+  </tr>
+  <tr>
+    <td>
+    <table width="100%">
+    <tr>
+      <td colspan="3" class="red" id="lv_stajnia"> Stajnia lv </td>
+    </tr>
+    <tr width="100%">
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_spy.png?1" alt=""> Zwiadowcy </td>
+      <td>(<span id="t_zw"></span>)</td>
+      <td> <input type="text" id="zw" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_light.png?1" alt=""> Lekka Kawaleria </td>
+      <td>(<span id="t_lk"></span>)</td>
+      <td> <input type="text" id="lk" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_marcher.png?1" alt=""> £ucznicy na koniach </td>
+      <td>(<span id="t_kl"></span>)</td>
+      <td> <input type="text" id="kl" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_heavy.png?1" alt=""> Ciê¿ka Kawaleria </td>
+      <td>(<span id="t_ck"></span>)</td>
+      <td> <input type="text" id="ck" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    </table>
+    </td>
+    <td id="Stajnia_fin"></td>
+  </tr>
+  <tr>
+    <th colspan="4"> <hr> </th>
+  </tr>
+  <tr>
+    <td>
+    <table>
+    <tr>
+      <td colspan="4" class="red" id="lv_warsztat"> Warsztat lv </td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_ram.png?1" alt=""> Tarany </td>
+      <td>(<span id="t_tar"></span>)</td>
+      <td> <input type="text" id="tar" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    <tr>
+      <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_catapult.png?1" alt=""> Katapulty </td>
+      <td>(<span id="t_kat"></span>)</td>
+      <td> <input type="text" id="kat" value="" size="4" onchange="wojsko()"> szt.</td>
+    </tr>
+    </table>
+    </td>
+    <td id="Warsztat_fin"></td>
+  </tr>
+  </table>
+  </td>
+  <td>
+  <table>
+  <tr>
+    <th> Ocena Wojska </th>
+  </tr>
+  <tr>
+    <th colspan="3"><hr></th>
+  </tr>
+  <tr>
+    <td /><th> Obrona </th><th> Obrona za Murem</th>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/def.png?1" alt=""> Przeciw Piechocie </td><td id="o_p" align="right"></td><td id="om_p" align="right"></td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/def_cav.png?1" alt=""> Przeciw Kawaleri </td><td id="o_k" align="right"></td><td id="om_k" align="right"></td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/def_archer.png?1" alt=""> Przeciw £ucznikom </td><td id="o_l" align="right"></td><td id="om_l" align="right"></td>
+  </tr>
+  <tr><td /><td align="right">Mur</td><td><span class="inpu" id="mur_procent" ></span>% </td></tr>
+ <tr><td><br><br></td></tr>
+   <tr>
+    <th colspan="3"> <hr> </th> <td><br></td>
+  </tr>
+  <tr>
+    <td /><th> Atak </th><th> Atak po Modyfikatorach</th>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/att.png?1" alt=""> Si³a Ataku Piechoty </td><td id="a_p" align="right" /> <td id="am_p" align="right" />
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/att_cav.png?1" alt=""> Si³a Ataku Kawaleri </td> <td id="a_k" align="right" /><td id="am_k" align="right" />
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_marcher.png?1" alt=""> Si³a Ataku £uczników </td> <td id="a_l" align="right" /><td id="am_l" align="right"/>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/unit/unit_ram.png?1" alt=""> Inpet Taranów </td><td id="a_t" align="right"></td>
+  </tr>
+  <tr><td /><td align="right">morale </td><td><input type="text" id="morale" value="" size="4" onchange="wojsko()">%</td></tr>
+  <tr><td /><td align="right">szczê¶cie(od -25% do +25%) </td><td><input type="text" id="szczescie" value="" size="4" onchange="wojsko()">%</td></tr>
+</tr>
+</table>
+</td>
+</tr> <tr><td colspan="4">
+ <table class="main" align="center">
+  <tr>
+    <td> pkt. </td>
+    <td id="suma_pkt"> </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/buildings/farm.png" alt="Zagroda" title="Zagroda"> Zagroda</td>
+    <td  colspan="2" id="_zag" align="center"> </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="post"><img src="http://pl5.plemiona.pl/graphic/face.png?1" alt=""> (zatrudnieni)
+         <b id="suma_zag" /></td>
+    <td class="post" colspan="2"> <b id="rekrutacja_zag"></b>
+    <img src="http://pl5.plemiona.pl/graphic/unit/att.png?1" alt=""> (Rekrutacja) </td>
+  </tr>
+  <tr>
+    <td><img src="http://pl5.plemiona.pl/graphic/face.png?1" alt=""> (zosta³o): </td>
+    <th class="post" colspan="2"><p align="center" id="suma_zag_w"></p> </th>
+  </tr>
+</table>
+  </td></tr>
+</table>
+            <p align="center">
+<script type="text/javascript">suma();</script>

@@ -63,7 +63,7 @@ TA<input type="checkbox" name="TA" id="TA" value="3" >
 </form>
 
 </td>
-  <td rowspan="2" width="90%"><iframe name="sec" id="sec" width="100%" height="100%" style="border:0px;"></iframe></td>
+  <td rowspan="2" width="90%"><iframe name="sec" id="sec" width="100%" height="100%" style="border:0px;" src="http://www.plemiona.pl/"></iframe></td>
  </tr>
  <tr>
   <td><iframe src="" name="RAM" id="RAM" width="100%" height="100" style="border:1px;"></iframe></td>

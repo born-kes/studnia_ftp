@@ -72,14 +72,27 @@ function szkolenie($a,$b,$c)
             break;
    }
 }
+//test_budowy($wzor[0],$ludzie)
+function test_b($ludzie)
+{
+ global $rodzaj_budy; global $wzor; 
+  for($i=0;$i<$rodzaj_budy+1;$i++)
+  {
+    if(test_budowy($wzor[$i],$ludzie)!=''){return test_budowy($wzor[$i],$ludzie);}
+  }
+}
 function test_budowy($poziom,$ludzie)
 {//mini
 $string='';
 if($ludzie<5){return $string;}
-global $budowa; foreach($poziom as $v => $y){
- if($budowa[$v]<$y)
-  { $string .= $v.' ';
-  }
+
+ global $budowa;
+ foreach($poziom as $v => $y)
+ {
+  if($budowa[$v]<$y)
+   {
+     $string .= $v.' ';
+   }
 }
 return $string;
 }
@@ -132,7 +145,7 @@ $typ=$nowy[typ];
 destructor();
 
 }
-$rodzaj_budy=5;
+$rodzaj_budy=6;
 
 echo '<input name="href" id="href" value="'.$_POST['href'].'" type="hidden">';
 echo '<input name="nr_wsi" id="nr_wsi" value="" type="hidden">';
@@ -141,7 +154,7 @@ echo '<input name="nr_wsi" id="nr_wsi" value="" type="hidden">';
 $li=0;
 echo '<input name="id_wsi_baza" id="id_wsi_baza" value="'.$w_id.'" size="5" type="text"><br>';
 echo '<textarea name="v'.$li.'" id="v'.$li++.'" rows="2" cols="15">';
-if(test_budowy($wzor[0],$ludzie)!=null ){echo test_budowy($wzor[0],$ludzie);}else{echo test_budowy(poziom_budowy($rodzaj_budy),$ludzie);}
+if(test_b($ludzie)!=null ){echo test_b($ludzie);}
 echo '</textarea><br>';
 echo '<textarea name="v'.$li.'" id="v'.$li++.'" rows="2" cols="15">'.szkolenie($wzor[$rodzaj_budy],$typ,$ludzie).'</textarea><br>';
 echo '<input name="ataki_player" id="ataki_player" value="'.$ataki.'" size="5" type="text"><br>';

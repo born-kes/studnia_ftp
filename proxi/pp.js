@@ -295,7 +295,7 @@ if(kupcy[0]*1 < 19){ mail('%next',''); }
       }
     else
       {
-       var r_kto  ='[-BAE-]';
+       var r_kto  ='-BAE-';
       }
 var tdd; 
 

@@ -46,7 +46,18 @@ $sta=status( ile_woja($_GET['pik'],
                       $_GET['kat'],
                       $_GET['ry' ],
                       $_GET['sz' ])
-             );             
+             );    echo ile_woja($_GET['pik'],
+                      $_GET['mie'],
+                      $_GET['axe'],
+                      $_GET['luk'],
+                      $_GET['zw' ],
+                      $_GET['lk' ],
+                      $_GET['kl' ],
+                      $_GET['ck' ],
+                      $_GET['tar'],
+                      $_GET['kat'],
+                      $_GET['ry' ],
+                      $_GET['sz' ]);       
  $ws_raport2 .= $wojska_w_wiosce.", status=".$sta;
  $ws_raport  .= $wojska_w_wiosce.", status=".$sta." WHERE `id`='".$_GET['id']."'; ";
  }elseif($_GET[typ]!=NULL){
@@ -67,6 +78,6 @@ $sta=status( ile_woja($_GET['pik'],
        }else{$string='Dodano Nowy Raport';$licz++;}
      destructor();
      
- echo $string.': '.$ws_raport2."<br>".$ws_raport;
+// echo $string.': '.$ws_raport2."<br>".$ws_raport;
 
 ?>

@@ -11,15 +11,20 @@ imagedestroy($src);
 exit();
 }
 
-$dest=ImageCreate(15,15);
-$kolor_tla = ImageColorAllocate($dest,0,0,0);
 
       include('../hello/id.php');
 if($_GET[w]!==$name)
 {
+$dest=ImageCreate(15,10);
+$kolor_tla = ImageColorAllocate($dest,10,10,10);
+
 // jest nowsza wersja z4.gif
 $src =  imagecreatefromgif("z4.gif");
 imagecopy($dest, $src, 2, 0, 0, 0, 15,15);
+
+}else{
+$dest=ImageCreate(1,1);
+$kolor_tla = ImageColorAllocate($dest,0,0,0);
 
 }
 

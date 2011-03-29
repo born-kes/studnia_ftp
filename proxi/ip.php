@@ -102,7 +102,7 @@ $i=0;     $zap = "SELECT v.id,v.name,v.x,v.y $hst FROM `ws_all` `v` $hs  WHERE v
    }
   destructor();
   $ip_php.= '</select>';
-$ip_php.= '<input type="submit" value="Wybierz Wiosek" />';
+$ip_php.= '<input type="submit" value="Wejdz do Wioski - Usun reklame" />';
 $ip_php.='</form>';
 
  $data = mktime()-$godzina_zero;

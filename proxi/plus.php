@@ -19,7 +19,7 @@ function haslo($limit)
     {
       echo '<frameset cols="170,*">
 	<frame frameborder="0" marginwidth="5" marginheight="5"  src="ip.php?p='.$_GET[p].'" name="ma" />
-	<frame frameborder="0" marginwidth="7" marginheight="0"  name="sec" />
+	<frame frameborder="0" marginwidth="7" marginheight="0"  name="sec" src="http://www.plemiona.pl/" />
 </frameset>';}
 else
 {echo '<center><h1>SESJA MINELA</h1></center>';}

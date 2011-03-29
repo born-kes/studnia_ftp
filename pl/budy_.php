@@ -51,7 +51,7 @@ echo $string.'<br>: '.$zapytanie.'<br>'.$zapytanie2.'<br>';
    }
 
 
- $zapy = "UPDATE ws_raport SET  data='$data', mur=$nowy[15] WHERE id=$zap;";
+ $zapy = "UPDATE ws_raport SET  d_mur='$data', mur=$nowy[15] WHERE id=$zap;";
     connection();
       @mysql_query($zapy);
     destructor();

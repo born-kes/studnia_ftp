@@ -1,8 +1,7 @@
 <head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
            <link rel="stylesheet" type="text/css" href="stamm.css">
 <?PHP   $i=1; $komu=' ';
-  include('../connection.php');$moje_id = $_SESSION['id'];
-
+  include('../connection.php');sesio_id();$moje_id = $_SESSION['id'];
     if($_POST!=null)
     {
   //    Insert Into `hex_kolor` Values('','$opis[0]','$id_zalogowany','$opis[3]','$w_atak','$w_obro'
@@ -42,10 +41,11 @@ $hex = $adres[count($adres)-1];
    $hexs=' var s_hex = new Array;
    s_hex[0]=\'92a38af8a7dea8a218ade9b480f5c88a\';
   ';
+$domyslne[1]='92a38af8a7dea8a218ade9b480f5c88a';
    $name=' var s_name = new Array;
    s_name[0]=\'swiat 5 \';
   ';
-
+$domyslne[2]='swiat 5';
       $option ='  <select name="plem_op" OnChange="selecturl(this)">'.'<OPTION VALUE="0"> (500|500) swiat 5</OPTION>';
 
   connection();
@@ -56,7 +56,7 @@ $hex = $adres[count($adres)-1];
   ';
    $name.='  s_name['.$r[id].']=\''.$r[nazwa].'\';
   ';
-         if($r[ulubione]==1){      $option .='<OPTION VALUE="'.$r[id].'" selected="tak">('.$r[x].'|'.$r[y].') '.$r[nazwa].' (ulubiony)</OPTION>';}
+         if($r[ulubione]==1){      $option .='<OPTION VALUE="'.$r[id].'" selected="tak">('.$r[x].'|'.$r[y].') '.$r[nazwa].' (ulubiony)</OPTION>';$domyslne[1]=$r[hex];$domyslne[2]=$r[nazwa].' (ulubiony)';}
       else {                       $option .='<OPTION VALUE="'.$r[id].'">('.$r[x].'|'.$r[y].') '.$r[nazwa].'</OPTION>';        }
  }@destructor();
       $option .='</select>';
@@ -65,15 +65,16 @@ $hex = $adres[count($adres)-1];
 
 function selecturl(s) {
 	var v = s.options[s.selectedIndex].value;
-	document.getElementById('link').innerHTML = '<a href="http://pl5.twmaps.org/'+s_hex[v]+'" target="_blank">'+s_name[v]+'</a>';
+	document.getElementById('link').innerHTML = 'Wejdz <a href="http://pl5.twmaps.org/'+s_hex[v]+'" target="_blank">'+s_name[v]+'</a>';
 }
 <?PHP  echo $name;  echo $hexs;    ?>
            </script></head>
 <?PHP echo $komu; ?>
+<p align="center">Twoja Lista TW Maps ;p</p>
 <form name="tw" action="" method="POST">
 <table class="main" align="center">
 <tr><td><?PHP echo $option; ?></td></tr>
 <tr><td><input type="submit" value="ustaw jako ulubiony" /></td></tr>
-<tr><th id="link"></th></tr>
+<tr><th id="link">Wejdz <a href="http://pl5.twmaps.org/<?PHP echo $domyslne[1]; ?>" target="_blank"><?PHP echo $domyslne[2]; ?></a></th></tr>
 </table></form>
 

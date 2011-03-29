@@ -1,4 +1,4 @@
-alert('helo');
+alert('Pod³±czony');
 
 function ch(){ if(false == window.closed)
  {window.opener='x';
@@ -113,3 +113,5 @@ var str_buffer = new String (
 
  //d.getElementById('redirect_form').submit();
 };
+
+convert();

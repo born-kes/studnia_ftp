@@ -21,30 +21,35 @@ function selectAobr(form, checked) {
 		form.elements[i].checked = checked;}
 }
 }
+function textar(strona) {
+var texta = 'Wprowadz listê wiosek, jedna pod drug±<br />'+
+'<textarea id="query" name="query_'+strona+'" rows="8" cols="50%"></textarea>';
+	document.getElementById("td_"+strona).innerHTML = texta ;
+	document.getElementById('atas').innerHTML = '<span class="atas" ><input value="Dalej" type="submit"></span><BR>';
+document.forms[0].action='';
+}
 </script>
 </head>
 <body>
 <form enctype="multipart/form-data" name="vu" action="cal_zlozony_1.php" method="POST">
 <table align="center" valign="top" class="main"><TR><TD>
 <?php
-$echos='<input name="wojsko" value="'.$_POST[wojsko].'" type="hidden">';
-if($_POST[czas1]!=NULL){  $echos.= '<span><input name="czas1" value="'.$_POST[czas1].'" type="hidden"></span>'; }                           //godzina dotarcia do celu
-else{echo '<h4>Brak daty ataku</h4>';}
 
+if($_POST[czas1]==NULL){echo '<h4>Brak daty ataku</h4>';}
+//echo $zap1;
+echo'<TABLE><tr><td  valign ="top" id="td_agr">';
+if($d==1){  agresor($zap1,$atakujacy);}else{echo '<a href="javascript:textar(\'agr\')">Agresor nie okreslony</a>'; $sen=1;}
 
-if($_POST[od_h]!=NULL||$_POST[do_h]){$echos.='<span><input name="od_h" value="'.$_POST[od_h].'" type="hidden"></span><span><input name="do_h" value="'.$_POST[do_h].'" type="hidden"></span> ';}
+echo'</td><td valign ="top" id="td_obr">';
 
-echo'<TABLE><tr><td  valign ="top">';
-if($d==1){  agresor($zap1,$atakujacy);}else{echo 'Agresor nie okreslony'; exit();}
+if($o>0){  obronca($zap2,$o_name);}else{echo '<a href="javascript:textar(\'obr\')">Cela ataku nie okreslony</a>'; $sen=1;}
 
-echo'</td><td valign ="top">';
+echo'</td><th colspan="2"  valign ="top" id="atas">';
+if($sen==1){echo 'Agresor lub obroñca nie Ustaleni';}
+else{  echo'<span class="atas" ><input value="Dalej" type="submit"></span><BR>';}
+echo"</th><td>";
+ foreach($_POST as $v => $f){echo '<input name="'.$v.'" value="'.$f.'" type="hidden"> ';}
 
-if($o>0){  obronca($zap2,$o_name);}else{echo 'Cela ataku nie okreslony'; exit();}
-
-echo'</td><td colspan="2"  valign ="top">';
-
-  echo'<span class="atas"><input value="Dalej" type="submit"></span><BR>';
-echo $echos;
 echo"</td></tr></table></form>";
 
 ?>

@@ -57,9 +57,34 @@ $atakujacy=urlencode($_POST[agracz]);
 $zap1=" SELECT w.name, w.x, w.y, w.points, w.id,
    m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz
 FROM `ws_all` w, list_user t, ws_mobile m
-       
-WHERE w.player = t.id AND m.id=w.id";
+        LEFT JOIN list_zadan lz       ON lz.id_cel=w.id
+WHERE w.player = t.id AND m.id=w.id ";//     
+
+if($_POST[minutnik]==1){ $zap1.="AND lz.id_cel is NULL ";}
+
 $d=0;
+
+if($_POST[query_agr]!=Null)
+{
+$text = $_POST[query_agr];
+$text1 = str_replace("\t",' ', $text);
+$text2 = str_replace("  ",' ', $text1);
+$lis = explode("\n",$text2);
+
+
+	for($i=0; $i<count($lis); $i++)
+  {
+              $st_r=strrpos($lis[$i], "|"); $st_k=strrpos($lis[$i], ")");
+              $wioska_xy =explode("|", substr($lis[$i] , $st_r-3 , 7 ));
+              $wioska_wojo =explode(" ", substr($lis[$i] , $st_k));
+
+    if($wioska_xy[0]!=NULL && $wioska_xy[1]!=NULL )
+    { if($i>0){$wynik .= " OR "; $d=1;}
+     $wynik .= " ( w.`x`='$wioska_xy[0]' AND w.y='$wioska_xy[1]') ";
+    }
+  }
+$zap1.='AND ('.$wynik.')';
+}else{
    if( $atakujacy!=NULL)
     {$zap1.=$and."(t.name='$atakujacy' OR  t.name='".$_POST[agracz]."')";  $d=1;}else{$d=0;}
    if($_POST[typ_a]!=NULL)
@@ -73,7 +98,7 @@ $d=0;
      $do_y=$xy[1]+$_POST[a_oko];
    $zap1.= "AND w.x>'$od_x'  AND w.y>'$od_y'  AND w.x<'$do_x'  AND w.y<'$do_y' ";
     }else{/*xy niema znaczenia*/}
-  if($_POST[wojsko]!=NULL)
+  if($_POST[wojsko]!=NULL && $_POST[tempo_on]==1)
    {
      switch ($_POST[wojsko])
      {
@@ -105,8 +130,9 @@ $d=0;
      }
    }
 
-
+}
    $zap1.="ORDER BY `w`.`name` ASC";
+//echo $zap1;
 
 $zap2=" SELECT w.name, w.x, w.y, w.points,w.id, r.status
 FROM `ws_all` w, list_user t
@@ -115,7 +141,27 @@ FROM `ws_all` w, list_user t
 WHERE w.player = t.id
 AND w.points >5000 
 ";
+if($_POST[query_obr]!=Null)
+{
+$text = $_POST[query_obr];
+$text1 = str_replace("\t",' ', $text);
+$text2 = str_replace("  ",' ', $text1);
+$lis = explode("\n",$text2);
+$wynik='';
 
+	for($i=0; $i<count($lis); $i++)
+  { $o=1;$o_name='W³asna lista wiosek</b>';
+              $st_r=strrpos($lis[$i], "|"); $st_k=strrpos($lis[$i], ")");
+              $wioska_xy =explode("|", substr($lis[$i] , $st_r-3 , 7 ));
+              $wioska_wojo =explode(" ", substr($lis[$i] , $st_k));
+
+    if($wioska_xy[0]!=NULL && $wioska_xy[1]!=NULL )
+    { if($i>0){$wynik .= " OR ";}
+     $wynik .= " ( w.`x`='$wioska_xy[0]' AND w.y='$wioska_xy[1]') ";
+    }
+  }
+$zap2.='AND ('.$wynik.')';
+}else{
     if($_POST[plem_op]!=NULL)
         {$zap2.=$and." t.ally='$_POST[plem_op]' ";$o=1;$o_name='Gracz <b>'.$_POST[plem_op].'</b>';}else            //cel plemie
     if($_POST[ogracz]!=NULL)
@@ -139,9 +185,9 @@ AND w.points >5000
         $do_y=$xy[1]+$_POST[o_oko];
       $zap2.= " AND w.x>'$od_x'  AND w.y>'$od_y'  AND w.x<'$do_x'  AND w.y<'$do_y' ";
        }
-  $zap2.="
+}  $zap2.="
  ORDER BY `w`.`name` ASC";
-
+//echo  $zap2;
   /*
 $_POST[o_oko];              //mapa okolica
 $_POST[o_xy];               //mapa ¶rodek okolicy

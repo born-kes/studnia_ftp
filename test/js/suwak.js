@@ -246,6 +246,9 @@ function suwak(b) { var a=b
         '<tr><td>'+input_name("a")+'</td></tr>'+
         '<tr><td>Typ Wioski</td></tr>'+
         '<tr><td>'+input_typ("a")+'</td></tr>'+div_oko("a")+
+        '<tr><td>Pomijaj wioski ju¿ opracowane </td></tr>'+
+        '<tr><td>w minutniku <input checked="checked" type="checkbox" name="minutnik" value="1" />'+
+              ' </td></tr>'+
 
         '<tr><td><hr></td></tr><tr><th>Cel Ataku</th></tr>'+
         '<tr><td>'+
@@ -257,7 +260,9 @@ function suwak(b) { var a=b
         '<tr><td><hr></td></tr>'+
         '<tr><td>Wojsko (tempo marszu)</td></tr>'+
         '<tr><td>'+input_wojo()+'</td></tr>'+
-        '<tr><td>Godzina Ataku</td></tr>'+
+        '<tr><td>Tylko wioski które </td></tr>'+
+        '<tr><td>maj± wybrane jednostki <input checked="checked" type="checkbox" name="tempo_on" value="1" /></td></tr>'+
+         '<tr><td>Godzina Ataku</td></tr>'+
         '<tr><td>'+input_czas()+'</td></tr>'+
         '<tr><td>Okno wysylane atakow</td></tr>'+
         '<tr><td>Tak <input type="radio" name="okno_atak" value="" onclick="loading(\' od \'+input(\'od_h\',\'16\')+\' do \'+input(\'do_h\',\'21\'),\'czas_start\');" />'+

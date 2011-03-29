@@ -15,7 +15,18 @@ function connection() {
 
 function destructor(){
 @mysql_close();
-}/*
+}
+
+function sesio_id(){
+ $user=$_SESSION['zalogowany'];
+  connection();
+     $wynik = mysql_query("SELECT `id` FROM `list_user` WHERE name='$user';")or die('Blad zapytania');
+
+       if($r = mysql_fetch_row($wynik)){ $_SESSION['id']=$r[0];}
+  destructor();
+}
+
+/*
 nowy podzia³:
 Niewybrana___			
 Niebroniona__		 0   - 0,4
@@ -38,7 +49,7 @@ $statuss[typ] = array ('Niewybrana','Niebroniona','Oddzia³','Posterunek','Warown
 function status($s){
 
 if($s===NULL || $s<0){return 7;}  //BUNKIER
-else{$s = intval($s/21000);}
+else{$s = floatval($s/21000);}
 
     if($s<0.4)	{return 1;}	//Nie Broniona
 elseif($s< 1)	{return 2;}	//Oddzia³
@@ -51,44 +62,20 @@ $rodzaje = array ('brak typu','wioska off','wioska def','Zwiad','wioska LK','wio
 $wojska_rap = array ('pik','mie','axe','luk','zw','lk','kl','ck','tar','kat','ry','sz');
 
 $godzina_zero = 1220000000;$godzina_jeden =(mktime()-172800-$godzina_zero);
-
-$plemiona = array ('bez plemienia',
-			'HERO',
-			'~ZP~',
-'&#1769;-MZ-&#1769;',
-			'-BAE-',
-			'SmAp',
-			'=MAD=',
-			'NWO',
-			'ZCR',
-			'RedRub',
-			'**MI**' );
-$id_plem   = array (  0,
-			51724,
-			4469,
-11183,
-			23660,
-			51732,
-			23185,
-			48588,
-			26084,
-			422,
-			898);
-
-$co_za_plemie =array ('0'=>'Brak Plemienia',
-                   '51724'=>'HERO',
-                    '4469'=>'~ZP~',
-'11183'=>'&#1769;-MZ-&#1769;',
-                   '23660'=>'-BAE-',
-                   '50650'=>'SmAp',
-                   '23185'=>'=MAD=',
-                   '48588'=>'NWO',
-                   '26084'=>'ZCR',
-                   '26084'=>'ZCR',
-                   '26084'=>'ZCR');
+  connection();
+     $wynik = mysql_query("SELECT  lp.id, lp.tag, p.stosunki FROM list_plemie lp, `polityka` p WHERE lp.id=p.id;")or die('Blad zapytania');
+$i=0;
+while($r = mysql_fetch_row($wynik))
+{
+$plemiona[$i] = urldecode($r[1]);
+$id_plem[$i] = $r[0];
+$co_za_plemie[$r[0]]= urldecode($r[1]);
+$plemiona_strosunki[$r[0]]= $r[2];
+$i++; 
+}
+  destructor();
 
 $w_tepm   = array (  18, 22 , 9, 10 , 11, 30, 35);
 $w_typ   = array ( 'Pik/Top/£uk' , 'Miecznik', 'Zwiadowca', 'Kawaleria', 'C.Kawaleria','Tar/Kat', 'Szlachcic');
 $and=' AND ';
-
 ?>

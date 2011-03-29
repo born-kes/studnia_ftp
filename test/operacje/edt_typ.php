@@ -8,7 +8,7 @@ echo'<form name="form" action="" method="post" target="ramka">
 <TR><td>Wybierz Typ/Grupe do jakiej naleza wioski
      <SELECT name="n_typ" ><option value=""></option>';
          for($licz=0; $licz<count($rodzaje); $licz++)
-        {      echo'<option value="'.$licz.'">'.$rodzaje[$licz].'</option>';}//+ Wojska <input type="checkbox" name="wo" id="wo" value="1" />
+        {      echo'<option value="'.$licz.'">'.$rodzaje[$licz].'</option>';}//+ Wojska <input type="checkbox" name="wo" id="wo" value="1" /> ';}
 echo'</SELECT> </td>
 </TR>
 <TR><TD  align="center"><textarea id="query" name="query" rows="8" cols="80%"></textarea></TD></TR>	
@@ -53,7 +53,7 @@ echo'</tr>';
   if($wioska_xy[0]!=NULL && $wioska_xy[1]!=NULL ){
 
   connection();
-   $wynik = @mysql_query("SELECT id, name FROM village
+   $wynik = @mysql_query("SELECT id, name FROM ws_all
                         WHERE `x`='$wioska_xy[0]' AND y='$wioska_xy[1]'");
  if($r = @mysql_fetch_array($wynik))
  {

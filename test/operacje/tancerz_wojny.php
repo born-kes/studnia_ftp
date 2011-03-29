@@ -8,22 +8,36 @@
 <body><br /><table class="vis"><?PHP
 if($_POST!=NULL)
 {
+
+if($_POST[czas1]==NULL){echo "<tr><td>Podaj date dotarcia do celu</td></tr>"; exit(); }
+$mk_ruznica = mkczas_pl($_POST[czas1])-mktime();    // ile czasu ma wojsko na marsz...
+
+if($mk_ruznica<480){echo "<tr><td>Podaj date w przysz³osci, by Twoje wojska mia³y czas na dojscie</td></tr>"; exit(); }
+
 $os=0;
     $hr='<tr><td colspan="3"><hr /></td></tr>';
  $p=" AND ";
-$zap=" SELECT  v.id , v.x, v.y, v.status, v.wolny
-  FROM `village` v, tribe t
-  WHERE v.player = t.id";
+$zap=" SELECT  v.id , v.x, v.y, wm.axe, wm.lk,wm.ck, wm.tar, wm.sz, v.name
+  FROM `ws_all` v, ws_mobile wm
+  WHERE wm.id = v.id ";
 
     // czas ataku
-$cos = $_POST[wojsko]; // tepo marszu
+$cos = intval($_POST[wojsko]); // tepo marszu
 
 
     // zwiur agresora
 $zap_a=$zap; $a=0;
 
+if($_POST[agracz]!=NULL){$a++;
+
+$gracz_a = zap("u.id,u.name"," list_user u"," u.name ='$_POST[agracz]'" );
+ $zap_a.=$p." v.player='$gracz_a[0]'";}
+if($_POST[a_gracz]!=NULL){$a++;
+$gracz_a = zap("u.id,u.name","list_user u", " u.id  ='$_POST[a_gracz]'" );
+ $zap_a.=$p." v.player='$gracz_a[0]'";}
+
 if($_POST[a_xy]!=NULL && $_POST[a_oko]!=NULL){$a++;
-$oko_a = addslashes(urldecode($_POST[a_oko]));
+$oko_a = addslashes(urlencode($_POST[a_oko]));
 $xy_ag = explode("|",$_POST[a_xy]);
 $odx_a= $xy_ag[0]-$oko_a;          $dox_a= $xy_ag[0]+$oko_a;
 $ody_a= $xy_ag[1]-$oko_a;          $doy_a= $xy_ag[1]+$oko_a;
@@ -37,27 +51,91 @@ $xy_ag = explode("|",$_POST[a_xy]);
 $zap_a.=$p."v.x='$xy_ag[0]'
         AND v.y='$xy_ag[1]'";}
 
-if($_POST[agracz]!=NULL){$a++;
-$gracz_a = $_POST[agracz];
-$zap_a.=$p." t.name='$gracz_a';";}
+ switch ($_POST[wojsko])
+ {
+      case 9:
+ $zap_a.= $p."wm.zw>10"; $a++;
+$co ='Zwiad';
+              break;
+      case 10:
+ $zap_a.= $p."wm.lk>10"; $a++;
+$co ='Lekka Kawaleria';
+              break;
+      case 11:
+ $zap_a.= $p."wm.ck>10"; $a++;
+$co ='Ciê¿ka Kawaleria';
 
-if($_POST[typ]!=NULL) {$zap_a.= $p."v.typ=".$_POST[typ]; $a++;}
+              break;
+      case 18:
+ $zap_a.= $p."wm.axe>10"; $a++;
+$co ='Topornicy';
+
+              break;
+      case 30:
+ $zap_a.= $p."wm.tar>10"; $a++;
+$co ='Tarany';
+
+              break;
+      case 35:
+ $zap_a.= $p."wm.sz>0"; $a++;
+$co ='Szlachcic';
+
+              break;
+
+     default:
+ $zap_a.= $p."(wm.zw>10 OR wm.lk>10 OR wm.ck>10 OR wm.axe>10 OR wm.tar>10 OR wm.sz>0)";
+
+ }   
+
+
 if($a==0) {echo 'Agresor nie okreslony'; exit();}
- 
+//echo $zap_a;
  connection();
 $wynik = @mysql_query($zap_a); $i=0;
 while($r = @mysql_fetch_array($wynik))
+{
+$agresor[name][$i]=$r[name];
+if($r[top]>0)
 {   $agresor[id][$i]=$r[id];
     $agresor[x][$i]=$r[x];
     $agresor[y][$i]=$r[y];
-    $agresor[wolny][$i++]=$r[wolny];
-
+    $agresor[wolny][$i++]=18;}
+if($r[lk]>0)
+{   $agresor[id][$i]=$r[id];
+    $agresor[x][$i]=$r[x];
+    $agresor[y][$i]=$r[y];
+    $agresor[wolny][$i++]=10;}
+if($r[ck]>0)
+{   $agresor[id][$i]=$r[id];
+    $agresor[x][$i]=$r[x];
+    $agresor[y][$i]=$r[y];
+    $agresor[wolny][$i++]=11;}
+if($r[tar]>0)
+{   $agresor[id][$i]=$r[id];
+    $agresor[x][$i]=$r[x];
+    $agresor[y][$i]=$r[y];
+    $agresor[wolny][$i++]=30;}
+if($r[sz]>0)
+{   $agresor[id][$i]=$r[id];
+    $agresor[x][$i]=$r[x];
+    $agresor[y][$i]=$r[y];
+    $agresor[wolny][$i++]=35;}
 }
+if($i==0) {echo '<tr><td>Twoje Wioski nie maja wojsk ofensywnych? uaktualnij dane</td></tr>'; exit();}
+
     // zbiur obroncy
-$zap_o=$zap; $o=0;
+$zap_o=" SELECT  v.id , v.x, v.y, v.name
+  FROM `ws_all` v
+  WHERE ";
+ $o=0;
 if($_POST[ogracz]!=NULL){ $o++;
-$gracz_o = addslashes(urldecode($_POST[ogracz]));
-$zap_o.= $p." t.name='$gracz_o' ";}
+$gracz_o = addslashes(urlencode($_POST[ogracz]));
+$gracz_o = zap("u.id, u.name","list_user u"," u.name ='$gracz_o'" );
+$zap_o.= " v.player ='$gracz_o[0]' ";}
+
+if($_POST[o_gracz]!=NULL){ $o++;
+$gracz_o = zap("u.id, u.name","list_user u"," u.id='$_POST[o_gracz]'" );
+ $zap_o.= " v.player ='$gracz_o[0]' ";}
 
 if($_POST[o_xy]!=NULL && $_POST[o_oko]!=NULL){$o++;
 $oko_o = $_POST[o_oko];
@@ -77,30 +155,31 @@ $zap_o.=$p."v.x='$xy_ob[0]'
 }
 
 if($o==0){echo "Obronca nieokreslony"; exit();}
-
- connection();
-$wynik = @mysql_query($zap_o);$i=0;
+ connection();// echo $zap_o;
+$wynik = @mysql_query($zap_o);$h=0;
 while($r = @mysql_fetch_array($wynik))
-{   $obrona[id][$i]=$r[id];
-    $obrona[x][$i]=$r[x];
-    $obrona[y][$i]=$r[y];
-    $obrona[wolny][$i++]=$r[wolny];
+{   $obrona[id][$h]=$r[id];
+    $obrona[x][$h]=$r[x];
+    $obrona[y][$h]=$r[y];
+    $obrona[wolny][$h++]=$r[wolny];
 }
 
-if($_POST[czas1]==NULL){echo "Podaj date dotarcia do celu"; exit(); }
- $mk_ruznica = mkczas_pl($_POST[czas1])-mktime();    // ile czasu ma wojsko na marsz...
 
- for($i=0;$i<count($agresor[x]);$i++){
-  //   echo  $cos.' <br>';
+echo '
+<tr><th colspan=>Agresor ('.urldecode($gracz_a[1]).') </th><td> => </td><td>'.$co.' </td></tr>
+<tr class="units_home"><th /><td>Obronca <b>('.urldecode($gracz_o[1]).')</b></td><td>Atak na <br />'.$_POST[czas1].'</td></tr>
+'.$hr; 
+ for($i=0;$i<count($agresor[x]);$i++){ //  echo ' <br>';
 
-if($cos!=1){$odzc = $mk_ruznica/($cos*60);  $ggg= 300 /($cos*60); $szb=($cos*60);}
+if($cos!=0){$odzc = $mk_ruznica/($cos*60);  $ggg= 300 /($cos*60); $szb=($cos*60);}
 else{ if($agresor[wolny][$i]==0||$agresor[wolny][$i]==NULL){continue;}
+
 $szb=($agresor[wolny][$i]*60);
   $odzc = $mk_ruznica/($agresor[wolny][$i]*60);
   $ggg= 300 /($agresor[wolny][$i]*60);
      }  // Odleg³osc policzona z czasu
 
-  $echo = '<tr><th>'. $agresor[x][$i].'|'.$agresor[y][$i].'</th><td> => </td></tr>';
+  $echo = '<tr><th>'.urldecode($agresor[name][$i]).' ('. $agresor[x][$i].'|'.$agresor[y][$i].')</th><td> => </td></tr>';
    //  echo $echo.' <br>';
              for($j=0;$j<count($obrona[x]);$j++)
              {

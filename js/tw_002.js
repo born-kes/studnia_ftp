@@ -1,12 +1,13 @@
- var zoom=8; var static='http://www.bornkes.w.szu.pl/pl/raport2.php';
-            inqlude=''; var iss='k';
-function check(){ return 0; }
-
 var bset=false;
 var actrow;
 
 function selecturl(s) {
-	var gourl = s.options[s.selectedIndex].value;	document.images.map.src = gourl;
+	var v = s.options[s.selectedIndex].value;
+
+ document.images.map.src = static + '?id=' + s_hex[v];
+ center_x=s_x[v]; 
+ center_y=s_y[v]; 
+ zoom =s_zoom[v];
 }
 function getElement(id)
 {
@@ -246,96 +247,50 @@ var m_y = 0;
 
 function MapClick(e)
 {
-/*	m_x = e.pageX;//+GetCoordsById('map')[0];
-	m_y = e.pageY;//+GetCoordsById('map')[1];
-//	var zoom=Math.floor(getElement('zoom').value);
-//	var c_x=Math.floor(500-(500/(zoom+1)));
-//	var c_y=Math.floor(500-(500/(zoom+1)));
-	var c_x=Math.floor(center_x-(500/(zoom+1)));
-	var c_y=Math.floor(center_y-(500/(zoom+1)));
-	var mapxy=GetCoords(getElement('map'));	
-	try
-	{
-	    var v_x=event.offsetX;
-	    var v_y=event.offsetY;
-	}
-	catch(error)
-	{
-	    var v_x=e.pageX-mapxy[0];
-	    var v_y=e.pageY-mapxy[1];
-	}
-	//alert(v_x+"|"+v_y +" -- "+(zoom+1));
-
-	if (zoom!=0)	
-	{
-	//    v_x=Math.floor(c_x+((v_x-500))/(zoom));
-	//    v_y=Math.floor(c_y+((v_y-500))/(zoom));	
-	//alert(c_x+"|"+v_x+"|"+zoom);
-
-	    v_x=Math.floor(c_x+(v_x/(zoom+1)));
-	    v_y=Math.floor(c_y+(v_y/(zoom+1)));	
-	}
-
-	//alert(v_x+"|"+v_y );stop();
-*/
-	var coords=GetVillageCoords(e);	
+	var coords=GetVillageCoords(e);
+	var map0xy=GetCoords(getElement('map0'));
+	
 	var v_x=coords[0];
 	var v_y=coords[1];
-	m_x = coords[2];
-	m_y = coords[3];
-        try {
-                oHTTP = new ActiveXObject("Microsoft.XMLHTTP");
-        }catch (E) {
-                oHTTP = false;
-        }
-        if (!oHTTP && typeof XMLHttpRequest!='undefined')
-                oHTTP = new XMLHttpRequest();
-        if (oHTTP != null) {
-		//var v_x=421;
-		//var v_y=368;
-                var sURL = "../village_data.php?vx="+v_x+"&vy="+v_y;
-		//alert(v_x+"|"+v_y+" - "+sURL);
-getElement('rapo').src=static+'?xy='+v_x+"|"+v_y;
-getElement('info_wsi').style.display = '';
-ShowVillageInfo();
-/*
-               oHTTP.open('GET', sURL, true);
-                oHTTP.onreadystatechange = 
-                oHTTP.send(null);
-	alert(oHTTP.onreadystatechange);
-*/
-	}
+	m_x = coords[2]-map0xy[0];
+	m_y = coords[3]-map0xy[1]; //alert(coords+""+map0xy);
+	gmap(v_x+"|"+v_y);
+
+//off('map0');
+if(iss=='a_')
+img_go('ra',m_x,m_y);
+else if(iss=='o_')
+img_go('ro',m_x,m_y);
+
+ShowVillageInfo(); 
+}
+function NOClick(si)
+{
+	var coords=getElement(si+'xy').value.split("|");
+	var mapxy=GetCoords(getElement('map'));
+	var map0xy=GetCoords(getElement('map0'));
+	
+	m_x = Math.floor(coords[0])*(zoom+1)+(mapxy[0]-map0xy[0]);
+	m_y = Math.floor(coords[1])*(zoom+1)+(mapxy[1]-map0xy[1]);
+alert('x'+Math.floor(coords[0])+" "+(mapxy[0]+' '+map0xy[0])+"\n y"+Math.floor(coords[1])+" "+(mapxy[1]+' '+map0xy[1])+"\n zoom "+(zoom+1));
+if(si=='a_')
+img_go('ra',m_x,m_y);
+else if(si=='o_')
+img_go('ro',m_x,m_y);
+
+ShowVillageInfo(); 
 }
 
-
 function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
-      /*  if (oHTTP.readyState == 4) {
-                if (oHTTP.responseText != "")
-		{
-        */        	var mapol_img=getElement("mapol_img");
+
+                	var mapol_img=getElement("mapol_img");
 			mapol_img.style.display="block";
 			mapol_img.style.visibility="visible";		
 			mapol_img.style.position="absolute";
 			mapol_img.style.left=m_x-2+"px";
 			mapol_img.style.top=m_y-2+"px";
 			mapol_img.src="http://static.twmaps.org/bl"+zoom+"_2.gif";
-
-                        //alert("Response erhalten, Status 200");
-          /*      	var mapol=getElement("mapol");
-			mapol.style.visibility="visible";		
-			mapol.style.display="block";
-			mapol.style.position="absolute";
-			mapol.style.left=m_x+zoom+5+"px";
-			mapol.style.top=m_y+zoom+5+"px";
-//			mapol.style.left=GetCoords(getElement('map'))[0]+"px";
-//			mapol.style.top=GetCoords(getElement('map'))[0]+"px";
-
-			var mapol = getElement("mapoldata");
-			mapol.innerHTML = oHTTP.responseText;
-		    alert(oHTTP.responseText);			
-			
-                }
-        }*/
+           
 }
 
 function HideVillageInfo(){
@@ -356,7 +311,7 @@ function HideVillageInfo(){
 
 var settingsheight;
 
-function GetVillageCoords(e)               // pobiera polozenie kursora
+function GetVillageCoords(e)               // pobiera polozenie kursora by wys³aæ raport fin
 {
 	var c_x=Math.floor(center_x-(500/(zoom+1)));
 	var c_y=Math.floor(center_y-(500/(zoom+1)));
@@ -368,8 +323,8 @@ function GetVillageCoords(e)               // pobiera polozenie kursora
 	}
 	catch(error)
 	{
-	    var v_x=e.pageX-mapxy[0];
-	    var v_y=e.pageY-mapxy[1];
+	    var v_x=e.pageX-(mapxy[0]);
+	    var v_y=e.pageY-(mapxy[1]);
 	}
 
 	v_x+=500%(zoom+1);
@@ -390,19 +345,20 @@ function GetVillageCoords(e)               // pobiera polozenie kursora
 	    v2_y=v_y;
 	}
 
-	var img_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+mapxy[0];
-	var img_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+mapxy[1];
-
+	var img_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+(mapxy[0]);
+	var img_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+(mapxy[1]);
     return [v2_x,v2_y,img_x,img_y];
 }
 
 function MapMouseMove(e)                 // kursor myszy na mapie
 {
-    if (zoom>=2)
+    if (zoom!==null)//>=2 poprawka
     {
 	var c_x=Math.floor(center_x-(500/(zoom+1)));
 	var c_y=Math.floor(center_y-(500/(zoom+1)));
-	var mapxy=GetCoords(getElement('map'));	
+	var mapxy=GetCoords(getElement('map'));	//poprawka przesuniecia
+	var map0xy=GetCoords(getElement('map0'));	//poprawka przesuniecia
+
 	try
 	{
 	    var v_x=event.offsetX;
@@ -431,35 +387,39 @@ function MapMouseMove(e)                 // kursor myszy na mapie
 	    v2_y=v_y;
 	}
 
-	var img_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+mapxy[0];
-	var img_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+mapxy[1];
+	var img_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+mapxy[0]-map0xy[0];
+	var img_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+mapxy[1]-map0xy[1];
 
-	var mapol_img=getElement("rd_top");
+img_go('rd',img_x,img_y);
+    }
+}
+function img_go(name,img_x,img_y)
+{
+	var mapol_img=getElement(name+"_top");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.width=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement("rd_left");
+	var mapol_img=getElement(name+"_left");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.height=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement("rd_right");
+	var mapol_img=getElement(name+"_right");
 	mapol_img.style.left=img_x+zoom+check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.height=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement("rd_bottom");
+	var mapol_img=getElement(name+"_bottom");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y+zoom+check()+"px";
 	mapol_img.style.width=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
-    }
-}
 
+}
 function HideMouseMarker()             // ukrywanie obramowki kursora
 {
 	var mapol_img=getElement("rd_bottom");
@@ -483,7 +443,8 @@ function MapMouseOut(e)        //ukrywa kursor po opuszczeniu mapy
 
 function registerEvents()        //ustalanie na starcie procesow mapy
 {
-    var map = getElement('map');
+    var map = getElement('map');// KES modyfikacja
+   // var map = gid('map');
     if (window.addEventListener)
     {
 	map.addEventListener('mouseup',MapClick,false);
@@ -497,3 +458,4 @@ function registerEvents()        //ustalanie na starcie procesow mapy
     }
 }
 
+registerEvents();

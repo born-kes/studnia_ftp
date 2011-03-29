@@ -21,7 +21,8 @@ function popup(url, width, height) {
 	wnd = window.open(url, "popup", "width="+width + ",height="+height + ",left=150,top=150,resizable=yes");
 	wnd.focus();
 }
-function a0(a){ if(gid(a).checked){return 1;}else{return 0;} }
+function a0(a){ if(! gid(a)){return -1;}else{ if(gid(a).checked){return 1;}else{return 0;} } }
+//alert(a0('color'));
 
 function nev_map(b)
 { var xy=gid('xy').value;
@@ -43,14 +44,18 @@ var string = "Druga Warstwa Mapy \n\n"+
 alert(string);
 }
 
+function info_w3()
+{
+getElement('rapo').src='test/operacje/legenda.php';
+getElement('info_wsi').style.display = '';
+}
            var center_x=<?PHP echo $xy[0]; ?>; var center_y=<?PHP echo $xy[1]; ?>;
             </script>
 </head>
   <body onload="registerEvents();">
 <div style="position:absolute ; bottom:10px; right:5px;">
-<input type="hidden" id="xy" value="<?PHP echo $xy[0]."|".$xy[1]; ?>" />
 <table class="main">
-<tr><td colspan="2" align="center"> Warstwy Mapy </td></tr>
+<tr><td colspan="2" align="center"> Warstwy Mapy <input type="text" id="xy"  size="4" value="<?PHP echo $xy[0]."|".$xy[1]; ?>" /></td></tr>
  <tr valign="top"><td>
 <table id="w1" class="main">
  <tr><th> I </th></tr>
@@ -67,7 +72,7 @@ alert(string);
 </td><td>
 <table id="w2" class="main">
  <tr><th> II <a href="javascript:info_w2();"> ?? </a>
-<input style="display:none" type="checkbox" id="dcolor" value="-1" disabled="tak" /></th></tr>
+<input style="display:none" type="checkbox" name="dcolor" value="-1" disabled="tak" /></th></tr>
  <tr><td><input type="checkbox" id="dobrona" value="1" /> obrona</td></tr>
  <tr><td><input type="checkbox" id="dtyp" value="1" /> typ</td></tr>
  <tr><td><input type="checkbox" id="draport" value="1" /> raport</td></tr>
@@ -84,7 +89,7 @@ alert(string);
 <td align="center"> <input type="submit" value="Wykonaj" onclick="nev_map('');" /> </td>
 <td align="center"> <input type="submit" value="Wykonaj" onclick="nev_map('d');" /> </td>
  </tr>
-<tr><td colspan="2"> <a href="javascript: popup('test/operacje/legenda.php', 290, 340);">Legenda</a> </td></tr>
+<tr><td colspan="2"> <a href="javascript: info_w3();">Legenda</a> </td></tr>
 </table>
 </div>
 
@@ -99,7 +104,7 @@ alert(string);
     </tr>
 
 <tr><td>
-<img src="img/00a.php?s=<?PHP echo ($_GET[s]); ?>&xy=<?PHP echo $xy[0]."|".$xy[1]; ?>" style="width: 1000px; height: 1000px; position: absolute; display: none; left: 2px; top: 2px;" id="dmap" alt="">
+<img src="img/00a.php?s=<?PHP echo ($_GET[s]); ?>&xy=<?PHP echo $xy[0]."|".$xy[1]; ?>&color=-1" style="width: 1000px; height: 1000px; position: absolute; display: none; left: 11px; top: 11px;" id="dmap" alt="">
 <img style='display:none' id='mapol_img' src='#' alt='' />
 <img src="img/rr.gif" style="width: 1px; height: 1px; position: absolute; display: block; left: 426px; top: 911px;" id="rd_top" alt="">
 <img src="img/rr.gif" style="width: 1px; height: 1px; position: absolute; display: block; left: 426px; top: 911px;" id="rd_left" alt="">

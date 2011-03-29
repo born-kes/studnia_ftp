@@ -1,23 +1,20 @@
-<?php
-
-$k_txt = ImageColorAllocate($dest,0,0,0);
-$kolor  = ImageColorAllocate($dest,100,55,0);
-
+<?php          //wojska
 if($r[mur]>=0){
-$flaga =  imagecreatefromgif("m.gif");
-imagecopy($dest, $flaga , 0, 28, 0, 0, 12,10);
+//imagecopy($dest, $flaga_m , $x_0+0, $y_0+28, $x_0+0, $y_0+0, 12,10);
+ImageRectangle($dest,$x_0+6,$y_0+28 ,12+$x_0+6,$y_0+37,$k_txt_cz);
+$wys=36;
+$mur=intval($r[mur]/3)+1;
+for($i=1 ;$i<$mur; $i++){ ImageRectangle($dest,$x_0+7,$y_0+$wys-- ,10+$x_0+7,$y_0+$wys,$kolor_1);}
+if($r[mur]==20)         { ImageRectangle($dest,$x_0+7,$y_0+$wys-- ,10+$x_0+7,$y_0+$wys,$kolor_1);}else{
+if($r[mur]==0){           ImageRectangle($dest,$x_0+7,$y_0+$wys   ,10+$x_0+7,$y_0+$wys,$kolor_sz);}//else{ $wys--;}
+for($i=$mur+1;$i<9;$i++){ ImageRectangle($dest,$x_0+7,$y_0+$wys-- ,10+$x_0+7,$y_0+$wys,$k_txt_sz);}    }
 
-$wys=36;//wojska
-
-
- //imagecopy($dest, $mur, 10, 0, 0, 0, 18,18);
-for($i=1 ;$i<($r[mur]/3)+1; $i++){ImageRectangle($dest,1,$wys--,10,$wys,$kolor);}
-
-//if($r[mur]==20){ImageRectangle($dest,1,$wys--,10,$wys,$kolor);}
 }
-if($r[mur]<20){$k_txt = ImageColorAllocate($dest,224,112,0);}
-if($r[mur]<5){$k_txt = ImageColorAllocate($dest,204,0,0);}
-if($r[mur]<10){$stopka = 4;}else{$stopka = 1;}
 
-ImageString($dest,0,$stopka,29,$r[mur],$k_txt);
+if($r[mur]<5 ){             ImageString($dest,0,$stopka+$x_0+7,29+$y_0,$r[mur],$k_txt_20);}else
+if($r[mur]<10){$stopka = 4; ImageString($dest,0,$stopka+$x_0+6,29+$y_0,$r[mur],$k_txt_ma);}else
+if($r[mur]<20){             ImageString($dest,0,$stopka+$x_0+6,29+$y_0,$r[mur],$k_txt_yo);}else
+              {$stopka = 1; ImageString($dest,0,$stopka+$x_0+6,29+$y_0,$r[mur],$k_txt_cz);}
+
+
 ?>

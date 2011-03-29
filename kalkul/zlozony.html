@@ -1,85 +1,139 @@
-<table cellpadding="0" cellspacing="0">
-<tbody><tr>
-  <td id="suwak" style="border-style: dotted; background-color: rgb(173, 87, 0);"><form name="form" action="operacje/cal_zlozony_0.php" method="post" target="ramka">
-  <table>
-  <tbody><tr>
-    <th>Agresor</th>
-  </tr>
-  <tr>
-    <td>Nazwa Gracza</td>
-  </tr>
-  <tr>
-    <td><input name="agracz" value="" size="14" type="text"></td>
-  </tr>
-  <tr>
-    <td>Typ Wioski</td>
-  </tr>
-  <tr>
-    <td><select name="typ_a"><option value=""></option><option value="0">brak 
-typu</option><option value="1">wioska off</option><option value="2">wioska 
-def</option><option value="3">Zwiad</option><option value="4">wioska 
-LK</option><option value="5">wioska CK</option><option value="6">do 
-rozbudowy</option></select></td>
-  </tr>
-  <tr>
-    <td id="siea"><b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy',0),'a_map_go');on('map0');iss='a_';">Okolica 
-</b>/ <b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy',0),'a_map_go');"> 
-Recznie </b></td>
-  </tr>
-  <tr>
-    <td id="a_map_go"></td>
-  </tr>
-  <tr>
-    <td><hr></td>
-  </tr>
-  <tr>
-    <th>Obronca</th>
-  </tr>
-  <tr>
-    <td>Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on('sieo');" type="radio"><br>Plemie 
-<input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on('sieo');" type="radio"><br>Wioska 
-<input name="ofiarra" onclick="loading('xxx|yyy'+input_xy(''),'kogo_go');off('sieo');loading('','o_map_go');" type="radio"><br></td>
-  </tr>
-  <tr>
-    <td id="kogo_go"></td>
-  </tr>
-  <tr>
-    <td id="sieo"><b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy',0),'o_map_go');on('map0');iss='o_';">Okolica 
-</b>/ <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy',0),'o_map_go');"> 
-Recznie </b></td>
-  </tr>
-  <tr>
-    <td id="o_map_go"></td>
-  </tr>
-  <tr>
-    <td><hr></td>
-  </tr>
-  <tr>
-    <td>Wojsko</td>
-  </tr>
-  <tr>
-    <td><input value=" &lt; " name="B2" onclick="backward()" type="button"><img src="img/1.PNG" name="photoslider" alt=" "><input value=" &gt; " name="B1" onclick="forward()" type="button"><input value="9" name="wojsko" id="wojsko" type="hidden"></td>
-  </tr>
-  <tr>
-    <td>Godzina Ataku</td>
-  </tr>
-  <tr>
-    <td><input name="czas1" value="" size="22" type="text"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);"><img src="img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
-  </tr>
-  <tr>
-    <td>Okno wysylane atakow</td>
-  </tr>
-  <tr>
-    <td>Tak <input name="okno_atak" value="" onclick="loading(' od '+input('od_h','16')+' do '+input('do_h','21'),'czas_start');" type="radio"> 
-Nie <input name="okno_atak" value="" onclick="loading('','czas_start');" type="radio"></td>
-  </tr>
-  <tr>
-    <td><span id="czas_start"></span></td>
-  </tr>
-  <tr>
-    <td><input value=" Wykonaj " type="submit"></td>
-  </tr>
-  </tbody></table>
-  </form></td>
-</tr>
-</tbody></table>
+<form action="" method="POST" name="form">
+<table style="width:100%" class="main" title="Tabelka kalkulator zlozony" align="center">
+<tbody>
+ <tr>
+  <td style="width:45%" />
+  <td />
+  <td style="width:45%" />
+ </tr>
+ <tr valign="top">
+  <td>
+   <table class="vis" align="center"><CAPTION>Agresor</caption>
+   <tbody>
+	<tr>
+	 <td>Nazwa Gracza</td>
+	</tr>
+	<tr>
+	 <td><input name="agracz" value="" size="14" type="text"></td>
+	</tr>
+	<tr>
+	 <td>Typ Wioski</td>
+	</tr>
+	<tr>
+	 <td onMouseOver="on('h0');" onMouseOut="off('h0');"><select name="typ_a">
+		<option value=""></option>
+		<option value="0">brak typu</option>
+		<option value="1">wioska off</option>
+		<option value="2">wioska def</option>
+		<option value="3">Zwiad</option>
+		<option value="4">wioska LK</option>
+		<option value="5">wioska CK</option>
+		<option value="6">do rozbudowy</option>
+		<option value="7">szlachta</option>
+  	 </select>
+           <div class="metro" id="h0" style="display:none;">jesli opisales typy wiosek mo¿esz ograniczyc liste o to pole</div>
+           </td>
+        </tr>
+	<tr>
+	 <td id="siea" onMouseOver="on('h1');" onMouseOut="off('h1');">Okolica:<br><b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy','xxx|yyy'),'a_map_go');on('map0');iss='a_';">Mapa
+	  </b>/ <b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy','xxx|yyy'),'a_map_go');">Recznie </b><b style="cursor: pointer;" onclick="NOClick('a_');">xxx</b>
+
+          </td>
+	</tr>
+	<tr>
+	 <td id="a_map_go"></td>
+	</tr>
+	<tr><td><div class="metro" id="h1" style="display:none;">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
+	<tr>
+	 <td onMouseOver="on('h2');" onMouseOut="off('h2');">
+         Pomijaj wioski ju¿ opracowane <br>
+	w minutniku <input checked="checked" name="minutnik" value="1" type="checkbox">
+	
+	</td>
+	</tr>
+<tr><td><div class="metro" id="h2" style="display:none;">jesli mozliwosc ograniczenia listy o wioski jeszcze nie dodane do minutnika czyli takie które nie maja jeszcze zadan</div></td></tr>
+	<tr>
+	 <td onMouseOver="on('h3');" onMouseOut="off('h3');">Full Off'y' <input checked="checked" name="foff" value="1" type="checkbox"><div class="metro" style="display:none;" id="h3">jest mozliwosc ograniczenia listy wiosek o takie które maja pelnego offa</div></td><!-- napisac ta opcje dopiero trzeba -->
+	</tr>
+
+   </tbody>
+   </table>
+  </td>
+  <td>
+   <table align="center">
+   <tbody>
+    <tr>
+	<td>Wojsko (tempo marszu)</td>
+	</tr>
+	<tr>
+	<td onMouseOver="on('h4');" onMouseOut="off('h4');">
+	<select name="wojsko" id="wojsko">
+	<option value=""></option>
+	<option value="9">Zwiad</option>
+	<option value="10">LK i KL</option>
+	<option value="11">CK</option>
+	<option value="18">Pik, Axe, Luk</option>
+	<option value="22">Mie</option>
+	<option value="30">Tar i Kat</option>
+	<option value="35">Sz (gruby)</option>
+	<option value="0">Wedlug wsi</option>
+	</select>
+         <div class="metro" style="display:none;" id="h4">Mozesz liczyæ tempo ataku dla kazdej wioski osobno, lub wszyskich razem</div>
+	</td>	
+	<tr>
+	<td>Tylko wioski które </td>
+	</tr>
+	<tr>
+	<td>maj± wybrane jednostki <input checked="checked" name="tempo_on" value="1" type="checkbox"></td>
+	</tr>
+	<tr>
+	<td>Godzina Ataku</td>
+	</tr>
+	<tr>
+	<td><input name="czas1" value="" size="22" type="text"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);"><img src="img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
+	</tr>
+	<tr>
+	<td>Okno wysylane atakow</td>
+	</tr>
+	<tr>
+	<td onMouseOver="on('h5');" onMouseOut="off('h5');">
+	Tak <input name="okno_atak" value="" onclick="loading(' od '+input('od_h','16')+' do '+input('do_h','21'),'czas_start');" type="radio">
+	Nie <input name="okno_atak" value="" onclick="loading('','czas_start');" type="radio">
+	</td>
+	</tr>
+	<tr>
+	<td><span id="czas_start"></span></td>
+        </tr>
+	<tr><td><div class="metro" style="display:none;" id="h5">Jest mozliwosc ograniczenia listy wiosek w propozycjach tak bys mogl stworzyc liste atakow w godzinach kiedy faktycznie masz czas je wyslac</div></td></tr>
+   </tbody>
+   </table>
+  </td>
+  <td >
+   <table align="center" style="width: 50%;"><CAPTION>Obroñca / Cel ataku</caption>
+   <tbody>
+	<tr>
+	 <td>
+          Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on('sieo');" type="radio"><br>
+          Plemie <input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on('sieo');" type="radio"><br>
+          Wioska <input name="ofiarra" onclick="loading('xxx|yyy'+input_xy(''),'kogo_go');off('sieo');loading('','o_map_go');" type="radio"><br>
+         </td>
+	</tr>
+	<tr>
+	 <td id="kogo_go"></td>
+	</tr>
+	<tr>
+	 <td id="sieo" onMouseOver="on('h6');" onMouseOut="off('h6');">Okolica:<br>
+         <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy','xxx|yyy'),'o_map_go');on('map0');iss='o_';">Mapa</b>
+	 / <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy','xxx|yyy'),'o_map_go');">Recznie </b>
+	 </td>
+	</tr>
+	<tr>
+	 <td id="o_map_go"></td>
+	</tr>
+        <tr><td><div class="metro" style="display:none;" id="h6">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
+   </tbody>
+   </table>
+  </td>
+ </tr>
+</tbody>
+</table></form>

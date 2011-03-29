@@ -1,1 +1,3 @@
-Nie gotowe.
+Na Etapie projektowania.
+<br>
+Masz pomysla napisz

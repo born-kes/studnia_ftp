@@ -19,7 +19,11 @@ if(!isSet($_SESSION['id']) || $_SESSION['id']==null|| count($_SESSION['id'])>1){
   destructor();
 }
 # Wyciaga x|y Wioski 
-function xy_wioski($name){$st_r=strrpos($name, "|"); $w_name= substr($name , $st_r-3,$st_r+3); return $w_name;}
+function xy_wioski($name){
+ $name= substr($name ,   strrpos($name, "(")+1 ); 
+ $name= substr($name ,0, strrpos($name, ")")   ); 
+
+return $name;}
 
 $co_idzie =array ('1'=>'Wedlug bazy',
                   '9'=>'Zwiad',
@@ -58,21 +62,37 @@ function wpisz_rodzaj($nr,$rodzaje){ if($rodzaje==NULL){global $rodzaje;}
   }
     return $str;
 }
-
+function dns($a)
+{global $godzina_zero;
+ $dnis = intval( (mktime()-$a-$godzina_zero+3500)/86400 );
+    if($dnis==1){return $dnis.' dzien ';}
+elseif($dnis==0){ $dnis = ((mktime()-$a-$godzina_zero)/3600);
+                 if($dnis<0){$dnis*=-1;}
+                 if($dnis<(intval($dnis)+0.45)){$dnis=intval($dnis);}else{$dnis=intval($dnis)+0.5;}
+                 return $dnis.' godzin';
+                }
+elseif($dnis<0){$dnis*=-1;}
+return $dnis.' dni ';
+}
+function data_z($rr){ global $godzina_zero; $wynik = date("d.m.Y G:i:s", $rr+$godzina_zero); return $wynik;}
 function data_z_bazy($rr)
 { global $godzina_zero;
-  global $godzina_jeden; $wynik = date("d.m.Y G:i:s", $rr+$godzina_zero);
+  global $godzina_jeden; $wynik=data_z($rr);
 
-if($rr==NULL){
+if($rr==NULL||$rr == $godzina_zero){
      $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu"> Brak Raportu';}
-elseif($rr<$godzina_jeden && $rr<$godzina_jeden-518400 ){
-     $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Stary raport"> ';}
-elseif($rr<$godzina_jeden && $rr>$godzina_jeden-518400 ){
-     $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Nowy Raport"> ';}
-elseif($rr>$godzina_jeden && $rr<mktime()-$godzina_zero ){
-     $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Bardzo Swierzy Raport"> ';}
-elseif( $rr<mktime() ){
-     $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc"> ';}
+elseif($rr<$godzina_jeden-31362000){
+     $ciag =$wynik.' <IMG SRC="../img/z6.gif" title="Raport ma ponad!! '.dns($rr).'"> ';}
+elseif($rr<$godzina_jeden-518400 ){
+     $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Raport Stary ma '.dns($rr).'"> ';}
+elseif($rr<$godzina_jeden ){
+     $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Raport Nowy ma '.dns($rr).'"> ';}
+elseif($rr<mktime()-$godzina_zero ){
+     $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Raport Bardzo Swierzy ma '.dns($rr).'"> ';}
+elseif($rr<mktime()-$godzina_zero+200 ){
+     $ciag =' Raport wlasnie dodany. ';}
+else{
+     $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc Data za '.dns($rr).'"> ';}
     return $ciag;
 }
 
@@ -177,38 +197,30 @@ function url_proxi($str)
    return $url;
 }
 function map_color($id_gracz,$id_plemie)
-{  global $moje_id;
+{  global $moje_id,$plemiona_strosunki;
 if($id_gracz==0){return 'sz';}
 elseif($id_gracz==$moje_id){ return 'ja';}
 
-switch($id_plemie){
-case 23660:	return 'my';       //-BAE-
-	//Sojusze
-case 4469:	return 'so';	//~ZP~
-case 11183:	return 'so';	//&#1769;-MZ-&#1769;
-case 23185:	return 'so';	//=MAD=
-case 51349:	return 'so';	//ZC
-case 51415:	return 'so';	//BM
-case 51472:	return 'so';	//DEVILS	
-case 51732:	return 'so';	//SmAp
 
-    	//PON
-case 51308:	 return 'po';	 //PALS
-
-	//Wrogowie
-case 422:	return 'aa';	//RedRub
-case 898:	return 'aa';	//**MI**
-case 13245:	return 'aa';	//C M
-case 48588:	return 'aa';	//NWO
-case 51306:	return 'aa';	//ZKG
-case 51667:	return 'aa';	//PaL
-case 51724:	return 'aa';	//HERO
-case 50811:	return 'aa';	//SNRG
-
-	//inne
+switch($plemiona_strosunki[$id_plemie]){
+ case 1:	return 'my';
+ case 2:	return 'so';
+ case 3:	return 'po';
+ case 4:	return 'aa';
 default:	return 'in';	// inne
 break;             }
 }
+// dla Proxi
+ $funkcja = Array('Niewybrana','Dostêp Go¶cinny','Rozbudowa','Handlarz','Pluskwa','Rozbiurka', 'Twórca nowych wiosek');
+function zap($a,$b,$c)
+{ $zap = "SELECT ".$a." FROM ".$b." WHERE ".$c.";";
+  connection();
+     $wynik = @mysql_query($zap)or die('Blad zapytania '.$zap);
 
+       if($r = mysql_fetch_row($wynik)){ $z = $r;}
+  destructor();
+
+return $z;
+}
 
 ?>
