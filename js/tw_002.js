@@ -258,9 +258,11 @@ function MapClick(e)
 
 //off('map0');
 if(iss=='a_')
-img_go('ra',m_x,m_y);
+{img_go('ra',m_x,m_y);
+selectAobr(document.forms[0], 'dane_agr');}
 else if(iss=='o_')
-img_go('ro',m_x,m_y);
+{img_go('ro',m_x,m_y);
+selectAobr(document.forms[0], 'dane_obr');}
 
 ShowVillageInfo(); 
 }

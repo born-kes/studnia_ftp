@@ -1,5 +1,70 @@
-<form action="" method="POST" name="form">
-<table style="width:100%" class="main" title="Tabelka kalkulator zlozony" align="center">
+<script language="JavaScript">
+<!--
+function zmien(form) {
+ form.value = (form.value == '1' ? '1' : '0');
+}
+function kes_expod(str)
+{
+ if(str.indexOf("\n")>-1)
+ {str = str.split("\n");
+var s1,s2,s;
+   for (var i=0; i< str.length ; i++ )
+   {
+
+if(str[i].indexOf("\t")>-1)
+      {
+      var estr = str[i].split("\t");
+      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
+      str[i] = estr.join("");
+      }
+if(str[i].indexOf(" ")>-1)
+      {
+      var estr = str[i].split(" ");
+      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
+      str[i] = estr.join("");
+      }
+
+
+  if(!str.indexOf("|")>-1) continue;
+   
+      if(str[i].indexOf("(")>-1 && str[i].indexOf(")")>-1)
+      {
+      s = str[i];
+      s1= str[i].lastIndexOf('(');
+      s2= str[i].lastIndexOf(')');
+  str[i]= str[i].substring(s1+1,s2);
+      }
+   }
+str.join(',');
+  }
+return str;
+} 
+
+function selectAobr(form,val) {     //selectAobr(this.form, this.checked)
+           var valu, str = '';
+     if(val=='d_agr')    valu='dane=0';
+else if(val=='dane_agr') valu='dane=1';
+else if(val=='dane_obr') valu='dane=2';
+
+	for(var i=0; i<=form.length-1; i++)
+        { 
+if(form.elements[i].type=="checkbox" || form.elements[i].type=="radio")
+   if(! form.elements[i].checked)
+     continue;
+if(form.elements[i].value.indexOf("\n")>-1)
+ var values= form.elements[i].value = kes_expod(form.elements[i].value);
+else
+ var values= form.elements[i].value;
+	str+='&'+ form.elements[i].name +'='+ values;		
+        }
+//alert(str);
+    Klik(val,'zlo_zap.php?'+valu+str)
+}
+
+//-->
+</script>
+<form action="zlo_zap.php" method="POST" name="form" target="rampa">
+<table style="width:100%" class="main" id="Tabelka kalkulator zlozony" align="center">
 <tbody>
  <tr>
   <td style="width:45%" />
@@ -8,19 +73,20 @@
  </tr>
  <tr valign="top">
   <td>
-   <table class="vis" align="center"><CAPTION>Agresor</caption>
+   <table class="vis" align="center" id="Table_agr">
+<CAPTION><a href="javascript:on('Table_agr_wlasna');off('Table_agr');">Agresor z Zapytania</a></caption>
    <tbody>
 	<tr>
 	 <td>Nazwa Gracza</td>
 	</tr>
 	<tr>
-	 <td><input name="agracz" value="" size="14" type="text"></td>
+	 <td><input name="agracz" value="<?PHP echo $_SESSION['zalogowany']; ?>" size="14" type="text" onChange="selectAobr(this.form, 'dane_agr');"></td>
 	</tr>
 	<tr>
 	 <td>Typ Wioski</td>
 	</tr>
 	<tr>
-	 <td onMouseOver="on('h0');" onMouseOut="off('h0');"><select name="typ_a">
+	 <td onMouseOver="on('h0');" onMouseOut="off('h0');"><select name="typ_a" onChange="selectAobr(this.form, 'dane_agr');selectAobr(this.form, 'd_agr');">
 		<option value=""></option>
 		<option value="0">brak typu</option>
 		<option value="1">wioska off</option>
@@ -35,39 +101,49 @@
            </td>
         </tr>
 	<tr>
-	 <td id="siea" onMouseOver="on('h1');" onMouseOut="off('h1');">Okolica:<br><b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy','xxx|yyy'),'a_map_go');on('map0');iss='a_';">Mapa
-	  </b>/ <b style="cursor: pointer;" onclick="loading(input('a_oko',0)+input('a_xy','xxx|yyy'),'a_map_go');">Recznie </b><b style="cursor: pointer;" onclick="NOClick('a_');">xxx</b>
+	 <td id="siea" onMouseOver="on('h1');" onMouseOut="off('h1');">Okolica:<br>
+<b style="cursor: pointer;" onclick="on('map0');iss='a_';on('a_map_go');">Mapa</b>
+<b style="cursor: pointer;" onclick="NOClick('a_');">xxx</b><br>
 
-          </td>
-	</tr>
-	<tr>
-	 <td id="a_map_go"></td>
+	 <div id="a_map_go" style="display:none;"><input size="5" name="a_oko" id="a_oko" value="0" type="text" onChange="selectAobr(this.form, 'dane_agr');"><input size="5" name="a_xy" id="a_xy" value="xxx|yyy" type="text" onChange="selectAobr(this.form, 'dane_agr');"></div></td>
 	</tr>
 	<tr><td><div class="metro" id="h1" style="display:none;">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
 	<tr>
 	 <td onMouseOver="on('h2');" onMouseOut="off('h2');">
          Pomijaj wioski ju¿ opracowane <br>
-	w minutniku <input checked="checked" name="minutnik" value="1" type="checkbox">
+	w minutniku <input name="minutnik" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_agr');">
 	
 	</td>
 	</tr>
 <tr><td><div class="metro" id="h2" style="display:none;">jesli mozliwosc ograniczenia listy o wioski jeszcze nie dodane do minutnika czyli takie które nie maja jeszcze zadan</div></td></tr>
 	<tr>
-	 <td onMouseOver="on('h3');" onMouseOut="off('h3');">Full Off'y' <input checked="checked" name="foff" value="1" type="checkbox"><div class="metro" style="display:none;" id="h3">jest mozliwosc ograniczenia listy wiosek o takie które maja pelnego offa</div></td><!-- napisac ta opcje dopiero trzeba -->
+	 <td onMouseOver="on('h3');" onMouseOut="off('h3');">Full Off'y' <input name="foff" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_agr');">
+<div class="metro" id="h3" style="display:none;">jest mozliwosc ograniczenia listy wiosek o takie które maja pelnego offa
+<br> Top <input size="5" name="top" value="4999" type="text" />
+<br> LK <input size="5" name="lk" value="1500" type="text" />
+<br> Tar <input size="5" name="tar" value="100" type="text" />
+</div>
+</td>
 	</tr>
 
    </tbody>
    </table>
+
+   <table class="vis" style="display:none;" align="center" id="Table_agr_wlasna"><CAPTION><a href="javascript:on('Table_agr');off('Table_agr_wlasna');">Wlasna lista wiosek Agresora</caption>
+   <tbody onMouseOver="on('ht1');" onMouseOut="off('ht1');">
+   <tr><td><textarea name="query_agr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_agr');"></textarea></td></tr>
+   <tr><td><div class="metro" id="ht1" style="display:none;">jesli mozliwosc podania wlasnej, gotowej listy wiosek</div></td></tr>
+   </tbody>
+   </table>
+
   </td>
   <td>
    <table align="center">
    <tbody>
     <tr>
-	<td>Wojsko (tempo marszu)</td>
-	</tr>
-	<tr>
-	<td onMouseOver="on('h4');" onMouseOut="off('h4');">
-	<select name="wojsko" id="wojsko">
+	<td onMouseOver="on('h4');" onMouseOut="off('h4');">Wojsko<br>(tempo marszu)
+<br>
+	<select name="wojsko" id="wojsko"  onChange="selectAobr(this.form, 'dane_agr');">
 	<option value=""></option>
 	<option value="9">Zwiad</option>
 	<option value="10">LK i KL</option>
@@ -78,44 +154,40 @@
 	<option value="35">Sz (gruby)</option>
 	<option value="0">Wedlug wsi</option>
 	</select>
-         <div class="metro" style="display:none;" id="h4">Mozesz liczyæ tempo ataku dla kazdej wioski osobno, lub wszyskich razem</div>
+         <div class="metro" style="display:none;" id="h4">Mozesz liczyæ tempo ataku dla kazdej wioski osobno, lub wszyskich razem
+Oraz zaznaczyc ze chcesz tylko wioski ktore maja wybrane jednostki <input name="tempo_on" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_agr');" title="Zaznacz ze tylko wioski ktore maja wybrany rodzaj w bazie" /></div>
 	</td>	
-	<tr>
-	<td>Tylko wioski które </td>
 	</tr>
 	<tr>
-	<td>maj± wybrane jednostki <input checked="checked" name="tempo_on" value="1" type="checkbox"></td>
+	<td></td>
 	</tr>
 	<tr>
 	<td>Godzina Ataku</td>
 	</tr>
 	<tr>
-	<td><input name="czas1" value="" size="22" type="text"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);"><img src="img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
+	<td><input name="czas1" value="" size="14" type="text" onChange="selectAobr(this.form, 'dane_agr');"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);"><img src="../img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
 	</tr>
 	<tr>
-	<td>Okno wysylane atakow</td>
-	</tr>
-	<tr>
-	<td onMouseOver="on('h5');" onMouseOut="off('h5');">
-	Tak <input name="okno_atak" value="" onclick="loading(' od '+input('od_h','16')+' do '+input('do_h','21'),'czas_start');" type="radio">
-	Nie <input name="okno_atak" value="" onclick="loading('','czas_start');" type="radio">
+	<td onMouseOver="on('h5');" onMouseOut="off('h5');">Okno wysylane atakow
+	<input name="okno_atak" value="true" onclick="show('czas_start');" type="checkbox">
+
 	</td>
 	</tr>
 	<tr>
-	<td><span id="czas_start"></span></td>
+	<td><span id="czas_start" style="display:none;">od <input size="5" name="od_h" id="od_h" value="16" type="text" /><br /> do <input size="5" name="do_h" id="do_h" value="21" type="text" /></span></td>
         </tr>
 	<tr><td><div class="metro" style="display:none;" id="h5">Jest mozliwosc ograniczenia listy wiosek w propozycjach tak bys mogl stworzyc liste atakow w godzinach kiedy faktycznie masz czas je wyslac</div></td></tr>
    </tbody>
    </table>
   </td>
   <td >
-   <table align="center" style="width: 50%;"><CAPTION>Obroñca / Cel ataku</caption>
+   <table align="center" style="width: 50%;" id="Table_obr"><CAPTION><a href="javascript:on('Table_obr_wlasna');off('Table_obr');">Obroñca / Cel ataku</a></caption>
    <tbody>
 	<tr>
 	 <td>
-          Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on('sieo');" type="radio"><br>
-          Plemie <input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on('sieo');" type="radio"><br>
-          Wioska <input name="ofiarra" onclick="loading('xxx|yyy'+input_xy(''),'kogo_go');off('sieo');loading('','o_map_go');" type="radio"><br>
+          Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_obr');"><br>
+          Plemie <input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_obr');"><br>
+          Wioska <input name="ofiarra" onclick="loading('','kogo_go');gid('o_oko').value='';off('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_obr');" value="1"><br>
          </td>
 	</tr>
 	<tr>
@@ -123,17 +195,43 @@
 	</tr>
 	<tr>
 	 <td id="sieo" onMouseOver="on('h6');" onMouseOut="off('h6');">Okolica:<br>
-         <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy','xxx|yyy'),'o_map_go');on('map0');iss='o_';">Mapa</b>
-	 / <b style="cursor: pointer;" onclick="loading(input('o_oko',0)+input('o_xy','xxx|yyy'),'o_map_go');">Recznie </b>
-	 </td>
-	</tr>
-	<tr>
-	 <td id="o_map_go"></td>
+         <b style="cursor: pointer;" onclick="on('map0');iss='o_';">Mapa</b>
+	 / <b style="cursor: pointer;" onclick="">Recznie </b><br>
+	 <div id="o_map_go"><input size="3" name="o_oko" id="o_oko" value="0" type="text" onChange="selectAobr(this.form, 'dane_obr');"><input size="5" name="o_xy" id="o_xy" value="xxx|yyy" type="text" onChange="selectAobr(this.form, 'dane_obr');"></div></td>
 	</tr>
         <tr><td><div class="metro" style="display:none;" id="h6">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
+	 <tr><td onMouseOver="on('h7');" onMouseOut="off('h7');">
+         Minimalna ilosc punktów
+	<input name="mini_plus" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_obr');">
+	<div class="metro" id="h7" style="display:none;">jesli mozliwosc ograniczenia listy o wioski ustawiajac minimalna ilosc punktow <br> <input size="3" name="mini" value="5000" type="text" onChange="selectAobr(this.form, 'dane_obr');"> pkt. </div>
+         </td></tr>
+	 <tr><td onMouseOver="on('h8');" onMouseOut="off('h8');">
+         Dane Wywiadowcze
+	<input name="zwiad" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_obr');">
+	<div class="metro" id="h8" style="display:none;">jesli mozliwosc ograniczenia listy  wiosk o takie ktore zostaly rozpoznane zwiadem. 
+    <select name="zwiad_st" onchange="selectAobr(this.form, 'dane_obr');">
+    <option value=""></option>
+    <?PHP for($licz=0; $licz<count($statuss[typ]); $licz++){echo'<option value="'.$licz.'">'.$statuss[typ][$licz].'</option>'; } ?>
+    </select></div>
+         </td></tr>
+
    </tbody>
    </table>
+   <table class="vis" style="display:none;" align="center" id="Table_obr_wlasna"><CAPTION><a href="javascript:on('Table_obr');off('Table_obr_wlasna');">Wlasna lista wiosek Obroncy</a></caption>
+   <tbody onMouseOver="on('ht2');" onMouseOut="off('ht2');">
+   <tr><td><textarea name="query_obr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_obr');"></textarea></td></tr>
+  <tr><td><div class="metro" id="ht2" style="display:none;">jesli mozliwosc podania wlasnej, gotowej listy wiosek</div></td></tr>
+   </tbody>
+   </table>
+
   </td>
  </tr>
+ <tr><th>Masz <b id="d_agr"></b> wiosek, spe³niaj±ce wymagania : <span id='dane_agr' ></span> </th><td /><th>Wioski spe³niaj±ce wymagania : <span id='dane_obr' ></span> </th></tr>
 </tbody>
-</table></form>
+</table>
+<script language="JavaScript">
+<!--
+ selectAobr(document.forms[0], 'd_agr');
+//-->
+</script>
+</form>

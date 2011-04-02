@@ -131,7 +131,7 @@ $zap1.='AND ('.$wynik.')';
    }
 
 }
-   $zap1.=" ORDER BY `w`.`name` ASC";
+   $zap1.="ORDER BY `w`.`name` ASC";
 //echo $zap1;
 
 $zap2=" SELECT w.name, w.x, w.y, w.points,w.id, r.status

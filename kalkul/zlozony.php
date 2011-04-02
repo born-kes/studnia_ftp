@@ -4,7 +4,7 @@
 
            <script src="../test/js/menu.js" type="text/javascript"></script>
            <script src="../test/js/suwak.js" type="text/javascript"></script>
-           <script src="../test/js/ts_picker.js" type="text/javascript"></script>
+           <script src="../js/ts_picker.js" type="text/javascript"></script>
            <script src="../js/tw_002.js" type="text/javascript"></script>
            <script src="../js/plac.js" type="text/javascript"></script>
            <script src="../js/ajax.js" type="text/javascript"></script>
@@ -23,7 +23,7 @@ function gmap(text){
 }
 function input_plemie() {
                         	var str_buffer =  new String (
-    '<select name="plem_op">'+
+    '<select name="plem_op" onchange="selectAobr(this.form, \'dane_obr\');">'+
     '<option value=""></option>'+
     '<?PHP for($licz=0; $licz<count($plemiona); $licz++){echo'<option value="'.$id_plem[$licz].'">'.$plemiona[$licz].'</option>'; } ?>'+
     '</select>');
@@ -31,7 +31,7 @@ function input_plemie() {
 }
 function input_typ(a) {
                         	var str_buffer =  new String (
-    '<select name="typ_'+a+'">'+
+    '<select name="typ_'+a+'" onchange="selectAobr(this.form, \'dane_agr\');">'+
     '<option value=""></option>'+
     '<?PHP for($licz=0; $licz<count($rodzaje); $licz++){echo'<option value="'.$licz.'">'.$rodzaje[$licz].'</option>'; } ?>'+
     '</select>');
@@ -109,8 +109,8 @@ var vv='mis';
 </head>
   <body bgcolor="#ffffff" onload="registerEvents();">
 <div style="position:relative ; z-index:3;" id="go1"><?PHP include('zlozony.html'); ?></div>
-
-<div id="map0">
+<div onclick="show('map0');" align="right" style="z-index:2;">MAPA <img src="http://www.corporis.pl/images/zamknij.gif"></div>
+<div id="map0" style="display:none;">
 <div style="position:absolute; z-index:2;" id="map2">
 <table cellpadding="0" cellspacing="0"><tr><td>
      <table cellpadding="0" cellspacing="0">
@@ -151,10 +151,10 @@ var vv='mis';
 <img src="../img/ro.gif" style="width: 4px; height: 1px; position: absolute; display: block; left: 426px; top: 914px;" id="ro_bottom" alt="">
 </div>
 
-</div><div onclick="show('map0');" align="right" style="z-index:2;"><img src="http://www.corporis.pl/images/zamknij.gif"></div>
+</div>
 <script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');</script>
 <table><tbody><tr><td id="test"/></tr></tbody></table>
-<b onclick="javascript:Klik('test','m.html')">bel</b>
+<b onclick="javascript:Klik('test','m.php')">bel</b>
 <b onclick="javascript:alert(vv);">beddl</b>
 </body>
   </html>

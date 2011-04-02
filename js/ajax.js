@@ -23,17 +23,21 @@ function Klik(gdzie,name)
          if(ajax_obiekt.readyState  == 4)
          {
               if(ajax_obiekt.status  == 200)
-{var sc=document.createElement('div');
-sc.innerHTML = ajax_obiekt.responseText;
-element.appendChild(sc);}
+{
+ if(ajax_obiekt.responseText.indexOf('id="#script"')>-1)
+ {
+  var sc=document.createElement('div');
+  sc.innerHTML = ajax_obiekt.responseText;
+  element.appendChild(sc);
+ }else{element.innerHTML = ajax_obiekt.responseText; }
+}
 
                //   element.innerHTML = ajax_obiekt.responseText;
               else
                  element.innerHTML = "b&#65533;&#65533;d Po&#65533;&#65533;czenia: <br />" + ajax_obiekt.status;
-         }
+         }else{element.innerHTML +='<img src="http://pl5.plemiona.pl/graphic/throbber.gif" />';}
     };
-
-   ajax_obiekt.open('GET', name,  true);
-   ajax_obiekt.send(null);
+   ajax_obiekt.open(Metod , name,  true);
+   ajax_obiekt.send(null); 
 }
-
+var Metod ='GET';
