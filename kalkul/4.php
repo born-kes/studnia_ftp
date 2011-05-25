@@ -7,7 +7,7 @@
 <body><br />
 <table align="center">
 <TR><TD>
-<?php  include('../connection.php');
+<?php include_once(dirname(dirname(__FILE__)) . '/connection.php'); sesio_id();
 
 if($_POST['ktos']!=Null)
 {
@@ -48,5 +48,5 @@ else
 {echo '<img src="../img/dodaj.PNG"> '.$opiss.' o godzinie '.$data.'<BR>';}
  
 destructor();}
-echo'<BR><a href="minuta.php" target="ramka">Zobacz Minutnik</a> masz go te¿ w zak³adce Profil';
+echo'<BR><a href="../rada/minutnik.php" target="ramka">Zobacz Minutnik</a> masz go te¿ w Panelu Radnego';
 ?>

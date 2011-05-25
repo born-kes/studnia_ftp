@@ -1,3 +1,27 @@
+function NOClick()
+{
+	var coords=getElement(iss+'xy').value.split("|");
+	var mapxy=GetCoords(getElement('map'));
+	var map0xy=GetCoords(getElement('map0'));
+if(zoom==0){	
+	m_x = Math.floor(coords[0])/(zoom+1)	+	(mapxy[0]-map0xy[0]);
+	m_y = Math.floor(coords[1])/(zoom+1)	+	(mapxy[1]-map0xy[1]);
+}else{
+	var m_x = (Math.floor(coords[0])-center_x+(500/(zoom+1)))*(zoom+1)	+(mapxy[0]-map0xy[0]);
+	var m_y = (Math.floor(coords[1])-center_y+(500/(zoom+1)))*(zoom+1)	+(mapxy[1]-map0xy[1]);
+
+}
+//alert('x'+Math.floor(coords[0])+" "+(mapxy[0]+' '+map0xy[0])+"\n y"+Math.floor(coords[1])+" "+(mapxy[1]+' '+map0xy[1])+"\n zoom "+(zoom+1));
+if(iss=='a_')
+img_go('ra_',m_x,m_y);
+else if(iss=='o_')
+img_go('ro_',m_x,m_y);
+
+iss = 'rd_';
+ShowVillageInfo(); 
+}
+
+
 var bset=false;
 var actrow;
 
@@ -8,6 +32,7 @@ function selecturl(s) {
  center_x=s_x[v]; 
  center_y=s_y[v]; 
  zoom =s_zoom[v];
+if( gid_kes('rd_xy') )gid_kes('rd_xy').value =s_x[v]+'|'+s_y[v]; 
 }
 function getElement(id)
 {
@@ -258,30 +283,15 @@ function MapClick(e)
 
 //off('map0');
 if(iss=='a_')
-{img_go('ra',m_x,m_y);
-selectAobr(document.forms[0], 'dane_agr');}
+{img_go('ra_',m_x,m_y);
+selectAobr(document.forms[0], 'dane_T_agr');}
 else if(iss=='o_')
-{img_go('ro',m_x,m_y);
-selectAobr(document.forms[0], 'dane_obr');}
-
+{img_go('ro_',m_x,m_y);
+selectAobr(document.forms[0], 'dane_T_ogr');}
+iss = 'rd_';
 ShowVillageInfo(); 
 }
-function NOClick(si)
-{
-	var coords=getElement(si+'xy').value.split("|");
-	var mapxy=GetCoords(getElement('map'));
-	var map0xy=GetCoords(getElement('map0'));
-	
-	m_x = Math.floor(coords[0])*(zoom+1)+(mapxy[0]-map0xy[0]);
-	m_y = Math.floor(coords[1])*(zoom+1)+(mapxy[1]-map0xy[1]);
-alert('x'+Math.floor(coords[0])+" "+(mapxy[0]+' '+map0xy[0])+"\n y"+Math.floor(coords[1])+" "+(mapxy[1]+' '+map0xy[1])+"\n zoom "+(zoom+1));
-if(si=='a_')
-img_go('ra',m_x,m_y);
-else if(si=='o_')
-img_go('ro',m_x,m_y);
 
-ShowVillageInfo(); 
-}
 
 function ShowVillageInfo(){              // mrygaj±cy kursor po kliknieciu
 
@@ -389,33 +399,37 @@ function MapMouseMove(e)                 // kursor myszy na mapie
 	    v2_y=v_y;
 	}
 
-	var img_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+mapxy[0]-map0xy[0];
-	var img_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+mapxy[1]-map0xy[1];
+	var m_x = (v2_x-center_x+(500/(zoom+1)))*(zoom+1)+mapxy[0]-map0xy[0];
+	var m_y = (v2_y-center_y+(500/(zoom+1)))*(zoom+1)+mapxy[1]-map0xy[1];
 
-img_go('rd',img_x,img_y);
+if(iss=='a_')
+img_go('ra_',m_x,m_y);
+else if(iss=='o_')
+img_go('ro_',m_x,m_y);
+else img_go('rd_',m_x,m_y);
     }
 }
 function img_go(name,img_x,img_y)
 {
-	var mapol_img=getElement(name+"_top");
+	var mapol_img=getElement(name+"top");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.width=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement(name+"_left");
+	var mapol_img=getElement(name+"left");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.height=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement(name+"_right");
+	var mapol_img=getElement(name+"right");
 	mapol_img.style.left=img_x+zoom+check()+"px";
 	mapol_img.style.top=img_y-check()+"px";
 	mapol_img.style.height=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
 
-	var mapol_img=getElement(name+"_bottom");
+	var mapol_img=getElement(name+"bottom");
 	mapol_img.style.left=img_x-check()+"px";
 	mapol_img.style.top=img_y+zoom+check()+"px";
 	mapol_img.style.width=zoom+(check()*2)+"px";
@@ -459,5 +473,5 @@ function registerEvents()        //ustalanie na starcie procesow mapy
 	map.attachEvent('onmousemove',MapMouseMove);	
     }
 }
-
+ var iss = 'ro_';
 registerEvents();

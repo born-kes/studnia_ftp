@@ -203,8 +203,8 @@
 	
 	// get available groups
 	var groups = [];
-	var selectedgroup = '';
-	var grps = $x('//td/a[contains(@href,"screen=train") and contains(@href,"mode=mass") and contains(@href,"group=") and not(contains(@href,"page=")) and starts-with(.," [")]');
+	var selectedgroup = '';                                            //@href,"mode=mass"
+	var grps = $x('//td/a[contains(@href,"screen=train") and contains(@href,"mode=success") and contains(@href,"group=") and not(contains(@href,"page=")) and starts-with(.," [")]');
 	if(grps.length > 0) {
 		var grpsel = $x('parent::td/strong[starts-with(.," >")]', grps[0]);
 		for(var i = 0; i < grps.length; i++) {
@@ -224,8 +224,8 @@
 	}
 
 	// get settings
-	var settings = get_cookie();
-	var recform = $x('//form[contains(@action,"screen=train") and contains(@action,"mode=mass") and contains(@action,"action=train_mass") and contains(@action,"h=")]');
+	var settings = get_cookie();                                           //@action,"mode=mass"
+	var recform = $x('//form[contains(@action,"screen=train") and contains(@action,"mode=success") and contains(@action,"action=train_mass") and contains(@action,"h=")]');
 	if(recform.length == 0)
 		return;
 	
@@ -398,8 +398,8 @@
 		// calculate and fill
 		evt.target.disabled = true;
 		evt.target.textContent = lang[curlang]['running'];
-		var currentsettings = getCurrentSettings(selectedgroup);
-		var rows = $x('//form[contains(@action,"screen=train") and contains(@action,"mode=mass") and contains(@action,"action=train_mass") and contains(@action,"h=")]/table[1]/tbody/tr/td/parent::tr');
+		var currentsettings = getCurrentSettings(selectedgroup);             //@action,"mode=mass"
+		var rows = $x('//form[contains(@action,"screen=train") and contains(@action,"mode=success") and contains(@action,"action=train_mass") and contains(@action,"h=")]/table[1]/tbody/tr/td/parent::tr');
 		var builtsum = [];
 		for(var i = 0; i < units.length; i++) {
 			builtsum[i] = 0;

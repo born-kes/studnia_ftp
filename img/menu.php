@@ -1,13 +1,16 @@
 <?php
 session_start();
 if(!isSet($_SESSION['zalogowany'])){
-$dest=ImageCreate(1,1);
-$kolor_tla = ImageColorAllocate($dest,25,25,25);
-$kolor_tla_przezroczysty = ImageColorTransparent($dest, $kolor_tla);
+
+$dest=ImageCreate(15,10);
+$kolor_tla = ImageColorAllocate($dest,250,250,250);
+$src =  imagecreatefromgif("z5.gif");
+imagecopy($dest, $src, 2, 0, 3, 0, 13,15);
 header('Content-Type: image/gif');
 imagegif($dest);
 imagedestroy($dest);
 imagedestroy($src);
+
 exit();
 }
 

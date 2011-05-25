@@ -1,4 +1,4 @@
-<?
+<? 
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
 $wczasy = mktime()-$godzina_zero;
 $licz=0;
@@ -83,10 +83,10 @@ tr.center td { text-align:center; }
 -->
 </style><body><?PHP 
 
-  echo 'Zapisano zmiany w';
+  echo 'Zapisano zmiany w <br />';
 if($_POST[n_typ]!=NULL){echo' Typie wiosek i';}
 echo' ilosci wojska do bazy<br>';
-  echo ' W sumie '.$licz.'rekordow <br>';
- echo 'Data aktualizacji :'.data_z_bazy($wczasy);
+  echo ' W sumie '.$licz.' rekordow <br>';
+ echo data_z_bazy($wczasy);
 
 ?></body></html>

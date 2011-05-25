@@ -1,6 +1,10 @@
-<?PHP include('../connection.php'); ?>
-<?PHP
+<?PHP include('../connection.php'); sesio_id();  $ec =mktime()-$godzina_zero-(86400*7);
+
+
+
 $statustyp= $status[typ];
+     if($_GET[COUNT]==='true')$COUNT=true; else $COUNT=false;
+
      if($_GET[query_agr]!=Null && $dane==1)
 {    $query = true;
      $text = $_GET[query_agr];
@@ -17,8 +21,8 @@ else if($_GET[query_obr]!=Null && $dane==2)
      $query_lis = explode(",",$text2);
 }
 
-     if($_GET[agracz]!=NULL && ($dane==0||$dane==1)){$gracz=urlencode($_GET[agracz]);}
-else if($_GET[ogracz]!=NULL && $dane==2){$gracz=urlencode($_GET[ogracz]);}
+     if($_GET[agracz]!=NULL && ($dane==0||$dane==1)){$gracz=urlencode($_GET[agracz]);$gracz1=$_GET[agracz];}
+else if($_GET[ogracz]!=NULL && $dane==2){$gracz=urlencode($_GET[ogracz]);$gracz1=$_GET[ogracz];}
 
      if($_GET[plem_op]!=NULL && $dane==2){$plemie=intval($_GET[plem_op]);$plem=true;}          //cel plemie
 
@@ -31,13 +35,13 @@ else if($_GET[typ_o]!=NULL && $dane==2){ $typ = intval($_GET[typ_o]);}
      $xy = explode("|", $_GET[a_xy]);
      $xy[0]=intval($xy[0]);
      $xy[1]=intval($xy[1]);
-     $oko = intval($_GET[a_oko]); $okolica = true; }            //mapa agresor okolica
+     $oko = intval($_GET[a_oko]/2)+1; $okolica = true; }            //mapa agresor okolica
 else if($_GET[o_oko]!=NULL && $_GET[ofiarra]=='on' && $_GET[o_xy]!=NULL && $dane==2)
     {
      $xy = explode("|", $_GET[o_xy]);
      $xy[0]=intval($xy[0]);
      $xy[1]=intval($xy[1]);
-     $oko = intval($_GET[o_oko]); $okolica = true; }           //mapa agresor okolica
+     $oko = intval($_GET[o_oko]/2)+1; $okolica = true; }           //mapa agresor okolica
 else if($_GET[o_xy]!=NULL && $dane==2)
     {
      $xy = explode("|", $_GET[o_xy]);
@@ -78,9 +82,9 @@ if($query)
 else
 {
    if( $gracz!=NULL)
-    {$zap.=$and."(t.name='$gracz' OR  t.name='".$_GET[agracz]."')";}
+    {$zap.=$and."(t.name='$gracz' OR  t.name='".$gracz1."')";}
 
-   if($minutnik){ $zap.=$and." lz.id_cel is NULL ";}
+   if($minutnik){$zap.=$and." lz.id_cel is NULL";}
 
    if($mini!=NULL){$zap.=$and." w.points >'$mini'";}
 
@@ -118,53 +122,100 @@ else
 else{$zaps[0]="LEFT JOIN ws_raport m ON m.id=w.id";$zaps[1]='';}
 
 }
-$zap0=" SELECT COUNT( * ) AS `Rekordów`
-FROM `ws_all` w, list_user t, ws_mobile m
-        LEFT JOIN list_zadan lz       ON lz.id_cel=w.id
-WHERE w.player = t.id AND m.id=w.id ";//
-$zap_fin = " GROUP BY t.`ally` ORDER BY t.`ally` ";
+$qzap1 = ' FROM `ws_all` w, list_user t ';
+$qzap2 =' WHERE w.player = t.id ';
+if($_GET[dane]==0
+|| $_GET[dane]==1){$qzap1 .=', ws_mobile m ';$qzap2.=' AND m.id=w.id '; $log = 'a';
+        if($minutnik) $qzap1.=' LEFT JOIN list_zadan lz ON lz.id_cel=w.id AND lz.id_gracz=w.player'; }
+if($_GET[dane]==2){$qzap1 .=$zaps[0];$qzap2.=$zaps[1]; $log = 'o';}
 
-$zap1=" SELECT w.name, w.x, w.y, w.points, w.id,
-   m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz
-FROM `ws_all` w, list_user t, ws_mobile m
-        LEFT JOIN list_zadan lz       ON lz.id_cel=w.id
-WHERE w.player = t.id AND m.id=w.id ";//
-
-$zap2=" SELECT COUNT( * ) AS `Rekordów`
-FROM `ws_all` w, list_user t
-      $zaps[0]
-WHERE w.player = t.id".$zaps[1];
-
-$zap3=" SELECT w.name, w.x, w.y, w.points,w.id, m.status
-FROM `ws_all` w, list_user t
-      $zaps[0]
-WHERE w.player = t.id".$zaps[1];
-
-
-if($_GET[dane]==0 || ($_GET[dane]==1 && !$query  ))
-{   $d = true;
-$zapytanie = $zap0.$zap.$zap_fin;      //echo $zapytanie;;
-}else if( $_GET[dane]==2)
-{   $d = true;
-$zapytanie = $zap2.$zap.$zap_fin;      //echo $zapytanie;;
+if($COUNT) {$qzap0 = 'SELECT COUNT( * ) AS `Rekordów` ';$qzap3.=' GROUP BY t.`ally` ORDER BY t.`ally` ';}
+else if($_GET[dane]==1){$qzap0 = ' SELECT w.name, w.x, w.y, w.points, w.id,
+   m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz ';
 }
-else if($query)
-{   $d = true;
-$zapytanie = $zap2.$zap.$zap_fin;      //echo $zapytanie;;
+else if($_GET[dane]==2){
+$qzap0 = ' SELECT w.name, w.x, w.y, w.points,w.id, m.status ,m.data , lz.opis';
+$qzap1.=' LEFT JOIN list_zadan lz ON lz.id_cel=w.id AND lz.id_gracz=w.player'; //COUNT( * ) AS `zaplanowane`
+//$qzap2.='';
+//$qzap3.=' GROUP BY t.`ally` ORDER BY t.`ally` ';
 }
 
-if($d){  $efekt=false;
+$zapytanie = $qzap0.$qzap1.$qzap2.$zap.$qzap3;
+// echo $zapytanie;
+$es = false;
+if($zap != NULL){$d = true;}
+
+$s =';
+';
+$i4=1;
+
+if($COUNT)
+{      connection();    $wynik = @mysql_query($zapytanie); //echo $zapytanie;
+  if($r = @mysql_fetch_array($wynik))
+  { echo $r[0].' '; }else{echo 0;}@destructor();
+}else{
+ $efekt=false;
+$id__1='      var '.$log.'_id =new Array'.$s;
+$name1='      var '.$log.'_name =new Array'.$s;
+$xy__1='      var '.$log.'_xy =new Array'.$s;
+
+$woln1='      var '.$log.'_wolne =new Array'.$s;
+$pkt_1='      var '.$log.'_pt =new Array'.$s; //points
+$if__1='      var '.$log.'_if =new Array'.$s;
+
+if( $log=='o'){
+$if__2='      var o_if2 =new Array'.$s;
+
+   $id__1.='      o_id[0] =0'.$s;
+   $name1.='      o_name[0] ="Wojska które zostan± w wiosce "'.$s;
+   $xy__1.='      o_xy[0] =\'\';'.$s;
+
+   $pkt_1.='      o_pt[0] =""'.$s;
+   $if__1.='      o_if[0] =true'.$s;
+
+   $if__2.='      o_if2[0] =true'.$s;
+}
       connection();
     $wynik = @mysql_query($zapytanie);
-      while($r = mysql_fetch_array($wynik))
-{
-if($_GET[dane]==0 || $_GET[dane]==1 || $_GET[dane]==2 ){$efekt=true;  echo $r[0].' '; brack;}
-echo '';
+      while($r = @mysql_fetch_array($wynik))
+  {$efekt=true;
+   $id__1.='      '.$log.'_id['.$i4.'] ='.$r[id].$s;
+   $name1.='      '.$log.'_name['.$i4.'] ='."'".plCharset(urldecode($r[name]), UTF8_TO_WIN1250)."'".$s;
+   $xy__1.='      '.$log.'_xy['.$i4.'] =\''.$r[x].'|'.$r[y].'\''.$s;
 
+   $pkt_1.='      '.$log.'_pt['.$i4.'] ='.$r[points].$s;
+   $if__1.='      '.$log.'_if['.$i4.'] =true'.$s;
 
+ if($wojsko==0 && $log=='a')
+ {
+     if($r[sz]>0) $szyb = 35;
+else if($r[tar]>0) $szyb =30;
+else if($r[mie]>0) $szyb =22;
+else if($r[pik]>0 || $r[axe]>0 || $r[luk]>0) $szyb =18;
+else if($r[ck]>0) $szyb =11;
+else if($r[lk]>0 || $r[kl]>0) $szyb =10;
+else if($r[zw]>0) $szyb =9;
+else $szyb ="0";
+  }else if($log=='a'){$szyb =$wojsko;}
+else{  
+     if($r[opis]==null) $if__2.='      o_if2['.$i4.'] =true'.$s;
+     else $if__2.='      o_if2['.$i4.'] =false'.$s;
+$szyb = "'".$statuss[typ][$r[status]]." ".data_z_bazy($r[data],false)."'";
+/*wolny dla obrona czyli status*/
+}
+   $woln1.='      '.$log.'_wolne['.$i4.'] ='.$szyb.$s;
+$i4++;
 }@destructor();
-if(! $efekt){echo 0;}
+if($efekt)
+ {
+?><script language="JavaScript" id="#script"><!-- // id="#script" 
+<? echo $id__1.$name1.$xy__1.$woln1.$pkt_1.$if__1.$if__2; ?>
+
+ <? echo "alert('pogoda'); guteka('".$log."',".$log."_id,".$log."_name,".$log."_xy,".$log."_wolne );"; ?>
+test_powiazania();
+//--></script>
+<?  }else{echo 'efekt 0';}
 
 }
-else{echo 'nic';}
+// echo '<br>'.$zapytanie;
 ?>

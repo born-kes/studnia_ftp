@@ -25,7 +25,7 @@ function Klik(gdzie,name)
               if(ajax_obiekt.status  == 200)
 {
  if(ajax_obiekt.responseText.indexOf('id="#script"')>-1)
- {
+ { element.innerHTML = '';
   var sc=document.createElement('div');
   sc.innerHTML = ajax_obiekt.responseText;
   element.appendChild(sc);

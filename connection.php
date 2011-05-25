@@ -75,12 +75,12 @@ elseif($dnis<0){$dnis*=-1;}
 return $dnis.' dni ';
 }
 function data_z($rr){ global $godzina_zero; $wynik = date("d.m.Y G:i:s", $rr+$godzina_zero); return $wynik;}
-function data_z_bazy($rr)
+function data_z_bazy($rr,$war =true)
 { global $godzina_zero;
-  global $godzina_jeden; $wynik=data_z($rr);
+  global $godzina_jeden; if($war)$wynik=data_z($rr);
 
 if($rr==NULL||$rr == $godzina_zero){
-     $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu"> Brak Raportu';}
+     $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu">'; if($war)$ciag .=' Brak Raportu';}
 elseif($rr<$godzina_jeden-31362000){
      $ciag =$wynik.' <IMG SRC="../img/z6.gif" title="Raport ma ponad!! '.dns($rr).'"> ';}
 elseif($rr<$godzina_jeden-518400 ){
@@ -90,7 +90,7 @@ elseif($rr<$godzina_jeden ){
 elseif($rr<mktime()-$godzina_zero ){
      $ciag =$wynik.' <IMG SRC="../img/z1.gif" title="Raport Bardzo Swierzy ma '.dns($rr).'"> ';}
 elseif($rr<mktime()-$godzina_zero+200 ){
-     $ciag =' Raport wlasnie dodany. ';}
+     if($war)$ciag =' Raport wlasnie dodany. ';}
 else{
      $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc Data za '.dns($rr).'"> ';}
     return $ciag;
@@ -222,5 +222,49 @@ function zap($a,$b,$c)
 
 return $z;
 }
+function plCharset($string, $type = ISO88592_TO_UTF8) {
 
+    $win2utf = array(
+      "\xb9" => "\xc4\x85", "\xa5" => "\xc4\x84",
+      "\xe6" => "\xc4\x87", "\xc6" => "\xc4\x86",
+      "\xea" => "\xc4\x99", "\xca" => "\xc4\x98",
+      "\xb3" => "\xc5\x82", "\xa3" => "\xc5\x81",
+      "\xf3" => "\xc3\xb3", "\xd3" => "\xc3\x93",
+      "\x9c" => "\xc5\x9b", "\x8c" => "\xc5\x9a",
+      "\xbf" => "\xc5\xbc", "\x8f" => "\xc5\xb9",
+      "\x9f" => "\xc5\xba", "\xaf" => "\xc5\xbb",
+      "\xf1" => "\xc5\x84", "\xd1" => "\xc5\x83"
+    );
+    $iso2utf = array(
+      "\xb1" => "\xc4\x85", "\xa1" => "\xc4\x84",
+      "\xe6" => "\xc4\x87", "\xc6" => "\xc4\x86",
+      "\xea" => "\xc4\x99", "\xca" => "\xc4\x98",
+      "\xb3" => "\xc5\x82", "\xa3" => "\xc5\x81",
+      "\xf3" => "\xc3\xb3", "\xd3" => "\xc3\x93",
+      "\xb6" => "\xc5\x9b", "\xa6" => "\xc5\x9a",
+      "\xbc" => "\xc5\xba", "\xac" => "\xc5\xb9",
+      "\xbf" => "\xc5\xbc", "\xaf" => "\xc5\xbb",
+      "\xf1" => "\xc5\x84", "\xd1" => "\xc5\x83"
+    );
+
+    if ($type == ISO88592_TO_UTF8)
+      return strtr($string, $iso2utf);
+    if ($type == UTF8_TO_ISO88592)
+      return strtr($string, array_flip($iso2utf));
+    if ($type == WIN1250_TO_UTF8)
+      return strtr($string, $win2utf);
+    if ($type == UTF8_TO_WIN1250)
+      return strtr($string, array_flip($win2utf));
+    if ($type == ISO88592_TO_WIN1250)
+      return strtr($string, "\xa1\xa6\xac\xb1\xb6\xbc",
+        "\xa5\x8c\x8f\xb9\x9c\x9f");
+    if ($type == WIN1250_TO_ISO88592)
+      return strtr($string, "\xa5\x8c\x8f\xb9\x9c\x9f",
+        "\xa1\xa6\xac\xb1\xb6\xbc");
+  }
+/* zastosowanie
+$imie_1=plCharset($imie_1, WIN1250_TO_UTF8);
+$imie_1=plCharset($imie_1, UTF8_TO_WIN1250);
+$imie_1=plCharset($imie_1, ISO88592_TO_WIN1250);
+*/
 ?>

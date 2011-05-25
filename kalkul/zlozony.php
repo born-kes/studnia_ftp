@@ -1,29 +1,25 @@
-<?PHP include('../connection.php'); ?><html>
-<head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
-           <link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<?PHP include('../connection.php'); sesio_id();?><html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
 
-           <script src="../test/js/menu.js" type="text/javascript"></script>
-           <script src="../test/js/suwak.js" type="text/javascript"></script>
+           <script src="../js/plac.js?2b" type="text/javascript"></script>
+           <script src="../js/menu.js?2d" type="text/javascript"></script>
            <script src="../js/ts_picker.js" type="text/javascript"></script>
-           <script src="../js/tw_002.js" type="text/javascript"></script>
-           <script src="../js/plac.js" type="text/javascript"></script>
-           <script src="../js/ajax.js" type="text/javascript"></script>
+           <script src="../js/tw_002.js?2b" type="text/javascript"></script>
+           <script src="../js/ajax.js?2" type="text/javascript"></script>
 <style type="text/css">
 <!--
 .metro {position:absolute; width: 200px;z-index:6;border-width:2px; border-style: solid; border-color:#804000; background-color:#F1EBDD;}
+.reds {background-color: red; color: rgb(250, 250, 250); }
 -->
 </style>
            <script type="text/javascript">
 var login_user =new String ('<?PHP echo $_SESSION['zalogowany']; ?>');
-           var center_x=500; var center_y=500; var zoom=0; var static='http://pl5.twmaps.org/showmap.php';
-            inqlude=''; var iss='k';
-function gmap(text){
-	gid( iss+'xy' ).value = text;
-	gid( iss+'oko' ).value = gid( 'zoom_h' ).value;
-}
+
 function input_plemie() {
                         	var str_buffer =  new String (
-    '<select name="plem_op" onchange="selectAobr(this.form, \'dane_obr\');">'+
+    '<select name="plem_op" onchange="selectAobr(this.form, \'dane_T_ogr\');">'+
     '<option value=""></option>'+
     '<?PHP for($licz=0; $licz<count($plemiona); $licz++){echo'<option value="'.$id_plem[$licz].'">'.$plemiona[$licz].'</option>'; } ?>'+
     '</select>');
@@ -41,7 +37,7 @@ function input_typ(a) {
 <?PHP   $i=1;
 
 $moje_id = $_SESSION['id'];
-      $option ='\'  <select name="plem_op" OnChange="selecturl(this)">\'+
+      $option ='\'  <select name="plem_op" OnChange="selecturl(this)" id="plem_op">\'+
   \'<OPTION VALUE=\"0\"> (500|500) swiat 5</OPTION>\'+';
       $x='   var s_x=   new Array;
       s_x[0]=500;
@@ -55,9 +51,10 @@ $moje_id = $_SESSION['id'];
       $hexs='   var s_hex=new Array;
    s_hex[0]=\'92a38af8a7dea8a218ade9b480f5c88a\';
   ';
-      
+
   connection();
-    $wynik = @mysql_query("SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` Where user_id= $moje_id OR user_id is NULL ORDER BY `ulubione` DESC");
+// stary kod    $wynik = @mysql_query("SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` Where user_id= $moje_id OR user_id is NULL ORDER BY `ulubione` DESC");
+    $wynik = @mysql_query("SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` ORDER BY `ulubione` DESC");
       while($r = mysql_fetch_array($wynik))
  {
       $x.='  s_x['.$i.']='.$r[x].';
@@ -68,8 +65,8 @@ $moje_id = $_SESSION['id'];
   ';
    $hexs.='  s_hex['.$i.']=\''.$r[hex].'\';
   ';
-
-      $option .="   '<OPTION VALUE=\"".$i++."\"> ($r[x]|$r[y]) $r[nazwa]</OPTION>'+
+if($r[ulubione]>0)$ulubiny=' selected="'.$r[ulubione].'" ';else $ulubiny='';
+      $option .="   '<OPTION VALUE=\"".$i++."\"".$ulubiny."> ($r[x]|$r[y]) $r[nazwa]</OPTION>'+
    ";
  }@destructor();
       $option .='\'</select>\'';
@@ -82,29 +79,8 @@ $moje_id = $_SESSION['id'];
        return str_buffer;
 }";
  ?>
-function check(){
- var okolica = gid('zoom').value;
- var check = ((zoom + 1)*okolica)/2;
-return check;
-// return intval(gid('zoom_h').value*1.5); }
-}
-
-function intval( mixed_var, base ) {
-    var tmp;
-    if( typeof( mixed_var ) == 'string' ){
-        tmp = parseInt(mixed_var);
-        if(isNaN(tmp)){
-            return 0;
-        } else{
-            return tmp.toString(base || 10);
-        }
-    } else if( typeof( mixed_var ) == 'number' ){
-        return Math.floor(mixed_var);
-    } else{
-        return 0;
-    }
-}
-var vv='mis';
+var vv=false;
+test_powiazania();
 </script>
 </head>
   <body bgcolor="#ffffff" onload="registerEvents();">
@@ -124,10 +100,17 @@ var vv='mis';
 
 </div>
  <div style="position:relative ; z-index:1;width: 95%;" id="map1">
-  <input type="hidden" name="koko" id="koko" value="" /><input type="hidden" name="kxy" id="kxy" value="" />
+
 
 <table class="map" align="center">
     <tbody>
+     <tr>
+      <td>
+       <b style="cursor: pointer;" onclick="iss='a_';on_KES('a_map_go');">Agresor</b>
+       <input type="text" name="rd_xy" id="rd_xy" value="" />
+       <b style="cursor: pointer;" onclick="iss='o_';on_KES('o_map_go');">Obronca</b>
+      </td>
+     </tr>
     <tr>
 	<td>
 	    <img id="map" src="http://pl5.twmaps.org/showmap.php?id=92a38af8a7dea8a218ade9b480f5c88a" alt="{map}">
@@ -152,9 +135,48 @@ var vv='mis';
 </div>
 
 </div>
-<script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');</script>
-<table><tbody><tr><td id="test"/></tr></tbody></table>
-<b onclick="javascript:Klik('test','m.php')">bel</b>
-<b onclick="javascript:alert(vv);">beddl</b>
+
+
+<script type="text/javascript">loading(input_zoom(),'oko_map');loading(map_ini(),'ini_map');selecturl(gid_kes('plem_op'));</script>
+<div style="position:relative ; z-index:1;width: 95%;">
+ <form action="3.php" method="POST" target="rampa" name="ajax_t">
+
+  <table>
+   <tbody>
+    <tr valign="top">
+     <td id="T_fin2" align="center" style="display: none;" >
+   <table align="center" class="main">
+   <tbody>
+	<tr>
+	<td>Godzina Ataku</td>
+	</tr>
+	<tr>
+	<td><input name="czas1" id="czas1" value="" size="14" type="text" /><a href="javascript:show_calendar('document.ajax_t.czas1', document.ajax_t.czas1.value);"><img src="../img/cal.gif" alt="Clicknij Tu by ustalić Datę" border="0" height="16" width="16"></a></td>
+	<td id="T_fin1" />
+	</tr>
+	<tr>
+	<td onMouseOver="on_KES('h5');" onMouseOut="offKES('h5');">Okno wysylane atakow
+	<input name="okno_atak" value="true" onclick="show('czas_start');" type="checkbox" id="czas1_c" />
+
+	</td>
+	</tr>
+	<tr>
+	<td><span id="czas_start" style="display:none;">od <input size="5" name="od_h" id="czas1_od" value="16" type="text" /><br /> do <input size="5" name="do_h" id="czas1_do" value="21" type="text" /></span></td>
+        </tr>
+	<tr><td><div class="metro" style="display:none;" id="h5">Jest mozliwosc ograniczenia listy wiosek w propozycjach tak bys mogl stworzyc liste atakow w godzinach kiedy faktycznie masz czas je wyslac</div></td></tr>
+   </tbody>
+   </table>
+     </td>
+     <td id="T_fin3" align="center" /></tr>
+    <tr valign="top"><td id="T_agr" /><td id="T_ogr" /></tr>
+    <tr valign="top"><td id="T_agr_fin" />
+     <td>
+      <div style="position:fixed;  right: 10px; bottom:0px; height: 400px; overflow:auto;" id="T_ogr_fin" ></div>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+ </form>
+</div>
 </body>
   </html>

@@ -96,10 +96,10 @@ LEFT JOIN ws_mobile wm ON wm.id = w.id
                // z jak daleka maja isc wojska
 
       if($_POST[co]=='sz'){$zap.=$p."sz>0";$mxo=intval($mk_ruznica/(35*60));if($mxo>70){$mxo=70;}}
-  elseif($_POST[co]=='off'){$zap.=$p." (axe>".intval($_POST[top])." OR lk>".intval($_POST[lk])."  OR kl>".intval($_POST[lk])."  OR ck>".intval($_POST[ck])." )";$mxo=intval($mk_ruznica/(10*60));if($mxo>200){$mxo=200;}}
+  elseif($_POST[co]=='off'){$zap.=$p." (axe>".intval($_POST[axe])." OR lk>".intval($_POST[light])."  OR kl>".intval($_POST[marcher])."  OR ck>".intval($_POST[heavy])." )";$mxo=intval($mk_ruznica/(10*60));if($mxo>200){$mxo=200;}}
   elseif($_POST[co]=='foff'){$zap.=$p." (axe>3000 OR lk>1000  OR kl>1000 ) AND tar>100 ";$mxo=intval($mk_ruznica/(30*60));if($mxo>500){$mxo=200;}}
-  elseif($_POST[co]=='def'){$zap.=$p." (pik>".intval($_POST[pik])." OR luk>".intval($_POST[luk])." OR mie>".intval($_POST[mie])." OR ck>".intval($_POST[ck])." )";$mxo=intval($mk_ruznica/(11*60));if($mxo>200){$mxo=200;}}
-  elseif($_POST[co]=='zw'){$zap.=$p. " (zw>".intval($_POST[zw])." )";$mxo=intval($mk_ruznica/(9*60));if($mxo>200){$mxo=200;}}
+  elseif($_POST[co]=='def'){$zap.=$p." (pik>".intval($_POST[spear])." OR luk>".intval($_POST[archer])." OR mie>".intval($_POST[sword])." OR ck>".intval($_POST[heavy])." )";$mxo=intval($mk_ruznica/(11*60));if($mxo>200){$mxo=200;}}
+  elseif($_POST[co]=='zw'){$zap.=$p. " (zw>".intval($_POST[spy])." )";$mxo=intval($mk_ruznica/(9*60));if($mxo>200){$mxo=200;}}
       if($_POST[co]!=NULL && $_POST[mxo]==1){ 
     $odx= $xy_ob[0]-$mxo;          $dox= $xy_ob[0]+$mxo;
     $ody= $xy_ob[1]-$mxo;          $doy= $xy_ob[1]+$mxo;
@@ -118,7 +118,7 @@ LEFT JOIN ws_mobile wm ON wm.id = w.id
 // echo $zap.'<br>';
 
  $k=0;
-connection();
+connection(); 
 $wynik = @mysql_query($zap);
 
 if(mysql_num_rows($wynik) ==0){ echo '<table class="main"><tr><th>Nic Dla Ciebie nie mam</th></tr>';destructor(); exit();}
@@ -144,7 +144,7 @@ if($odleglosc==0){continue;}
       }
   elseif($_POST[co]=='off')
     {
-        if($r[axe]>intval($_POST[top]))
+        if($r[axe]>intval($_POST[axe]))
          {$odzc = $mk_ruznica/(18*60);  $ggg=  $g_z /(18*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -155,7 +155,7 @@ if($odleglosc==0){continue;}
           $Dane[odleglosc][$k++]=$odleglosc*(18*60);
           }
          }
-        if($r[lk]>intval($_POST[lk])||$r[kl]>intval($_POST[kl]))
+        if($r[lk]>intval($_POST[light])||$r[kl]>intval($_POST[marcher]))
          {$odzc = $mk_ruznica/(10*60);  $ggg=  $g_z /(10*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -166,7 +166,7 @@ if($odleglosc==0){continue;}
           $Dane[odleglosc][$k++]=$odleglosc*10*60;
           }
          }
-        if($r[ck]>intval($_POST[ck]))
+        if($r[ck]>intval($_POST[heavy]))
          {$odzc = $mk_ruznica/(11*60);   $ggg= $g_z /(11*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -181,7 +181,7 @@ if($odleglosc==0){continue;}
     }
   elseif($_POST[co]=='def')
     {
-        if($r[ck]>intval($_POST[ck]))
+        if($r[ck]>intval($_POST[heavy]))
          {$odzc = $mk_ruznica/(11*60);  $ggg= $g_z /(11*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -192,7 +192,7 @@ if($odleglosc==0){continue;}
           $Dane[odleglosc][$k++]=$odleglosc*11*60;
           }
          }
-         if($r[mie]>intval($_POST[mie]))
+         if($r[mie]>intval($_POST[sword]))
          {$odzc = $mk_ruznica/(22*60);  $ggg= $g_z /(22*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -203,7 +203,7 @@ if($odleglosc==0){continue;}
           $Dane[odleglosc][$k++]=$odleglosc*22*60;
           }
          }
-         if($r[pik]>intval($_POST[pik]) || $r[luk]>intval($_POST[luk]) )
+         if($r[pik]>intval($_POST[spear]) || $r[luk]>intval($_POST[archer]) )
          {$odzc = $mk_ruznica/(18*60);  $ggg= $g_z /(18*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {
@@ -216,7 +216,7 @@ if($odleglosc==0){continue;}
          }
     }
   elseif($_POST[co]=='zw')
-  {if($r[zw]>intval($_POST[zw]))
+  {if($r[zw]>intval($_POST[spy]))
          {$odzc = $mk_ruznica/(9*60);  $ggg= $g_z /(9*60);
          if(($odzc-$ggg<$odleglosc+1||$_POST[on]==0) && $odleglosc<$odzc+$ggg ) // sprawdzenie okna dotarcia wojsk
           {

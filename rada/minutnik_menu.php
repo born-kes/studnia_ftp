@@ -1,4 +1,4 @@
-<?php  include('../connection.php');?>
+<?php  include('../connection.php'); sesio_id();?>
 
 <html><head>
 <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-2" />

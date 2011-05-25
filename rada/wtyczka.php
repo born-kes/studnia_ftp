@@ -33,7 +33,7 @@ tr.center td { text-align:center; }
 <h3 align="center"><b style="color: rgb(255, 0, 0);" >Jest ju¿ nowsza wtyczka:</b> wersja Hello_Studnia <?PHP echo $name; ?></h3>
 mo¿esz j± pobraæ <a href="../hello/Hello_Studnia<?PHP echo $name; ?>.xpi"  id="ff">tutaj </a>
 <h4> Instalacja</h4>
-Dzia³a pod <b>Mozilla Firefox 3.5 </b>(niestety)<br>
+Dzia³a pod <b>Mozilla Firefox 3 i 4 </b><br>
  Chcia³em by by³a jak najprostsza w instalacji,<br>
 wiêc jest to ca³y pakiet w jednym pliku.<br><br>
 

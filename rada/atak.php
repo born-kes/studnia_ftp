@@ -40,9 +40,9 @@ tr.center td { text-align:center; }
   while($r = @mysql_fetch_array($wynik)){
            $storing0.= '
  <tr>
-  <td><a href="javascript:show_suwak(\''.$r[name].'\');"><i>'.$r[name].'</i></a></td>
+  <td><a href="javascript:show_suwak(\''.urldecode($r[name]).'\');"><i>'.urldecode($r[name]).'</i></a></td>
   <td>x <b>'.$r[Rekordow].'</b></td>
-<td>%stor_'.$r[name].'</td>
+<td>%stor_'.urldecode($r[name]).'</td>
  </tr>';$kto[$q]=$r[id];}
   destructor();
 
@@ -62,16 +62,16 @@ tr.center td { text-align:center; }
   connection();  $wynik = @mysql_query($zap);
   while($r = @mysql_fetch_array($wynik)){
 
-  if($r[name]!=$names && $names!=null){$storing.='</table>';}
+  if(urldecode($r[name])!=$names && $names!=null){$storing.='</table>';}
 
-  if($r[name]!=$names )
+  if(urldecode($r[name])!=$names )
   { if($names !=null){$storing0 = str_replace('%stor_'.$names , $storing, $storing0);}
-       $names=$r[name];
+       $names=urldecode($r[name]);
        $storing='<table id="'.$names.'" style="display: none;" class="main" >';
   }
    $storing.='
  <tr>
-  <td>(<i> '.$r[name].' </i>)</td>
+  <td>(<i> '.urldecode($r[name]).' </i>)</td>
   <td><b>'.$r[Rekordow].'</b> x </td>
   <td><a href="javascript:show_suwak(\'w'.$r[cel].'\');"> '.$r[x].'|'.$r[y].' </a><a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=map&amp;x='.$r[x].'&y='.$r[y].'" target="_blank"><img src="http://pl5.plemiona.pl/graphic/map_center.png" alt="Scentruj mapê" title="Scentruj mapê"></a></td>
   <td>%stroi_'.$r[cel].'</td>

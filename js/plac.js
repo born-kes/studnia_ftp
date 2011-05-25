@@ -1,7 +1,5 @@
-if(!gid() || typeof(gid)!== 'function')
-{
- function gid(id) {	return document.getElementById(id);}
-}
+function gid(id) {	return document.getElementById(id);}
+
  function gid_kes(id) {	return document.getElementById(id);}
 
 function gN(a,b) { return a.getElementsByTagName(b);}
@@ -75,6 +73,49 @@ function zapisz_cook()         //   spear sword axe archer spy light marcher hea
     setCookie('place',string, 365);
 alert('zapisano');
 }
+function zapisz_cook_budy()         //   spear sword axe archer spy light marcher heavy ram catapult knight snob
+{
+    var string  =     gid_kes('k_pkt').value;
+	string += ":"+gid_kes('k_ratusz').value;
+	string += ":"+gid_kes('k_koszary').value;
+	string += ":"+gid_kes('k_stajnie').value;
+	string += ":"+gid_kes('k_warsztat').value;
+	string += ":"+gid_kes('k_palac').value;
+	string += ":"+gid_kes('k_kuznia').value;
+	string += ":"+gid_kes('k_plac').value;
+	string += ":"+gid_kes('k_piedestal').value;
+	string += ":"+gid_kes('k_rynek').value;
+	string += ":"+gid_kes('k_tartak').value;
+	string += ":"+gid_kes('k_glina').value;
+	string += ":"+gid_kes('k_huta').value;
+	string += ":"+gid_kes('k_zagrody').value;
+	string += ":"+gid_kes('k_spichlerz').value;
+	string += ":"+gid_kes('k_schowek').value;
+	string += ":"+gid_kes('k_mur').value;
+
+var r = confirm('Czy Aktywowac ?');
+	string += ":"+r;
+if(r){ gid_kes('Kes_edyt').innerHTML = ' Aktywny'; kolors();}
+else gid_kes('Kes_edyt').innerHTML = ' NieAktywny';
+
+    setCookie('budy',string, 365);
+
+}function kolors()
+{  var wytyczne = new Array(0,0,0,dels(gid_kes('k_pkt').value),gid_kes('k_ratusz').value,gid_kes('k_koszary').value,gid_kes('k_stajnie').value,gid_kes('k_warsztat').value,gid_kes('k_palac').value,gid_kes('k_kuznia').value,gid_kes('k_plac').value,gid_kes('k_piedestal').value,gid_kes('k_rynek').value,gid_kes('k_tartak').value,gid_kes('k_glina').value,gid_kes('k_huta').value,gid_kes('k_zagrody').value,gid_kes('k_spichlerz').value,gid_kes('k_schowek').value,gid_kes('k_mur').value);
+   table = gid_kes('buildings_table');
+   tr = gN(table,'tr');
+       for (var i=1; i< tr.length ; i++ )
+       {
+           td = gN(tr[i],'td');
+           for (var j=3; j< td.length-1 ; j++ )
+           {    // if(td[j].innerHTML.lastIndexOf('span')>-1) td[j].innerHTML = td[j].textContent;
+               if( dels(td[j].textContent)*1000 < wytyczne[j]*1000){td[j].style.backgroundColor  = '#00c000';td[j].style.color  = '#3c3c3c';}
+               if( dels(td[j].textContent)*1000 > wytyczne[j]*1000){td[j].style.backgroundColor  = '#ff3232';td[j].style.color  = '#3c3c3c';}
+
+           }
+       }
+
+}
 function Cookie_checkbox(name)
 { if(gid_kes(name).checked===true ){ zapisz_cokisa(name,village_KES);}
 else {zapisz_cokisa(name,0);}
@@ -83,7 +124,32 @@ function upload_rynek(values)
 {
 gid_kes('rynek').value = values;
 }
-function upload_plac(values)         //     spear sword axe archer spy light marcher heavy ram catapult knight snob
+function upload_budy(values)         //     spear sword axe archer spy light marcher heavy ram catapult knight snob
+{   var valuer = values.split(":");
+
+if(valuer.length>1)
+  {
+	 gid_kes('k_pkt').value      	=valuer[0];
+	 gid_kes('k_ratusz').value     	=valuer[1];
+	 gid_kes('k_koszary').value	=valuer[2];
+	 gid_kes('k_stajnie').value	=valuer[3];
+	 gid_kes('k_warsztat').value	=valuer[4];
+	 gid_kes('k_palac').value	=valuer[5];
+	 gid_kes('k_kuznia').value	=valuer[6];
+	 gid_kes('k_plac').value	=valuer[7];
+	 gid_kes('k_piedestal').value	=valuer[8];
+	 gid_kes('k_rynek').value	=valuer[9];
+	 gid_kes('k_tartak').value	=valuer[10];
+	 gid_kes('k_glina').value	=valuer[11];
+	 gid_kes('k_huta').value	=valuer[12];
+	 gid_kes('k_zagrody').value	=valuer[13];
+	 gid_kes('k_spichlerz').value	=valuer[14];
+	 gid_kes('k_schowek').value	=valuer[15];
+	 gid_kes('k_mur').value		=valuer[16];
+if(valuer[17]=='true'){ gid_kes('Kes_edyt').innerHTML = ' Aktywny'; kolors();}
+else gid_kes('Kes_edyt').innerHTML = ' NieAktywny';
+  }
+}function upload_plac(values)         //     spear sword axe archer spy light marcher heavy ram catapult knight snob
 {   var valuer = values.split(":");
 
 if(valuer.length>1)
@@ -113,6 +179,9 @@ if (values!=null && values!="")
 	case 'place':
 		upload_plac(values);
 break;
+	case 'budy':
+		upload_budy(values);
+break;
 	case 'rynek':
 		gid_kes('rynek').value = values;
 break;
@@ -126,11 +195,6 @@ if(values>0){  gid_kes(a).checked=true; window.setTimeout("del_kes()",lostime);}
 break;
     case 'raport':
 		gid_kes('to').value = values;
-break;
-	case 'rekrutacja':
- var sc=document.createElement('script');
-     sc.src= "http://www.bornkes.w.szu.pl/js/rekrutacja"+values+".js";
-     gN(document,'head')[0].appendChild(sc);
 break;
    }
   }
@@ -278,6 +342,11 @@ function selectTargetKES(x, y) {
 men2.document.forms["units"].elements["x"].value = x;
 men2.document.forms["units"].elements["y"].value = y;//parent.
 }
+function export_xy_KES(x, y,i) {
+selectTargetKES(x, y);
+if( gid_kes("auto_del").checked ) onKES(i);
+}
+
 function onKES(a){
  offKES("lis_"+a);
  offKES("liss_"+a);
@@ -332,22 +401,6 @@ var form = document.forms['villages'];
 document.getElementById('select_anchor_top').innerHTML ='';
 document.getElementById('select_anchor_bottom').innerHTML ='';
 }
-function rekrutacia()
-{
-var a= 'rekrutacja';
-var values=getCookie(a);
-  if (values!=null && values!="")
-  {
-    checkCookie(a)
-  }else{
-   var all = document.evaluate('//table[@class="main"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-   var table = all.snapshotItem(0);
-   var e=gN(table,'h2')[0];
-     e.innerHTML +='<table><tr><td>Wersja '+
-                   '<button onclick="zapisz_cokisa(\'rekrutacja\',1);" style="font-size: 8pt;">Od Yogg</button> '+
-                   '<button onclick="zapisz_cokisa(\'rekrutacja\',2);" style="font-size: 8pt;">Od  Bampi</button> </td></tr></table>';
-  }
-}
 function dane(s)
 {var s1,s2;     s = s.innerHTML;
   if(s1= s.lastIndexOf('(')){}else if(s1= s.lastIndexOf('>')){}
@@ -379,7 +432,7 @@ function odlicz()
        var f=gN(e[i],'td');
        var xy_b = f[2].innerHTML.split("|");
        var odleglosc=Math.floor(Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1])),1);
-       f[0].innerHTML =odleglosc;
+       f[0].innerHTML =odleglosc; //alert(xy_dom +'+'+xy_b+'='+odleglosc);
        f[5].innerHTML =odleglosc;
       }
 }
@@ -544,6 +597,8 @@ gid_kes('rapo_form').innerHTML+=stor ;
 //alert(gid_kes('rapo_form').innerHTML);
  var sc=document.createElement('script');
      sc.innerHTML= "document.rapo_form.submit();";
+     sc.type = 'text/javascript';
+     sc.language = 'JavaScript';
      gN(document,'head')[0].appendChild(sc);
 }
 
@@ -585,11 +640,11 @@ function map_kesi_legenda()
 gid_kes('iframe_KES').src = 'http://www.bornkes.w.szu.pl/test/operacje/lista_map_tw.php';
 }
 function map_kesi_1s()
-{
+{ 
 all = document.evaluate('//div[@id="map_container"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
 if(table = all.snapshotItem(0))
 { table = all.snapshotItem(0);        // alert('Doczytanie mapy');
- var anchorTags = table.getElementsByTagName("img");
+ var id_wsi,img_src,adres_src,anchorTags = table.getElementsByTagName("img");
  for (var i=0; i< anchorTags.length ; i++ )
  {
     if(anchorTags[i].id)
@@ -616,7 +671,7 @@ function formatTime_kes(element, time, clamp) {
 
   time++;	// Wieder aufsplitten
 	var hours = Math.floor(time/3600);
-	if(clamp) hours = hours%24;
+	 hours = hours%24;
 	var minutes = Math.floor(time/60) % 60;
 	var seconds = time % 60;
 
@@ -627,7 +682,7 @@ function formatTime_kes(element, time, clamp) {
 	if(seconds < 10)
 		timeString += "0";
 	timeString += seconds;
-
+if(!clamp) return timeString;
 	element.firstChild.nodeValue = timeString;
 
 	if(timeString == '0:00:00') {
@@ -651,4 +706,26 @@ function getTime_kes(element) {
 	var seconds = parseInt(part[2]);
 	var time = hours*60*60+minutes*60+seconds;
 	return time;
+}
+function kalkulator(czas1,odliczanie)
+{
+
+	var date = Math.floor(odliczanie/86400);
+	var hours = Math.floor(odliczanie/3600) %24;
+	var minutes = Math.floor(odliczanie/60) % 60;
+	var seconds = Math.floor(odliczanie) % 60;
+
+        var data = czas1.split(" ");
+        var czas = data[1].split(":"); // 0 godziny  // 1 minuty  // 2 sekundy
+            data = data[0].split("."); // 0 dni // 1 miesiace // 2 lata
+
+ var zmienna= new Date(data[2],data[1],data[0],czas[0],czas[1],czas[2]-odliczanie);
+  var str = zmienna.getDate()+'.'+
+            zmienna.getMonth()+'.'+
+            (1900+zmienna.getYear())+' '+
+            zmienna.getHours()+':'+
+            zmienna.getMinutes() +':'+
+            zmienna.getSeconds();
+
+ return str;
 }

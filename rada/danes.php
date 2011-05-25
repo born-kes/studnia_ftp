@@ -1,8 +1,10 @@
-<html dir="ltr" lang="pl"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta http-equiv="Content-Language" content="pl">
-<link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<html><head>
+           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+           <meta http-equiv="Content-Style-Type" content="text/css">
+           <meta http-equiv="Content-Language" content="pl">
+           <link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+           <script src="../js/ajax.js?2" type="text/javascript"></script>
+           <script src="../js/plac.js?2" type="text/javascript"></script>
 </head>
 <body>
 <?PHP include('../connection.php'); ?>
@@ -25,16 +27,16 @@ return data_z_bazy($b).dns($a);
    <th>Data</th>
   </tr>
   <tr>
-   <td>Ostatnia aktualizacja listy Plemion</td>
-   <td><? echo zly($plemie);  ?></td>
+   <td>Ostatnia <a href="#" onclick="Klik('plemie','update.php?pas=3');return false;">aktualizacja</a> listy Plemion</td>
+   <td><? echo zly($plemie);  ?></td><td id="plemie" />
   </tr>
   <tr>
-   <td>Ostatnia aktualizacja listy Graczy</td>
-   <td><? echo zly($users);  ?></td>
+   <td>Ostatnia <a href="#" onclick="Klik('gracz','update.php?pas=2');return false;">aktualizacja</a> listy Graczy</td>
+   <td><? echo zly($users);  ?></td><td id="gracz" />
   </tr>
   <tr>
-   <td>Ostatnia aktualizacja listy Wiosek</td>
-   <td><? echo zly($wsi);  ?></td>
+   <td>Ostatnia <a href="#" onclick="Klik('wsi','update.php?pas=1');return false;">aktualizacja</a> listy Wiosek</td>
+   <td><? echo zly($wsi);  ?></td><td id="wsi" />
   </tr>
  </tbody>
 </table>

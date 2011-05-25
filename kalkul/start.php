@@ -2,6 +2,7 @@
 ?><html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <script src="../js/kes_picker.js?1" type="text/javascript"></script>
+<script src="../js/plac.js?7.5" type="text/javascript"></script>
 <script language="JavaScript">
 <!--
 function ukryj(id) {
@@ -55,10 +56,10 @@ else
 <td valign="top" align="center"> 
  <table class="main">
   <tr>
-   <th><label for="def">Def </label> <a href="javascript:ukryj('inne_def');ukryj('inne_max');" class="red">*</a></th>
-   <th><label for="off">Off</label> <a href="javascript:ukryj('inne_off');ukryj('inne_max');" class="red">*</a></th>
-   <th><label for="foff">full Off</label> <a href="javascript:ukryj('inne_max');" class="red">*</a></th>
-   <th><label for="zw">Zwiad</label> <a href="javascript:ukryj('inne_zw');ukryj('inne_max');" class="red">*</a></th>
+   <th><label for="def">Def </label> <a href="javascript:ukryj('inne');" class="red">*</a></th>
+   <th><label for="off">Off</label> <a href="javascript:ukryj('inne');" class="red">*</a></th>
+   <th><label for="foff">full Off</label> <a href="javascript:ukryj('inne');" class="red">*</a></th>
+   <th><label for="zw">Zwiad</label> <a href="javascript:ukryj('inne');" class="red">*</a></th>
    <th><label for="sz">Szlachta</label></th>
   </tr>
   <tr>
@@ -70,24 +71,33 @@ else
   </tr>
   <tr>
    <td colspan="5">
-<table id="inne_def" style="display :none;"><tbody>
-<tr><td> pik &gt; </td><td><input type="text" name="pik" value="50" /></td></tr>
-<tr><td> mieczy &gt; </td><td> <input type="text" name="mie" value="50" /></td></tr>
-<tr><td> lukow &gt; </td><td><input type="text" name="luk" value="50" /></td></tr>
-<tr><td> ck &gt; </td><td><input type="text" name="ck" value="50" /></td></tr>
-</tbody></table>
-<table id="inne_off" style="display :none;"><tbody>
-<tr><td> top  &gt; </td><td><input type="text" name="top" value="50" /></td></tr>
-<tr><td> lk  &gt; </td><td><input type="text" name="lk" value="50" /></td></tr>
-<tr><td> kl  &gt; </td><td><input type="text" name="kl" value="50" /></td></tr>
-<tr><td> ck  &gt; </td><td><input type="text" name="ck" value="50" /></td></tr>
-</tbody></table>
-<table id="inne_zw" style="display :none;"><tbody>
-<tr><td> Minimum ZW </td><td><input type="text" name="zw" value="100" /></td></tr>
-</tbody></table>
-<table id="inne_max" style="display :none;"><tbody>
-<tr><td>limit odleglosci <input name="mxo" type="checkbox" title="zostaw zaznaczony by nie przeciazac serwera" checked="tak" value="1"></td></tr>
-</tbody></table>
+<table id="inne" style="display :none;">
+  <tbody>
+   <tr><th colspan="3">minimalna ilosc wojska</th></tr>
+   <tr><th>def</th><th>off</th><th>zw</th></tr>
+   <tr>
+    <td><img class="spear"><input type="text" name="spear" value="50" size="3"  /></td>
+    <td><img class="axe"><input type="text" name="axe" value="50" size="3" /></td>
+    <td><img class="spy"><input type="text" name="spy" value="100" size="3" /></td>
+   </tr><tr>
+    <td><img class="sword"><input type="text" name="sword" value="50" size="3" /></td>
+    <td><img class="light"><input type="text" name="light" value="50" size="3" /></td>
+    <td><input name="ram" type="hidden">
+        <input name="catapult" type="hidden">
+        <input name="knight" type="hidden">
+        <input name="snob" type="hidden">
+    </td>
+   </tr><tr>
+    <td><img class="archer"><input type="text" name="archer" value="50" size="3" /></td>
+    <td><img class="marcher"><input type="text" name="marcher" value="50" size="3" /></td>
+   </tr><tr>
+    <td colspan="2" align="center"><img class="heavy"><input type="text" name="heavy" value="50" size="3" /></td>
+    <td><BUTTON onclick="zapisz_cook();">Zapisz</BUTTON></td>
+   </tr>
+   <tr><td colspan="3" >aktywacja limit odleglosci <input name="mxo" id="mxo" type="checkbox" title="zostaw zaznaczony by nie przeciazac serwera" checked="tak" value="1"></td></tr>
+
+  </tbody>
+ </table>
    </td>
   </tr>
  </table>
@@ -95,8 +105,8 @@ else
 </tr>
 <tr><td valign="top" align="center">
 Czas:
-<input name="czas1" value="" size="19" type="text"  onclick="show_calendar('document.form.czas1', document.form.czas1.value);"><a href="javascript:show_calendar('document.form.czas1', document.form.czas1.value);">
-<img src="../img/cal.gif" border="0" height="16" width="16" alt="Clicknij Tu by ustaliæ Datê"></a>
+<input name="czas1" value="" size="19" type="text" onclick="show_calendar('document.form.czas1',document.form.czas1.value,false);">
+<a href="javascript:show_calendar('document.form.czas1',document.form.czas1.value,true);"><img src="../img/cal.gif" border="0" height="16" width="16" alt="Clicknij Tu by ustaliæ Datê"></a>
  <a href="javascript:pomoc();"> POMOC ? </a></td>
 </tr>
 
@@ -109,6 +119,8 @@ Czas:
 <tr><td valign="top" align="center">
 <input type="submit" value="POLICZ" /></td></tr></table>
 </form>
+<div style="position: absolute;left:-100;">
+
 <?  $ec =mktime()-$godzina_zero;
 
   $zap ="SELECT  a.`cel` , v.x, v.y, a.godz, t.name,a.kto
@@ -132,5 +144,15 @@ $stor=$gstr;
   destructor();
 if($stor!=$gstr){$stor.='</table>'; echo $stor;}
 
-?>
-</div></body></html>
+?></div></div>
+
+<script language="JavaScript">
+<!--
+function url_dla_img()
+{var img = document.getElementsByTagName("img");
+	for (var i = 0; i < 8; i++) {	img[i].src = 'http://pl5.plemiona.pl/graphic/unit/unit_'+img[i].className+'.png';  }
+}url_dla_img();
+checkCookie('place');
+//-->
+</script>
+</body></html>
