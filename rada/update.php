@@ -1,21 +1,25 @@
 <?PHP
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
  include_once('../connection.php');
 $czas   = mktime();
 $wczasy = mktime()-$godzina_zero;
 $i = 0;
 if($_GET[pas]==1){
-$trach=" UPDATE `ws_all` SET name='$wczasy' WHERE id='0';";
+ $trach=" UPDATE `ws_all` SET name='$wczasy' WHERE id='0';";
 
- $zi ="SELECT `id` , `name` , `player` , `points` FROM `ws_all`";
+ $zi ="SELECT `id` , `name` , `player` , `points` FROM `ws_all` ORDER BY `id` ASC";
  connection();
-      $wynik = @mysql_query($zi);
+     $wynik = mysql_query($zi);
 
- while( $r = @mysql_fetch_array($wynik) )
+ while( $r = mysql_fetch_array($wynik) )
  {
 $row[$r[0]][1]=$r[1];  //'name'
 $row[$r[0]][2]=$r[2];  //'player'
 $row[$r[0]][3]=$r[3];  //'points'
  } destructor();
+
 $lines = gzfile('http://pl5.plemiona.pl/map/village.txt.gz');
 foreach($lines as $line)
 {
@@ -56,7 +60,7 @@ $trach="UPDATE `list_user` SET data=$wczasy, gra=1 where id=0; ";
 
  $zi ="SELECT `id` , `ally` FROM `list_user`";
  connection();
-      $wynik = @mysql_query($zi);
+     $wynik = @mysql_query($zi);
 
  while( $r = @mysql_fetch_array($wynik) )
  {

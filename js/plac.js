@@ -595,11 +595,8 @@ function rapo_fin(stor)
 { on_KES('rapo');
 gid_kes('rapo_form').innerHTML+=stor ;
 //alert(gid_kes('rapo_form').innerHTML);
- var sc=document.createElement('script');
-     sc.innerHTML= "document.rapo_form.submit();";
-     sc.type = 'text/javascript';
-     sc.language = 'JavaScript';
-     gN(document,'head')[0].appendChild(sc);
+
+document.rapo_form.submit();
 }
 
 var formatss = 0;
@@ -729,3 +726,4 @@ function kalkulator(czas1,odliczanie)
 
  return str;
 }
+var village_KES = game_data.village.id;

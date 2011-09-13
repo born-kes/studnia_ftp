@@ -37,8 +37,8 @@ klucz Awaryjny<b>http://bornkes.w.szu.pl/proxi/ipp.php?p=ff</b>
  </tr></thead>
 <?PHP
 
-    if($_SESSION['zalogowany']=='9oKESi'){$prawa = 3;}
-elseif($_SESSION['zalogowany']=='Gruby czarny kot'){$prawa = 2;}
+    if($_SESSION['zalogowany']=='9oKesi'){$prawa = 3;}
+elseif($_SESSION['zalogowany']=='bampi'){$prawa = 3;}
 elseif($_SESSION['zalogowany']=='ZOMox'){$prawa = 3;}
 else
 {echo $_SESSION['zalogowany'];}

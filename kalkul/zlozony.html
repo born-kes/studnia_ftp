@@ -41,12 +41,12 @@ return str;
 } 
 
 function selectAobr(form,val) {     //selectAobr(this.form, this.checked)
-           var valu, str = '';
+           var valu, str = ''; var x='zlo_';
      if(val=='d_agr')    valu='dane=0&COUNT=true';
 else if(val=='dane_T_agr') valu='dane=1&COUNT=true';
 else if(val=='dane_T_ogr') valu='dane=2&COUNT=true';
-else if(val=='T_agr') valu='dane=1&COUNT=false';
-else if(val=='T_ogr') valu='dane=2&COUNT=false';
+else if(val=='T_agr'){ valu='dane=1&COUNT=false';x='';}
+else if(val=='T_ogr'){ valu='dane=2&COUNT=false';x='';}
 else return false;
 
 	for(var i=0; i<=form.length-1; i++)
@@ -61,7 +61,7 @@ else
 	str+='&'+ form.elements[i].name +'='+ values;		
         }
 //alert(val+' zlo_zap.php?'+valu+str);
-    Klik(val,'zlo_zap.php?'+valu+str)
+    Klik(val,x+'zap.php?'+valu+str)
 }
 
 //-->
@@ -218,6 +218,7 @@ Oraz <br /><br /> zaznaczyc ze chcesz tylko wioski ktore maja wybrane jednostki 
 <script language="JavaScript">
 <!--
  selectAobr(document.forms[0], 'd_agr');
+
 //-->
 </script>
 </form>

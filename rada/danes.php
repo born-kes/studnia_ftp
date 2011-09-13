@@ -1,4 +1,4 @@
-<html><head>
+<?PHP include('../connection.php'); ?><html><head>
            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
            <meta http-equiv="Content-Style-Type" content="text/css">
            <meta http-equiv="Content-Language" content="pl">
@@ -7,7 +7,7 @@
            <script src="../js/plac.js?2" type="text/javascript"></script>
 </head>
 <body>
-<?PHP include('../connection.php'); ?>
+
 <?
 $wsi = zap('name,name','`ws_all`','id=0');
 $users = zap('data,data','`list_user`','id=0');
@@ -40,5 +40,16 @@ return data_z_bazy($b).dns($a);
   </tr>
  </tbody>
 </table>
+<?
+$zap=" SELECT name FROM `list_user` WHERE `prawa` =1";
+  connection();
+$wynik = mysql_query($zap);
+echo '<br /><b> Posiadaj± prawa Radnego do studni. </b><br />';
+
+  while($f = @mysql_fetch_array($wynik))
+{
+echo $f[name].'<br />';
+}    destructor();
+?>
 </body>
 </html>

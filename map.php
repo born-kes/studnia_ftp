@@ -6,7 +6,7 @@ else    {echo 'brak xxx|yyy';exit();}
 <head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">          
 <link rel="stylesheet" type="text/css" href="http://pl5.plemiona.pl/css/stamm.css?1255509606">
 
-           <script src="js/tw_002.js" type="text/javascript"></script>
+           <script src="js/tw_001.js" type="text/javascript"></script>
            <script type="text/javascript">
 var t,ts=0;
 function druga_warstwa(a) 
@@ -97,7 +97,7 @@ getElement('info_wsi').style.display = '';
     <tbody>
     <tr>
 	<td>
-	    <img id="map" src="img/00a.php?s=<?PHP echo ($_GET[s]); ?>&xy=<?PHP echo $xy[0]."|".$xy[1]; ?>&color=1&obrona=0&raport=0&szl=0&typ=0&azm=0&ann=0" alt="{map}">
+	    <img id="map" src="img/00a.php?s=<?PHP echo ($_GET[s]); ?>&xy=<?PHP echo $xy[0]."|".$xy[1]; ?>&color=1&obrona=0&raport=0&szl=0&typ=1&azm=0&ann=0" alt="{map}">
 	</td>
 <td rowspan="10" valign="top">
 </td>

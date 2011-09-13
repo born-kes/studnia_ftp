@@ -35,6 +35,10 @@ $co_idzie =array ('1'=>'Wedlug bazy',
                   '35'=>'Szlachta');
 
 # liczy wojsko
+function deCode($x)
+{
+return plCharset(urldecode($x), UTF8_TO_WIN1250);
+}
 function ile_woja($pik, $mie, $axe, $arche,$zw, $lk, $kl, $ck, $tar, $kat, $ryc, $sz){
 $wojo= $pik+ $mie+ $axe+ $arche+($zw*2)+ ($lk*4)+ ($kl*5)+ ($ck*6)+($tar*5)+($kat*8)+($ryc*10)+($sz*100);
 return $wojo;

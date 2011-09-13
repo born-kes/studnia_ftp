@@ -34,10 +34,12 @@ echo '<form name="form" action="tancerz_wojny.php" method="POST">';
 if($_GET[t]==null)  //agresor
     { $tet=zap("u.name, u.id","ws_all v, list_user u","v.player = u.id AND v.id =".$_GET[village] ); }
 else
-    { $tet=zap("name, u.id","list_user","id =".$_GET[t] ); }
+    { $tet=zap("name, id","list_user ","id =".$_GET[t] ); }
+     if($tet[0]=='0'){$tet[0]=$_SESSION['zalogowany'];sesio_id();   $tet[1]=$_SESSION['id'];}
 
 $obr = zap("u.name, u.id","ws_all v, list_user u","v.player = u.id AND v.id =".$_GET[id] );
-  if($tet[0]==0){$tet[0]=$_SESSION['zalogowany'];sesio_id();   $tet[1]=$_SESSION['id'];}
+
+ 
 $nagluwek = 'Agresor: <b>'.urldecode($tet[0]).'</b> Obroñca: <b>'.urldecode($obr[0]).'</b>
 ';
  echo '

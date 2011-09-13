@@ -7,8 +7,8 @@ $wczasy = mktime()-$godzina_zero;
  $ws_raport= " UPDATE ws_raport SET  data='$wczasy'";
  $ws_raport2 = " INSERT INTO ws_raport SET id='".$_GET['id']."', data='$wczasy'";
 }elseif($_GET[mur]!=NULL){
- $ws_raport= " UPDATE ws_raport SET  data='$wczasy', mur=".$_GET['mur'];
- $ws_raport2 = " INSERT INTO ws_raport SET id='".$_GET['id']."', data='$wczasy', mur=".$_GET['mur'];
+ $ws_raport= " UPDATE ws_raport SET  d_mur='$wczasy', mur=".$_GET['mur'];
+ $ws_raport2 = " INSERT INTO ws_raport SET id='".$_GET['id']."', d_mur='$wczasy', mur=".$_GET['mur'];
 }elseif($_GET[typ]==22){
  $ws_raport= " UPDATE ws_mobile SET  data='$wczasy'";
  $ws_raport2 = " INSERT INTO ws_mobile SET id='".$_GET['id']."', data='$wczasy' ";

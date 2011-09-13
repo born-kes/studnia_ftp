@@ -110,7 +110,8 @@ $zapytanie .=" WHERE id=($zap)"; // echo $zapytanie;
 }else{exit();}//*/  xy = istnieje
 connection();
 $wynik = @mysql_query($zapytanie);      $hidd = ' class="hidden"';
-if($r = @mysql_fetch_array($wynik)){
+if($r = @mysql_fetch_array($wynik))
+{
 echo'
 <TABLE class="main" width="100%">
  <tbody>
@@ -123,58 +124,84 @@ echo'    <td>Typ:</td>
 }elseif($_GET['o0']==1){
 echo'    <td>Status:</td>
     <td>'.$statuss[typ][$r[status]].'</td>';
-echo'<th>Mur lv.';if($r[mur]!=NULL){echo $r[mur].' <i> '.data_z_bazy($r[d_mur]).'</i>';}else{ echo '<b>??</b>';}echo '</Th>';}echo '
-  </tr>
- </tbody>
-</TABLE>';              //
-echo '<TABLE class="main ba" align="center" width="100%"><tbody><tr class="center row"><td width="51">W bazie:</td>';
+echo'    <th>Mur lv.';if($r[mur]!=NULL){echo $r[mur].' <i> '.data_z_bazy($r[d_mur]).'</i>';}else{ echo '<b>??</b>';}echo '</Th>';}echo '
+   </tr>
+  </tbody>
+ </TABLE>';
+              //
+ echo '<TABLE class="main ba" align="center" width="100%"><tbody><tr class="center row"><td width="51">W bazie:</td>';
 
-if($r[status]!=count($statuss[typ])-1){
-echo '<td'; if($r[pik]==0){echo $hidd;}echo '>'. $r[pik].'</td>';  $woj[0]=$r[pik];
-echo '<td'; if($r[mie]==0){echo $hidd;}echo '>'. $r[mie].'</td>';  $woj[1]=$r[mie];
-echo '<td'; if($r[axe]==0){echo $hidd;}echo '>'. $r[axe].'</td>';  $woj[2]=$r[axe];
-echo '<td'; if($r[luk]==0){echo $hidd;}echo '>'. $r[luk].'</td>';  $woj[3]=$r[luk];
-echo '<td'; if($r[zw] ==0){echo $hidd;}echo '>'. $r[zw].'</td>';   $woj[4]=$r[zw];
-echo '<td'; if($r[lk] ==0){echo $hidd;}echo '>'. $r[lk].'</td>';   $woj[5]=$r[lk];
-echo '<td'; if($r[kl] ==0){echo $hidd;}echo '>'. $r[kl].'</td>';   $woj[6]=$r[kl];
-echo '<td'; if($r[ck] ==0){echo $hidd;}echo '>'. $r[ck].'</td>';   $woj[7]=$r[ck];
-echo '<td'; if($r[tar]==0){echo $hidd;}echo '>'. $r[tar].'</td>';  $woj[8]=$r[tar];
-echo '<td'; if($r[kat]==0){echo $hidd;}echo '>'. $r[kat].'</td>';  $woj[9]=$r[kat];
-echo '<td'; if($r[ry] ==0){echo $hidd;}echo '>'. $r[ry].'</td>';   $woj[10]=$r[ry];
-echo '<td'; if($r[sz] ==0){echo $hidd;}echo '>'. $r[sz].'</td>';   $woj[11]=$r[sz];
-}else
-{echo '<td>¯aden ¿o³nierz nie wróci³ ¿ywy.</td>';}
-echo '</tr></tbody></TABLE>';
-$vid= $r[id];
+ if($r[status]!=count($statuss[typ])-1)
+ {
+ echo '<td'; if($r[pik]==0){echo $hidd;}echo '>'. $r[pik].'</td>';  $woj[0]=$r[pik];
+ echo '<td'; if($r[mie]==0){echo $hidd;}echo '>'. $r[mie].'</td>';  $woj[1]=$r[mie];
+ echo '<td'; if($r[axe]==0){echo $hidd;}echo '>'. $r[axe].'</td>';  $woj[2]=$r[axe];
+ echo '<td'; if($r[luk]==0){echo $hidd;}echo '>'. $r[luk].'</td>';  $woj[3]=$r[luk];
+ echo '<td'; if($r[zw] ==0){echo $hidd;}echo '>'. $r[zw].'</td>';   $woj[4]=$r[zw];
+ echo '<td'; if($r[lk] ==0){echo $hidd;}echo '>'. $r[lk].'</td>';   $woj[5]=$r[lk];
+ echo '<td'; if($r[kl] ==0){echo $hidd;}echo '>'. $r[kl].'</td>';   $woj[6]=$r[kl];
+ echo '<td'; if($r[ck] ==0){echo $hidd;}echo '>'. $r[ck].'</td>';   $woj[7]=$r[ck];
+ echo '<td'; if($r[tar]==0){echo $hidd;}echo '>'. $r[tar].'</td>';  $woj[8]=$r[tar];
+ echo '<td'; if($r[kat]==0){echo $hidd;}echo '>'. $r[kat].'</td>';  $woj[9]=$r[kat];
+ echo '<td'; if($r[ry] ==0){echo $hidd;}echo '>'. $r[ry].'</td>';   $woj[10]=$r[ry];
+ echo '<td'; if($r[sz] ==0){echo $hidd;}echo '>'. $r[sz].'</td>';   $woj[11]=$r[sz];
 
-}else{echo'<table class="main ba" align="center" width="100%">
- <tbody>
-  <tr class="center row"><th>brak raportu, wioski niema w bazie</th></tr>
- </tbody>
-</table>';}
-destructor();
-if($data+61>$rdata){
+ }else{
+
+ echo '<td>¯aden ¿o³nierz nie wróci³ ¿ywy.</td>';
+     }
+ echo '</tr></tbody></TABLE>';
+ $vid= $r[id];
+
+}
+else
+{
 echo'
-<TABLE class="main" align="center" width="100%">
+ <table class="main ba" align="center" width="100%">
+  <tbody>
+   <tr class="center"><td>brak raportu, wioski niema w bazie</td></tr>
+  </tbody>
+ </table>';
+}
+ destructor();
+if($data==$rdata)
+{
+ echo '<table align="center" width="100%">
+ <tbody>
+  <tr class="center"><th><b>Baza ma Ten Raport.</b></th></tr></tbody></table>';
+}else
+if($data>$rdata && !($_GET['o0']==0 && $data<$rdata+900 ) )
+{
+ echo'
+ <TABLE class="main" align="center" width="100%">
   <tbody>
     <tr class="center row">
       <td>';
-if($_GET['w']    !=NULL && $_GET['w']    !=''){ echo'<input type="submit" name="sql" value="WSZYSTKO" />';
-echo'<input type="submit" name="sql" value="Wojsko" />';}
+   if($_GET['w']    !=NULL && $_GET['w']    !='')
+   {
+    echo'<input type="submit" name="sql" value="WSZYSTKO" />';
+    echo'<input type="submit" name="sql" value="Wojsko" />';
+   }
 
-if($_GET['o0']==0){echo '<input type="submit" name="sql" value="TylkoTyp" /><select name="typ">'.wpisz_rodzaj($_GET['typ'],$rodzaje).'</select>';}
-else{
+  if($_GET['o0']==0)
+    {echo '<input type="submit" name="sql" value="TylkoTyp" /><select name="typ">'.wpisz_rodzaj($_GET['typ'],$rodzaje).'</select>';}
+  else
+    {
      if($wm!==NULL){ echo'<input type="submit" name="sql" value="Mur" />'; }
      if($_GET['w'] !=NULL){$status = status(ile_woja($wg[0],$wg[1],$wg[2],$wg[3],$wg[4],$wg[5],$wg[6],$wg[7],$wg[8],$wg[9],$wg[10],$wg[11]));}else{$status = status(NULL); }
- echo '<input type="submit" name="sql" value="Status" />       <select name="typ">'.wpisz_rodzaj($status,$statuss[typ]).'</select>';
-       }
-echo'      </td>
+  echo '<input type="submit" name="sql" value="Status" />       <select name="typ">'.wpisz_rodzaj($status,$statuss[typ]).'</select>';
+     }
+ echo'      </td>
     </tr>
   </tbody>
-</table>';}else{echo '<table class="main ba" align="center" width="100%">
+ </table>';
+}
+else
+{
+ echo '<table class="main ba" align="center" width="100%">
  <tbody>
-  <tr class="center row"><th><b>Baza ma bardziej Aktualne dane.</b>';
- if($_GET['o0']==0&&$data+359200>$rdata){echo 'Mo¿esz dodac Wojska<input type="submit" name="sql" value="+" />'; }
+  <tr class="center row"><th><b>Baza ma bardziej Aktualne dane. </b>';
+ if($_GET['o0']==0 && $data>$rdata ){echo 'Mo¿esz dodac Wojska <input type="submit" name="sql" value="+" />'; }
  if($_GET['o0']==1 && $wm!==NULL && $wm<$r[mur]){ echo' Ale mo¿esz dodac <input type="submit" name="sql" value="Mur" />'; }
 
 echo '</th></tr></tbody></table>';

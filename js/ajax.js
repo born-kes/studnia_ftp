@@ -19,25 +19,38 @@ function Klik(gdzie,name)
 
     ajax_obiekt.onreadystatechange  = function()
     {
+
          var element = gid_kes(gdzie);
          if(ajax_obiekt.readyState  == 4)
          {
-              if(ajax_obiekt.status  == 200)
-{
- if(ajax_obiekt.responseText.indexOf('id="#script"')>-1)
- { element.innerHTML = '';
+              if(ajax_obiekt.status  == 200)  {
+  if(ajax_obiekt.responseText.indexOf('id="#script"')>-1)
+ {
+// var response = ajax_obiekt.responseXML;     alert(response );
+// var xmlHttp = ajax_obiekt.responseText;     alert(xmlHttp );
+ var responseXml = ajax_obiekt.responseXML;   //  alert(responseXml );
+ var xmlDoc =  responseXml.documentElement;   //  alert(xmlDoc );
+
+          if(ajax_obiekt.responseText.indexOf('a_name')>-1){var table = gN(xmlDoc,'a_name'); 
+
+        for (i = 0; i < table.length; i++) {alert(table[i].firstChild.data);}
+
+}
+
+ element.innerHTML = '';
   var sc=document.createElement('div');
   sc.innerHTML = ajax_obiekt.responseText;
   element.appendChild(sc);
  }else{element.innerHTML = ajax_obiekt.responseText; }
+
+
 }
 
-               //   element.innerHTML = ajax_obiekt.responseText;
               else
                  element.innerHTML = "b&#65533;&#65533;d Po&#65533;&#65533;czenia: <br />" + ajax_obiekt.status;
          }else{element.innerHTML +='<img src="http://pl5.plemiona.pl/graphic/throbber.gif" />';}
     };
    ajax_obiekt.open(Metod , name,  true);
-   ajax_obiekt.send(null); 
+   ajax_obiekt.send(null);
 }
 var Metod ='GET';

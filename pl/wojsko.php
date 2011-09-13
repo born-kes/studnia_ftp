@@ -1,8 +1,9 @@
-<? 
+<?
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
 $wczasy = mktime()-$godzina_zero;
 $licz=0;
 $p=" , ";
+if(count(array_keys($_POST['id']) )<2 ){echo'error ';exit(); }
 $id=array_keys($_POST['id']);
 
 $pik=array_keys($_POST['pik']);
@@ -17,29 +18,28 @@ $tar=array_keys($_POST['tar']);
 $kat=array_keys($_POST['kat']);
 $ry=array_keys($_POST['ry']);
 $sz=array_keys($_POST['sz']);
-            
+
 for($i=0; $i<count($id);$i++){
 
-         $wpik=$_POST['pik'][$pik[$i]];
-         $wmie=$_POST['mie'][$mie[$i]];
-         $waxe=$_POST['axe'][$axe[$i]];
-         $wluk=$_POST['luk'][$luk[$i]];
-         $wzw=$_POST['zw'][$zw[$i]];
-         $wlk=$_POST['lk'][$lk[$i]];
-         $wkl=$_POST['kl'][$kl[$i]];
-         $wck=$_POST['ck'][$ck[$i]];
-         $wtar=$_POST['tar'][$tar[$i]];
-         $wkat=$_POST['kat'][$kat[$i]];
-         $wry=$_POST['ry'][$ry[$i]];
-         $wsz=$_POST['sz'][$sz[$i]];
-         $wid=$_POST['id'][$id[$i]];
+         $wpik=intval($_POST['pik'][$pik[$i]]);
+         $wmie=intval($_POST['mie'][$mie[$i]]);
+         $waxe=intval($_POST['axe'][$axe[$i]]);
+         $wluk=intval($_POST['luk'][$luk[$i]]);
+         $wzw=intval($_POST['zw'][$zw[$i]]);
+         $wlk=intval($_POST['lk'][$lk[$i]]);
+         $wkl=intval($_POST['kl'][$kl[$i]]);
+         $wck=intval($_POST['ck'][$ck[$i]]);
+         $wtar=intval($_POST['tar'][$tar[$i]]);
+         $wkat=intval($_POST['kat'][$kat[$i]]);
+         $wry=intval($_POST['ry'][$ry[$i]]);
+         $wsz=intval($_POST['sz'][$sz[$i]]);
+         $wid=intval($_POST['id'][$id[$i]]);
 $wol=jaki_czas_marszu($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz);
 $sta=status(ile_woja($wpik,$wmie,$waxe,$wluk,$wzw,$wlk,$wkl,$wck,$wtar,$wkat,$wry,$wsz));
-$query = " UPDATE ws_mobile
+$query1 = " UPDATE ws_mobile
      SET ";
-if($_POST[n_typ]!=NULL){ $query .=" typ='$_POST[n_typ]' , ";}
 
-$query .= "  
+$query2 = "
          pik='$wpik',
          mie='$wmie',
          axe='$waxe',
@@ -53,16 +53,14 @@ $query .= "
          ry='$wry',
          sz='$wsz',
          data=$wczasy";
-$query .= "     WHERE `id`='$wid'; ";
-//echo $query;
+if($_POST[n_typ]!=NULL){ $query2 .=", typ='$_POST[n_typ]' ";}
+
+$query2 .= "     WHERE `id`='$wid'; ";     //echo $query1.$query2.'<br>';
+
   connection();
-   if(!@mysql_query($query)){echo "b³±d zapisu<br>";}else{$licz++; /*echo $query.'<br>';*/}
+   if(@mysql_query($query1.$query2)) $licz++; else echo "b³±d zapisu<br>";
  @destructor();
 }
-//$query=substr($query,0,-1).")";
- 
-//for($j=0; $j<count($obr);$j++){$quert.=$_POST['obr'][$obr[$j]]; $quert.=",";}
-//$quert=substr($quert,0,-1).")";
 ?>
 <html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -81,7 +79,7 @@ tr.center td { text-align:center; }
 
 
 -->
-</style><body><?PHP 
+</style><body><?PHP
 
   echo 'Zapisano zmiany w <br />';
 if($_POST[n_typ]!=NULL){echo' Typie wiosek i';}

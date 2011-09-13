@@ -34,20 +34,33 @@ table.main tr.row td.hidden { color:#333366; }
 tr.center td { text-align:center; }
 -->
 </style></head>
-<body><div style="position: absolute; top: -6px; left: 100px;"><form name="form" action="radar.php" method="POST"><?php
+<body><div style="position: absolute; top: -6px; left: 100px;"><form name="form" action="radar.php" method="POST">
+<?php      sesio_id();
+
+if($_GET[t]!=null)
+    {
+       $user=zap("u.name,u.name","list_user u","u.id =".$_GET[t] ); $user=$user[0];
+       $u_id=$_GET[t];
+     echo '<input type="hidden" name="t" value="'.$_GET[t].'" />';
+    }
+else if($_GET[g]!=null)
+    {
+       $user=zap("u.name,u.name","list_user u","u.id =".$_GET[g] ); $user=$user[0];
+       $u_id=$_GET[g];
+     echo '<input type="hidden" name="gracz" value="'.$u_id.'" />';
+    }
+else
+    {
+      $user= $_SESSION['zalogowany'];
+      $u_id= $_SESSION['id'];
+    }
 
 $obr = zap("v.x, v.y, u.name","ws_all v, list_user u","v.player = u.id AND v.id =".$_GET[id] );
-$nagluwek = 'Agresor: <b>'.$_SESSION['zalogowany'].'</b> Obroñca: <b>'.urldecode($obr[2]).'</b> ('.$obr[0].'|'.$obr[1].')';
+
+$nagluwek = 'Agresor: <b>'.urldecode($user).'</b> Obroñca: <b>'.urldecode($obr[2]).'</b> ('.$obr[0].'|'.$obr[1].')';
 
 echo '<input type="hidden" name="xy" value="'.$_GET[id].'" />';
 echo '<input type="hidden" name="id" value="'.$_GET[id].'" />'; // village ??
-
-if($_GET[t]==null)
-    {sesio_id(); echo '<input type="hidden" name="gracz" value="'.$_SESSION['id'].'" />'; }
-else
-    { echo '<input type="hidden" name="t" value="'.$_GET[t].'" />'; }
-
-
 
  ?>
 <table class="main" align="center">

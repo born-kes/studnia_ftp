@@ -1,7 +1,8 @@
 <?PHP include_once('../connection.php'); ?>
 
 <?PHP
- if($_SESSION['zalogowany']!='9oKESi' 
+ if($_SESSION['zalogowany']!='9oKesi' 
+ && $_SESSION['zalogowany']!='bampi' 
  && $_SESSION['zalogowany']!='ZOMox' )
     {echo 'brak uprawnien...';exit();}
 
