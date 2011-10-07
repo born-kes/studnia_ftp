@@ -11,7 +11,7 @@
 <table width="100%" height="100%" border="1" >
  <tr>
   <td valign="top" width="17" class="TN" id="tryb" >
-<?PHP echo $ip_php; ?>
+<?PHP echo $ip_php; if($warunek){?>
 
 <p align="center"><input type="button" id="lewy" value="&lt;&lt;&lt;&lt;" /> wioski <input type="button" id="prawy" value="&gt;&gt;&gt;&gt;" /></p>
 <HR>
@@ -61,7 +61,7 @@ TA<input type="checkbox" name="TA" id="TA" value="3" >
  <tr><td colspan="3"><input value="sprawdz" type="submit"></td></tr>
 </table><input type="hidden" name="user" value="<?PHP echo $id_player; ?>" >
 </form>
-
+<?PHP } ?>
 </td>
   <td rowspan="2" width="90%"><iframe name="sec" id="sec" width="100%" height="100%" style="border:0px;" src="http://www.plemiona.pl/"></iframe></td>
  </tr>

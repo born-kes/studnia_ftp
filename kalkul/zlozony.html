@@ -1,224 +1,167 @@
-<script language="JavaScript">
-<!--
-function zmien(form) {
- form.value = (form.value == '1' ? '1' : '0');
-}
-function kes_expod(str)
-{
- if(str.indexOf("\n")>-1)
- {str = str.split("\n");
-var s1,s2,s;
-   for (var i=0; i< str.length ; i++ )
-   {
-
-if(str[i].indexOf("\t")>-1)
-      {
-      var estr = str[i].split("\t");
-      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
-      str[i] = estr.join("");
-      }
-if(str[i].indexOf(" ")>-1)
-      {
-      var estr = str[i].split(" ");
-      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
-      str[i] = estr.join("");
-      }
-
-
-  if(!str.indexOf("|")>-1) continue;
-   
-      if(str[i].indexOf("(")>-1 && str[i].indexOf(")")>-1)
-      {
-      s = str[i];
-      s1= str[i].lastIndexOf('(');
-      s2= str[i].lastIndexOf(')');
-  str[i]= str[i].substring(s1+1,s2);
-      }
-   }
-str.join(',');
-  }
-return str;
-} 
-
-function selectAobr(form,val) {     //selectAobr(this.form, this.checked)
-           var valu, str = ''; var x='zlo_';
-     if(val=='d_agr')    valu='dane=0&COUNT=true';
-else if(val=='dane_T_agr') valu='dane=1&COUNT=true';
-else if(val=='dane_T_ogr') valu='dane=2&COUNT=true';
-else if(val=='T_agr'){ valu='dane=1&COUNT=false';x='';}
-else if(val=='T_ogr'){ valu='dane=2&COUNT=false';x='';}
-else return false;
-
-	for(var i=0; i<=form.length-1; i++)
-        { 
-if(form.elements[i].type=="checkbox" || form.elements[i].type=="radio")
-   if(! form.elements[i].checked)
-     continue;
-if(form.elements[i].value.indexOf("\n")>-1)
- var values= form.elements[i].value = kes_expod(form.elements[i].value);
-else
- var values= form.elements[i].value;
-	str+='&'+ form.elements[i].name +'='+ values;		
-        }
-//alert(val+' zlo_zap.php?'+valu+str);
-    Klik(val,x+'zap.php?'+valu+str)
-}
-
-//-->
-</script>
-<form action="zlo_zap.php" method="POST" name="form" target="rampa">
-<table style="width:100%" class="main" id="Tabelka kalkulator zlozony" align="center">
-<tbody>
- <tr>
-  <td style="width:45%" />
-  <td />
-  <td style="width:45%" />
- </tr>
- <tr valign="top">
-  <td>
-   <table class="vis" align="center" id="Table_agr">
-<CAPTION><a href="javascript:on_KES('Table_agr_wlasna');offKES('Table_agr');">Agresor z Zapytania</a></caption>
-   <tbody>
-	<tr>
-	 <td>Nazwa Gracza</td><td><a href="javascript:selectAobr(document.forms[0], 'dane_T_agr');">OK</a></td>
-	</tr>
-	<tr>
-	 <td><input name="agracz" value="<?PHP echo $_SESSION['zalogowany']; ?>" size="14" type="text" onChange="selectAobr(this.form, 'dane_T_agr');selectAobr(document.forms[0], 'd_agr');"></td>
-	</tr>
-	<tr>
-	 <td>Typ Wioski</td>
-	</tr>
-	<tr>
-	 <td onMouseOver="on_KES('h0');" onMouseOut="offKES('h0');"><select name="typ_a" onChange="selectAobr(this.form, 'dane_T_agr');">
-		<option value=""></option>
-		<option value="0">brak typu</option>
-		<option value="1">wioska off</option>
-		<option value="2">wioska def</option>
-		<option value="3">Zwiad</option>
-		<option value="4">wioska LK</option>
-		<option value="5">wioska CK</option>
-		<option value="6">do rozbudowy</option>
-		<option value="7">szlachta</option>
-  	 </select>
-           <div class="metro" id="h0" style="display:none;">jesli opisales typy wiosek mo¿esz ograniczyc liste o to pole</div>
+<form action="zlo_zap.php" method="POST" name="form" target="rampa"><?$ww=1; ?>
+ <table style="width:100%" class="main" id="Tabelka kalkulator zlozony" align="center">
+  <tbody>
+   <tr>
+    <td style="width:40%" />
+    <td style="width:20%" />
+    <td style="width:40%" />
+   </tr>
+   <tr valign="top">
+    <td>
+	<table class="vis" align="center" id="Table_agr">
+	 <CAPTION onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);"><a href="javascript:on_KES('Table_agr_wlasna');offKES('Table_agr');">Agresor z Zapytania</a></caption>
+	 <tbody>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+            Nazwa Gracza
+	    <br />
+	    <input name="agracz" value="<?PHP echo $_SESSION['zalogowany']; ?>" size="14" type="text" onChange="selectAobr(this.form, 'dane_T_agr');selectAobr(document.forms[0], 'd_agr');"></td>
            </td>
-        </tr>
-        <tr>
-  	<td onMouseOver="on_KES('h4');" onMouseOut="offKES('h4');">Najwolniejsze Wojsko<br>(tempo marszu)
-  <br>
-	 <select name="wojsko" id="wojsko"  onChange="selectAobr(this.form, 'dane_T_agr');">
-	 <option value=""></option>
-	 <option value="9">Zwiad</option>
-	 <option value="10">LK i KL</option>
-	 <option value="11">CK</option>
-	 <option value="18">Pik, Axe, Luk</option>
-	 <option value="22">Mie</option>
-	 <option value="30">Tar i Kat</option>
-	 <option value="35">Sz (gruby)</option>
-	 <option value="0">Wedlug wsi</option>
-	 </select>
-         <div class="metro" style="display:none;" id="h4">Mozesz liczyæ tempo ataku dla kazdej wioski osobno, lub wszyskich razem
-Oraz <br /><br /> zaznaczyc ze chcesz tylko wioski ktore maja wybrane jednostki <input name="tempo_on" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');" title="Zaznacz ze tylko wioski ktore maja wybrany rodzaj w bazie" /></div>
-	</td>	
-	</tr>
-	<tr>
-	 <td id="siea" onMouseOver="on_KES('h1');" onMouseOut="offKES('h1');">Okolica:<br>
-<b style="cursor: pointer;" onclick="on_KES('map0');iss='a_';on_KES('a_map_go');">Mapa</b>
-
-	 <div id="a_map_go" style="display:none;">
-          <input size="5" name="a_oko" id="a_oko" value="3" type="text" onChange="iss='a_';NOClick('a_');selectAobr(this.form, 'dane_T_agr');">
-          <input size="5" name="a_xy" id="a_xy" value="xxx|yyy" type="text" onChange="iss='a_';NOClick('a_');selectAobr(this.form, 'dane_T_agr');"></div></td>
-	</tr>
-	<tr><td><div class="metro" id="h1" style="display:none;">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
-	<tr>
-	 <td onMouseOver="on_KES('h2');" onMouseOut="offKES('h2');">
-         Pomijaj wioski ju¿ opracowane <br>
-	w minutniku <input name="minutnik" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');">
-	
-	</td>
-	</tr>
-<tr><td><div class="metro" id="h2" style="display:none;">jesli mozliwosc ograniczenia listy o wioski jeszcze nie dodane do minutnika czyli takie które nie maja jeszcze zadan</div></td></tr>
-	<tr>
-	 <td onMouseOver="on_KES('h3');" onMouseOut="offKES('h3');">Full Off'y' <input name="foff" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');">
-<div class="metro" id="h3" style="display:none;">jest mozliwosc ograniczenia listy wiosek o takie które maja pelnego offa
-<br> Top <input size="5" name="top" value="4999" type="text" />
-<br> LK <input size="5" name="lk" value="1500" type="text" />
-<br> Tar <input size="5" name="tar" value="100" type="text" />
-</div>
-</td>
-	</tr>
-
-   </tbody>
-   </table>
-
-   <table class="vis" style="display:none;" align="center" id="Table_agr_wlasna"><CAPTION><a href="javascript:on_KES('Table_agr');offKES('Table_agr_wlasna');">Wlasna lista wiosek Agresora</caption>
-   <tbody onMouseOver="on_KES('ht1');" onMouseOut="offKES('ht1');">
-   <tr><td><textarea name="query_agr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_T_agr');"></textarea></td></tr>
-   <tr><td><div class="metro" id="ht1" style="display:none;">jesli mozliwosc podania wlasnej, gotowej listy wiosek</div></td></tr>
-   </tbody>
-   </table>
-
-  </td>
-  <td>
-    <a href="javascript:test_go('T_agr');">Lista dla Agresora</a>
-    <a href="javascript:test_go('T_ogr');">Lista dla Obroncy</a>
-  </td>
-  <td >
-   <table align="center" style="width: 50%;" id="Table_obr"><CAPTION><a href="javascript:on_KES('Table_obr_wlasna');offKES('Table_obr');">Obroñca / Cel ataku</a></caption>
-   <tbody>
-	<tr valign="top">
-	 <td>
-          Gracz <input name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on_KES('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_T_ogr');"><br>
-          Plemie <input name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on_KES('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_T_ogr');"><br>
-          Wioska <input name="ofiarra" onclick="loading('','kogo_go');gid_kes('o_oko').value='';offKES('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_T_ogr');" value="1"><br>
-         </td>
-         <td><a href="javascript:selectAobr(document.forms[0], 'dane_T_ogr');">OK</a></td>
-	</tr>
-	<tr>
-	 <td id="kogo_go"></td>
-	</tr>
-	<tr>
-	 <td id="sieo" onMouseOver="on_KES('h6');" onMouseOut="offKES('h6');">Okolica:<br>
-         <b style="cursor: pointer;" onclick="on_KES('map0');iss='o_';">Mapa</b>
-	 / <b style="cursor: pointer;" onclick="">Recznie </b><br>
-	 <div id="o_map_go">
-          <input size="3" name="o_oko" id="o_oko" value="3" type="text" onChange="iss='o_';NOClick('o_');selectAobr(this.form, 'dane_T_ogr');">
-          <input size="5" name="o_xy" id="o_xy" value="xxx|yyy" type="text" onChange="iss='o_';NOClick('o_');selectAobr(this.form, 'dane_T_ogr');"></div></td>
-	</tr>
-        <tr><td><div class="metro" style="display:none;" id="h6">Jest mozliwosc ograniczenia listy wiosek o polozenie na mapie</div></td></tr>
-	 <tr><td onMouseOver="on_KES('h7');" onMouseOut="offKES('h7');">
-         Minimalna ilosc punktów
-	<input name="mini_plus" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_ogr');">
-	<div class="metro" id="h7" style="display:none;">jesli mozliwosc ograniczenia listy o wioski ustawiajac minimalna ilosc punktow <br> <input size="3" name="mini" value="5000" type="text" onChange="selectAobr(this.form, 'dane_T_ogr');"> pkt. </div>
-         </td></tr>
-	 <tr><td onMouseOver="on_KES('h8');" onMouseOut="offKES('h8');">
-         Dane Wywiadowcze
-	<input name="zwiad" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_ogr');">
-	<div class="metro" id="h8" style="display:none;">jesli mozliwosc ograniczenia listy  wiosk o takie ktore zostaly rozpoznane zwiadem. 
-    <select name="zwiad_st" onchange="selectAobr(this.form, 'dane_T_ogr');">
-    <option value=""></option>
-    <?PHP for($licz=0; $licz<count($statuss[typ]); $licz++){echo'<option value="'.$licz.'">'.$statuss[typ][$licz].'</option>'; } ?>
-    </select></div>
-         </td></tr>
-
-   </tbody>
-   </table>
-   <table class="vis" style="display:none;" align="center" id="Table_obr_wlasna"><CAPTION><a href="javascript:on_KES('Table_obr');offKES('Table_obr_wlasna');">Wlasna lista wiosek Obroncy</a></caption>
-   <tbody onMouseOver="on_KES('ht2');" onMouseOut="offKES('ht2');">
-   <tr><td><textarea name="query_obr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_T_ogr');"></textarea></td></tr>
-  <tr><td><div class="metro" id="ht2" style="display:none;">jesli mozliwosc podania wlasnej, gotowej listy wiosek</div></td></tr>
-   </tbody>
-   </table>
-
-  </td>
- </tr>
- <tr><th>Wed³ug bazy Masz <b id="d_agr"></b> wiosek, spe³niaj±ce wymagania : <span id='dane_T_agr' ></span> </th><td /><th>Wioski spe³niaj±ce wymagania : <span id='dane_T_ogr' ></span> </th></tr>
-</tbody>
-</table>
-<script language="JavaScript">
-<!--
- selectAobr(document.forms[0], 'd_agr');
-
-//-->
-</script>
+           <td>
+            <a href="javascript:selectAobr(document.forms[0], 'dane_T_agr');">OK</a>
+           </td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>Typ Wioski<br />
+	    <select name="typ_a" onChange="selectAobr(this.form, 'dane_T_agr');">
+	    <option value=""></option>
+<?PHP for($licz=0;$licz<count($rodzaje);$licz++){echo'    <option value="'.$licz.'">'.$rodzaje[$licz].'</option>'.$s;}?>
+	    </select>
+	   </td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+            Najwolniejsze Wojsko<br>(tempo marszu)
+	    <br>
+	    <select name="wojsko" id="wojsko"  onChange="selectAobr(this.form, 'dane_T_agr');">
+            <option value=""></option>
+<?PHP for($licz=0;$licz<count($w_typ);$licz++){echo'    <option value="'.$w_tepm[$licz].'">'.$w_typ[$licz].'</option>'.$s;}?>
+	    </select>
+           <a href="javascript:show('h2');">&#187;</a>
+           </td>
+           <td style="display:none;" id="h2" >
+           wojsko ma byc w wiosce? <input name="tempo_on" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');" title="Zaznacz ze tylko wioski ktore maja wybrany rodzaj w bazie" />
+	   </td>	
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td id="siea">
+	    Okolica /
+	    <b style="cursor: pointer;" onclick="on_KES('map0');iss='a_';on_KES('a_map_go');">Mapa</b>
+	    <div id="a_map_go">
+             <input size="5" name="a_oko" id="a_oko" value="3" type="text" onChange="iss='a_';NOClick('a_');selectAobr(this.form, 'dane_T_agr');">
+             <input size="5" name="a_xy" id="a_xy" value="xxx|yyy" type="text" onChange="iss='a_';NOClick('a_');selectAobr(this.form, 'dane_T_agr');">
+            </div>
+           </td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+            Pomijaj wioski w minutniku
+	    <input name="minutnik" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');">
+	   </td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>Full Off'y' <input name="foff" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_agr');">
+	   <a href="javascript:show('h3');">&#187;</a>
+           </td>
+	   <td id="h3" style="display:none;">
+	     <br> zwiad <input size="5" name="zwi" value="100" type="text" />
+	     <br> Top <input size="5" name="top" value="4999" type="text" />
+	     <br> LK <input size="5" name="lk" value="1500" type="text" />
+	     <br> Tar <input size="5" name="tar" value="100" type="text" />
+	   </td>
+	  </tr>
+	 </tbody>
+	</table>
+	<table class="vis" style="display:none;" align="center" id="Table_agr_wlasna"><CAPTION><a href="javascript:on_KES('Table_agr');offKES('Table_agr_wlasna');">Wlasna lista wiosek Agresora</caption>
+	 <tbody onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	  <tr><td><textarea name="query_agr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_T_agr');"></textarea></td></tr>
+	 </tbody>
+	</table>
+    </td>
+    <td rowspan="2" height="100%">
+	<table height="100%" width="100%">
+	 <tbody>
+	  <tr valign="top" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+           <td>
+	    <? echo $Zapis; ?>
+	   </td>
+          </tr>
+	  <tr style="border: 3px solid;border-color:#000000;" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+           <th style="border-bottom:3px;background-color:#653200;color:#FFC387;margin:10px;width:100%;height:40%;" id="komentarze">
+	   </th>
+          </tr>
+	 </tbody>
+	</table>
+    </td>
+    <td >
+	<table align="center" style="width: 50%;" id="Table_obr">
+	 <CAPTION onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);"><a href="javascript:on_KES('Table_obr_wlasna');offKES('Table_obr');">Obronca / Cel ataku</a></caption>
+	 <tbody>
+	  <tr valign="top" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+	    Gracz <input id="r_g" name="ofiarra" onclick="loading(input_name('o'),'kogo_go');on_KES('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_T_ogr');"><br>
+	    Plemie <input id="r_p" name="ofiarra" onclick="loading(input_plemie(),'kogo_go');on_KES('o_oko');" type="radio" onChange="selectAobr(this.form, 'dane_T_ogr');"><br>
+	   </td>
+	   <td><a href="javascript:selectAobr(document.forms[0], 'dane_T_ogr');">OK</a></td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td id="kogo_go"></td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td id="sieo">Okolica/
+	    <b style="cursor: pointer;" onclick="on_KES('map0');iss='o_';">Mapa</b>
+	    <br>
+	    <div id="o_map_go">
+	     <input size="3" name="o_oko" id="o_oko" value="3" type="text" onChange="iss='o_';NOClick('o_');selectAobr(this.form, 'dane_T_ogr');">
+	     <input size="5" name="o_xy" id="o_xy" value="xxx|yyy" type="text" onChange="iss='o_';NOClick('o_');selectAobr(this.form, 'dane_T_ogr');">
+            </div>
+           </td>
+	  </tr>
+          <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+	    Minimalna ilosc punktow
+	    <input name="mini_plus" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_ogr');">
+	   <a href="javascript:show('h1');">&#187;</a>
+           </td>
+	   <td style="display:none;" id="h1">
+	    <input size="3" name="mini" value="5000" type="text" onChange="selectAobr(this.form, 'dane_T_ogr');"> pkt.
+	   </td>
+	  </tr>
+	  <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	   <td>
+	    Dane Wywiadowcze
+	    <input name="zwiad" value="1" type="checkbox" onChange="selectAobr(this.form, 'dane_T_ogr');">
+	   <a href="javascript:show('h4');">&#187;</a>
+           </td>
+	   <td style="display:none;" id="h4">
+	    <select name="zwiad_st" onchange="selectAobr(this.form, 'dane_T_ogr');">
+	    <option value=""></option>
+<?PHP for($licz=0; $licz<count($statuss[typ]); $licz++){echo'          <option value="'.$licz.'">'.$statuss[typ][$licz].'</option>'.$s; } ?>
+	    </select>
+	   </td>
+	  </tr>
+	 </tbody>
+	</table>
+	<table class="vis" style="display:none;" align="center" id="Table_obr_wlasna"><CAPTION><a href="javascript:on_KES('Table_obr');offKES('Table_obr_wlasna');">Wlasna lista wiosek Obroncy</a></caption>
+	 <tbody onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	  <tr>
+	   <td><textarea name="query_obr" id="query_obr" rows="10" cols="30" onChange="selectAobr(this.form, 'dane_T_ogr');"></textarea></td>
+	  </tr>
+	 </tbody>
+	</table>
+    </td>
+    </tr>
+   <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+    <th class="i" >Wedlug bazy Masz <b id="d_agr" style="color:green;"></b> opisanych wiosek,<br />
+	spelniajace dodatkowe wymagania jest: <span id='dane_T_agr'  style="color:#AF3300;"></span>
+    </th>
+    <th class="i" >Wioski spelniajace wymagania : <span id='dane_T_ogr' style="color:green;" ></span> </th>
+   </tr>
+   <tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+    <td style="text-align:right;"><a href="javascript:test_go('T_agr');">Lista dla Agresora</a></td>
+    <td />
+    <td><a href="javascript:test_go('T_ogr');">Lista dla Obroncy</a></td>
+   </tr>
+  </tbody>
+ </table>
 </form>

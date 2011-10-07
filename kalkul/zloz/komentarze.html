@@ -1,0 +1,143 @@
+<script language="JavaScript">
+<!--
+kom = new Array();
+<? $wi=0;
+	//
+$kom[$wi++]='';
+$kom[$wi++]='Mozesz stworzyc liste wiosek z ktorych wysylasz ataki,<br /> wypelniajac ponizszy formularz,<br /> albo kliknij tu i podaj wlasna gotowa liste wiosek. '; //wlasne lista lub przez warunki											
+$kom[$wi++]='Podaj Gracza ktory bedzie Agresorem<br /><br /> Mozesz w ten sposob policzyc ataki dla innego gracza.';	 // Gracz agresor
+$kom[$wi++]='Jesli opisales typy wiosek i zapisales to w studni,<br /> mozesz ograniczyc liste wiosek o to kryterium.';	 // Typy Wiosek
+$kom[$wi++]='Mozesz liczyc tempo ataku dla kazdej wioski osobno, lub przyjac jedno dla wszystkich.';// Tempo marszu jednostek
+$kom[$wi++]='Mozesz ograniczenia listy wiosek o polozenie na mapie, efekt jest widoczny na mapie ponizej.<br /><br />  Mapy sa pobrane z TWmap i mozesz dodac wlasna do tej listy.';// MAPA
+$kom[$wi++]='Zaznacz to pole jesli zaplanowales juz ataki i zapisales je w minutniku, te wioski nie beda brane pod uwage przy tworzeniu listy.';	 //  MINUTNIK
+$kom[$wi++]='Jesli zalezy Ci by na liscie wiosek znalazly sie tylko wioski, ktore maja wojsko by wyslac atak. Zaznacz ten warunek.';
+$kom[$wi++]='W tym miejscu wklej wlasna liste wiosek.Moze byc skopjowana np z podgladu, Kalkulator sam ja oczysci, najwazniejsze dla niego sa koordynaty wiosek i zobaczysz je jako efekt. musisz tylko sprawdzic czy niema bledow';
+$kom[$wi++]='Zapisz lub Wczytuj wypelniony formularz kalkulatora zlozonego. Ulatwi to zaplanowanie kolejnego ataku, a na pewno skroci i ulatwi Ci prace w przyszlosci. ';	 // LOAD /ZAPISZ
+$kom[$wi++]='W tym miejscu widac opisy pul kalkulatora zlozonego. W razie problemow czy propozycji pisz do 9oKesi. Czekam.';   // Pole Info
+$kom[$wi++]='Mozesz stworzyc Liste wiosek atakowanych wypelniajac ponizszy formularz. Jesli masz wlasna liste kliknij Tutaj by ja wprowadzic. ';
+$kom[$wi++]='Pierwsze Kryterium przy tworzeniu listy celi.<br /> Gracz: wpisz login albo zero "0" jesli chodzi o wioski opuszczone. <br /> Plemie : ten warunek jest by atakowac okolice, a nie konkretnego gracza.'; //wybur celi gracz,plemie, wioska
+$kom[$wi++]='Pole powiazane z warunkiem wyzej. ';
+$kom[$wi++]='Tworzac liste oprzyj ja o polozenie na mapie.Efekt jest na niej widoczny.<br /><br /> Mapy sa pobrane z TWmap i mozesz dodac wlasna do tej listy.';
+// 15
+	 // PKT
+$kom[$wi++]='Zmniejsz ilosc wioski na liscie dodajac minimum punktow ktore musi miec wioska. ';
+$kom[$wi++]='Rozpoznanie zwiadem.<br /> Zaznacz jesli chcesz ograniczyc liste wiosek, pod kontem danych pochodzacych od zwiadu. ';
+$kom[$wi++]='Wklej Tu gotowa liste Celi, kalkulator przetworzy ja sam by oczyscic i zostawic tylko kordynaty. Sprawdz czy sie zgadza.';// Wlasna  Lista Wiosek
+$kom[$wi++]='W tym miejscu widac na jakim etapie jest Twoje tworzenie listy.<br /> Dane sa aktualizowane na biezaco.';
+$kom[$wi++]='Jesli uwazasz ze lista wiosek jest optymalna, mozesz ja pobrac i wyswietlic.';
+$kom[$wi++]='Odslon lub Ukryj mape.<br /> Jesli podales juz okolice i xy wioski to na mapie widac gdzie one sa.<br /> ¯olty - agresor<br />Czarny - obronca/Cel atakow. ';
+$kom[$wi++]='Okolica to Kwadrat ze srodkiem w punkcie xy. Na mapie widac efekt zmiany jego wielkosci.';
+$kom[$wi++]='Mapy pobierane sa z TWmap. Mozna wybrac jedna z propozycji lub dodac do nich wlasna.';
+$kom[$wi++]='Ustawienie Okolicy dla Agresora';
+$kom[$wi++]='Ustawienie Okolicy dla Obroncy';
+$kom[$wi++]='Glowna Mapa.<br /> Widac na niej obszary brane pod uwage przy tworzeniu list Agresora i Celi.<br />Mozna ja zmieniac korzystajac z menu po lewej.';
+$kom[$wi++]='Standardowe dla kalkulatorow jest liczenie atakow na konkretna date. Klikniecie na Przelicz liczy czas dotarcia dla kazdej wioski.';
+$kom[$wi++]='Okno wysylania atakow.<br /> To godziny kiedy mamy czas puscic atak. Przeliczajac kiedy wyslac atak wioski poza oknem sa usuwane.<br /><br /> np. okno 18-22 . nie zaproponuje ci bys wyslal atak o 11. ';
+$kom[$wi++]='Stworzona lista Wiosek z ktorych bedziemy planowali wyslanie ataku. Mozliwosc dodatkowej selekcji i poprawek. np zmiana tepa marszu.';
+$kom[$wi++]='Blokuje liste wiosek obroncy tak ze przesuwaja sie nie zaleznie do calej strony.';
+$kom[$wi++]='Lista wiosek Obroncy. Mozliwosc dodatkowej selekcji, ustalenia ile atakow ma isc na wioske, blokowania i podswietlania wioski w propozycjach. ';
+$kom[$wi++]='';
+
+
+$licz=0;//                ".($licz-1)." 
+foreach($kom as $f) echo " kom[".$licz++."]='$f'".$s;  ?>
+var iss = 'rd_';
+  function komentarze(nr){gid_kes('komentarze').innerHTML = kom[nr];}
+
+function zmien(form) {
+ form.value = (form.value == '1' ? '1' : '0');
+}
+function kes_expod(str)
+{
+ if(str.indexOf("\n")>-1)
+ {str = str.split("\n");
+var s1,s2,s;
+   for (var i=0; i< str.length ; i++ )
+   {
+
+if(str[i].indexOf("\t")>-1)
+      {
+      var estr = str[i].split("\t");
+      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
+      str[i] = estr.join("");
+      }
+if(str[i].indexOf(" ")>-1)
+      {
+      var estr = str[i].split(" ");
+      for (var j=0; j< estr.length ; j++ ){ if(estr[j].indexOf("|")==-1){ estr[j]='';}}
+      str[i] = estr.join("");
+      }
+
+
+  if(!str.indexOf("|")>-1) continue;
+
+      if(str[i].indexOf("(")>-1 && str[i].indexOf(")")>-1)
+      {
+      s = str[i];
+      s1= str[i].lastIndexOf('(');
+      s2= str[i].lastIndexOf(')');
+  str[i]= str[i].substring(s1+1,s2);
+      }
+   }
+str.join(',');
+  }
+return str;
+}
+
+function selectAobr(form,val) {     //selectAobr(this.form, this.checked)
+           var valu, str = '';
+     if(val=='d_agr')    valu='dane=1&COUNT=true';
+else if(val=='dane_T_agr') valu='dane=1&COUNT=true';
+else if(val=='dane_T_ogr') valu='dane=2&COUNT=true';
+else if(val=='T_agr'){ valu='dane=1&COUNT=false';}
+else if(val=='T_ogr'){ valu='dane=2&COUNT=false';}
+else if(val=='zapisz_'){ valu='dane=5&COUNT=true';}
+else if(val=='usun_'){Klik('zapisz_','zlo_zap.php?'+'m=11&'+form);return false;}
+
+
+else return false;
+
+	for(var i=0; i<=form.length-1; i++)
+        {
+if(form.elements[i].type=="checkbox" || form.elements[i].type=="radio")
+   if(! form.elements[i].checked)
+     continue;
+if(form.elements[i].value.indexOf("\n")>-1)
+ var values= form.elements[i].value = kes_expod(form.elements[i].value);
+else
+ var values= form.elements[i].value;
+	str+='&'+ form.elements[i].name +'='+ values;		
+        }
+//alert(str);
+    Klik(val,'zlo_zap.php?'+valu+str)
+}
+	selectAobr(document.forms[0], 'd_agr');
+<? if($_GET!=NULL){
+if($_GET[ogracz]!=NULL) {echo "loading(input_name('o'),'kogo_go');on_KES('o_oko');gid_kes('r_g').checked = true;";}
+if($_GET[plem_op]!=NULL){echo "loading(input_plemie(),'kogo_go');on_KES('o_oko');gid_kes('r_p').checked = true;";}
+if($_GET[o_oko]==NULL){echo "loading('','kogo_go');gid_kes('o_oko').value='';offKES('o_oko');gid_kes('r_w').checked = true;";}?>
+function selectLoad()
+{
+       var namez= new Array();
+       var valuez=new Array();
+<?$jg=0;
+foreach($_GET as $f => $v)
+{
+    echo "
+    namez[$jg]='$f';
+    valuez[$jg]='$v'; "; $jg++;
+} ?>
+	for(var j=0; j<=namez.length-1; j++)
+	 for(var i=0; i<=form.length-1; i++)
+	{
+if(form.elements[i].type=="checkbox")
+{
+   if(namez[j]==form.elements[i].name)	form.elements[i].checked = true;
+}else if(namez[j]==form.elements[i].name){	form.elements[i].value= valuez[j]; }
+	}
+}
+selectLoad();
+selectAobr(document.forms[0], 'dane_T_agr');
+selectAobr(document.forms[0], 'dane_T_ogr');
+<? } ?>//-->
+</script>

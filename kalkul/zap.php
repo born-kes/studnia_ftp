@@ -178,7 +178,8 @@ $Storing .='<o_if2>true</o_if2>'.$s;                                            
    $wynik = @mysql_query($zapytanie);
       while($r = @mysql_fetch_array($wynik))
   {$efekt=true;
-$Storing .='<'.$log.'_id>'.$r[id].'</'.$log.'_id>'.$s;                                                  //$id__1
+$Storing .='<Wsi>'.$s; 
+$Storing .='<x><'.$log.'_id>'.$r[id].'</'.$log.'_id></x>'.$s;                                                  //$id__1
 $Storing .='<'.$log.'_name>"'.plCharset(urldecode($r[name]), UTF8_TO_WIN1250).'"</'.$log.'_name>'.$s;   //$name1
 $Storing .='<'.$log.'_xy>"'.$r[x].'|'.$r[y].'</'.$log.'_xy>'.$s;                                        //$xy__1
 
@@ -198,6 +199,7 @@ $szyb = '"'.$statuss[typ][$r[status]].' '.data_z_bazy($r[data],false).'"';
 /*wolny dla obrona czyli status*/
 }
 $Storing .='<'.$log.'_wolne>'.$szyb.'</'.$log.'_wolne>'.$s;                           //$woln1
+$Storing .='</wsi>'.$s;
 $i4++;
 }@destructor();
 

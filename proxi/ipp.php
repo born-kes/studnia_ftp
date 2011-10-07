@@ -54,8 +54,18 @@ echo'<br />Witaj <b>'.$r[login].'</b><br />
 		</form>';
 $id_player=$r[id];		
   }else{
-  echo'<br /><b>ip</b> nieznane.';
+  echo'<br /><b>ip</b> ';
+
+ destructor();
+  $qest = "SELECT COUNT( * ) AS `Rekordów` FROM `list_proxi` Where ip='$ip' GROUP BY `id` ORDER BY `id`"
+ connection();
+$wynikk = mysql_query($qest);
+  if($rs = @mysql_fetch_array($wynikk))
+ {echo  'nie przypisane go konta';}else{echo   '<s>Nieznane w bazie </s> ';  }
+
+
  destructor(); exit(); } destructor();
+
 echo '<br />';
 
   if($id_player!=NULL)

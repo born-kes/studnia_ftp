@@ -1,4 +1,4 @@
-<html><?PHP
+<?PHP
  include('../connection.php');
  include('css.htm');
  $ec =mktime()-$godzina_zero;
@@ -11,7 +11,7 @@
       GROUP BY t.id
       ORDER BY t.name ASC"; $q=0; //echo $zap;  
 
- ?>
+ ?><html>
 <body>
 <script language="JavaScript">
 <!--

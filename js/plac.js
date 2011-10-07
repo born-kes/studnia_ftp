@@ -222,7 +222,7 @@ function manu(a)
     url = 'rada/minutnik.php'+t; break;
     case 6:
     login = 'Raporty - przeglad nowych raportow w bazie';
-    url = 'rada/raporty.php'; break;
+    url = 'rada/raporty.php?village='+game_data.village.id; break;
     case 7:
     login = 'Strona Studnia';
     url = 'test/'; break;
@@ -415,7 +415,7 @@ function potega(podstawa)
         wynik *= podstawa;
     return wynik;
 }
-function odlicz()
+function odlicz(v)
 { //alert(self.name);
 // alert(men2.src);
 // alert(self.men2.src);
@@ -431,10 +431,30 @@ function odlicz()
      {
        var f=gN(e[i],'td');
        var xy_b = f[2].innerHTML.split("|");
-       var odleglosc=Math.floor(Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1])),1);
-       f[0].innerHTML =odleglosc; //alert(xy_dom +'+'+xy_b+'='+odleglosc);
+        var odleglosc1=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1]))*100000 )/100000;
+       var odleglosc=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1])) );
+if(v==true){  f[0].innerHTML =odleglosc1; gid_kes('czas_'+(i-2)).innerHTML=data_getTime(Math.floor(odleglosc1*50)/100); }
+else   f[0].innerHTML =odleglosc;                                                                    //alert(xy_dom +'+'+xy_b+'='+odleglosc);
        f[5].innerHTML =odleglosc;
       }
+}
+
+function data_getTime(i)
+{
+var minut = 60*1000;var str='';
+var zm= new Date().getTime();
+  if(i!=Math.floor(i)) i=Math.floor(Math.floor(i)*60 + (i-Math.floor(i))*60)*minut  ;
+  else i=i*60*minut;
+var zmienna= new Date(zm+i );
+if(zmienna.getHours()>8)str+='<b class="green">';
+str += 'Dotrze dnia: ';
+str += zmienna.getDate()+"."+
+          zmienna.getMonth()+' '+
+          zmienna.getHours()+':'+
+          zmienna.getMinutes();
+if(zmienna.getHours()>8)str+='</b>';
+return str ;
+
 }
 function dels(s) {s = s.replace(new RegExp("[^\\d|]+","g"),""); return s;}
 
@@ -726,4 +746,49 @@ function kalkulator(czas1,odliczanie)
 
  return str;
 }
+function teh_off()
+{
+var tablica  = gN(gid_kes('techs_table'),'tr');
+    for (var i=0; i< tablica.length ; i++ )
+    {   
+        tablica[i].style.display= 'none';
+        
+    }
+var tablica  = gN(gid_kes('techs_table'),'a');
+    for (var i=0; i< tablica.length ; i++ )
+    {   if(!tablica[i].className.indexOf("brown")>-1)
+        {
+        tablica[i].parentNode.parentNode.style.display= '';
+        }
+    }
+}
+
+if( window.location.href.indexOf("plemiona")!= -1 )
 var village_KES = game_data.village.id;
+
+function opracuj_bb(t)
+{
+    t.style.display='';
+    t.childNodes[1].style.display='none';
+    t.childNodes[2].style.display='none';
+    t.childNodes[4].style.display='none';
+var form= t.childNodes[8].childNodes[3].childNodes[1];
+    form.childNodes[0].style.display='none';
+    form.childNodes[2].style.display='none';
+    form.childNodes[4].style.display='';
+    form.childNodes[6].style.display='';
+    form.childNodes[8].style.display='';
+    form.childNodes[10].style.display='';
+
+var str = "[quote][b]\n";
+var tr= gN(gid_kes('tabela_xy'),'tr');
+
+   for(var j=0;j<tr.length;j++)
+  {
+    if(tr[j].style.display=='')str+="\t [coord]" + gN(tr[j],'td')[2].innerHTML + "[/coord] \n";
+   }
+str += "[/b][/quote]\n";
+ 
+gN(t,'textarea')[0].innerHTML = str;;
+
+}

@@ -7,28 +7,42 @@ function gid(id) {
 //function off(co) { gid(co).style.display = 'none'; }
 function guteka(log,ile,name,xy,wolne)
 { //alert(ile.length);
-   var str='<table class="main"  cellpadding="1" cellspacing="2"><tbody><tr><td /><td style="width:200px;"></td></tr>';
- if(log=='o') str+= '<tr><td colspan="4" id="tr0" style="display:none;">'+name[0]+'</td><td id="cel_0"></td><td id="op_0" style="display:none;"><input type="radio" name="Podswietl" title="Podswietl ta wioske w propoz" onclick="podswietlanie_opcji(0)" /></td>'+
+   var str='<table class="main"  cellpadding="1" cellspacing="2">'+
+   '<tbody><tr><td /><td style="width:200px;"></td><th><a href="javascript:bb_code_go();">bb_code</a></th></tr>';
+ if(log=='o') str+= '<tr>'+
+          '<td colspan="4" id="tr0" style="display:none;">'+name[0]+'</td><td id="cel_0"></td>'+
+          '<td id="op_0" style="display:none;"><input type="radio" name="Podswietl" title="Podswietl ta wioske w propoz" onclick="podswietlanie_opcji(0)" /></td>'+
           '<td>'+
           '<input id="limit_0" type="text" size="2" title="Limit atakow ma wszystkie wioski" onchange="przepisz_all(o_id,\'limit_\',this.value);">'+
           '</td></tr>';
 
       for (var i=1; i< ile.length ; i++ )
-    { var l = ile[i]; if(log=='a') var place =' <a href="http://pl5.plemiona.pl/game.php?village='+l+'&screen=place" title="zobacz plac" target="_blank"><img src="http://pl5.plemiona.pl/graphic/buildings/place.png" /></a>'; else var place ='';
- var class='';  if(log=='o'){ if(!o_if2[i]){ var c = ' checked="tak"';  class=' class="metro"'; }else var c=''; }
+    { var l = ile[i];
+     if(log=='a') var place =' <a href="http://pl5.plemiona.pl/game.php?village='+l+'&screen=place" title="zobacz plac" target="_blank"><img src="http://pl5.plemiona.pl/graphic/buildings/place.png" /></a>';
+      else var place ='';
+ var clasy='';
+    if(log=='o'){ if(!o_if2[i]){ var c = ' checked="tak"';  clasy=' class="metro"'; }else var c=''; }
 
      str+='<tr id="tr'+l+'"><td>'+
-     ' <a href="#" onclick="'+log+'_id['+i+']='+log+'_xy['+i+']='+log+'_name['+i+']=0;'+log+'_if['+i+']=false;offKES(\'tr'+l+'\'); return false;" title="Usun z listy\"><img src="http://www.corporis.pl/images/zamknij.gif" /></a>'+
-     '</td><td'+class+'>'+
+     ' <a href="#" onclick="'+log+'_id['+i+']='+log+'_xy['+i+']='+log+'_name['+i+']=0;'+log+'_if['+i+']=false;offKES(\'tr'+l+'\'); return false;" title="Usun z listy\">'+
+     '<img src="../img/usun.png" /></a>'+
+     '</td><td'+clasy+'>'+
      unescape(unescape(name[i]))+
-     ' <a href="#" onclick="show(\'mob_'+l+'\');Klik(\'mob_'+l+'\',\'../pl/raport2.php?id='+l+'&yes=pies\'); return false;" title="pokarz raport\"><img src="../img/rap.png" /></a>'+place +
+     ' <a href="#" onclick="show(\'mob_'+l+'\');Klik(\'mob_'+l+'\',\'../pl/raport2.php?id='+l+'&yes=pies\'); return false;" title="pokarz raport\">'+
+     '<img src="../img/rap.png" /></a>'+
+     place +
      '<div id="mob_'+l+'" style="width:200px;display:none;" />'+
      '</td><td>'+
      xy[i]+
      '</td>';
   str+= '<th>';
- if(log=='a')str+='<a href="javascript:typs('+i+');" id="img_'+i+'">'+ typ[wolne[i]]+'</a><div id="typ_ataku_form_'+i+'" class="metro" style="display:none;" />'; else str+=wolne[i];
+  
+ if(log=='a')str+='<a href="javascript:typs('+i+');" id="img_'+i+'">'+ typ[wolne[i]]+'</a>'+
+ '<div id="typ_ataku_form_'+i+'" class="metro" style="display:none;" />';
+ else str+=wolne[i];
+ 
     str+='</th><td id="cel_'+l+'"></td>';
+    
 if(log=='o'){ 
    str+= '<td id="op_'+l+'" style="display:none;">'+
           '<input type="radio" onclick="podswietlanie_opcji('+l+')" title="Podswietl ta wioske w propoz" name="Podswietl">'+
@@ -38,11 +52,23 @@ if(log=='o'){
           '<input id="limit_'+i+'" type="text" size="2" title="Limit atakow">'+
           '</td>';
             }
+
     str+='</tr>';
     }
         str+='</tbody></table>';
    gid_kes('T_'+log+'gr_fin').innerHTML=str;
 
+}
+function bb_code_go()
+{
+var str = "[quote][b]\n"; 
+       for (var i=1; i< o_xy.length ; i++ )
+       {
+if(o_if[i])str+="\t [coord]" + o_xy[i] + "[/coord] \n";
+       }
+str += "[/b][/quote]\n";
+on_KES('Table_obr_wlasna');
+gid_kes('query_obr').value= str;
 }
 
 function ua(){   for (var i=0; i< o_id.length ; i++ ){ if( o_if2[i]){  gid_kes('tr'+o_id[i]).style.display='none';}else{blokowanie_opcji(o_id[i]); gid_kes('tr'+o_id[i]).style.display='';}   gid_kes('op_'+o_id[i]).style.display=''; } }

@@ -12,10 +12,13 @@
 <!--
 .metro {position:absolute; width: 200px;z-index:6;border-width:2px; border-style: solid; border-color:#804000; background-color:#F1EBDD;}
 .reds {background-color: red; color: rgb(250, 250, 250); }
+.blokada {position:fixed;  right: 10px; bottom:0px; height: 400px; overflow:auto;}
+th .i {text-align:center;}
 -->
 </style>
            <script type="text/javascript">
 var login_user =new String ('<?PHP echo $_SESSION['zalogowany']; ?>');
+
 
 function input_plemie() {
                         	var str_buffer =  new String (
@@ -34,7 +37,8 @@ function input_typ(a) {
        return str_buffer;
 }
 
-<?PHP   $i=1;
+<?PHP
+   $i=1;
 
 $moje_id = $_SESSION['id'];
       $option ='\'  <select name="plem_op" OnChange="selecturl(this)" id="plem_op">\'+
@@ -53,8 +57,10 @@ $moje_id = $_SESSION['id'];
   ';
 
   connection();
-// stary kod    $wynik = @mysql_query("SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` Where user_id= $moje_id OR user_id is NULL ORDER BY `ulubione` DESC");
-    $wynik = @mysql_query("SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` ORDER BY `ulubione` DESC");
+// stary kod 
+ $zak ="SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` Where user_id= $moje_id OR user_id is NULL ORDER BY `ulubione` DESC";
+// tymczasowy $zak = "SELECT `hex`, `nazwa`,x,y,zoom,ulubione FROM `hex_kolor` ORDER BY `ulubione` DESC"
+    $wynik = @mysql_query($zak);
       while($r = mysql_fetch_array($wynik))
  {
       $x.='  s_x['.$i.']='.$r[x].';
@@ -78,41 +84,63 @@ if($r[ulubione]>0)$ulubiny=' selected="'.$r[ulubione].'" ';else $ulubiny='';
                         	var str_buffer =  new String (".$option.");
        return str_buffer;
 }";
+
+                   # zapisz load
+  connection(); $z=0; $Zapis .= '<BR>';
+    $wynik = @mysql_query("SELECT `id` , `opis` FROM `ws_opis` Where id_user = $moje_id");
+      while($r = mysql_fetch_array($wynik))
+{
+  if($r[1]!=$url)
+  {$url=$r[1];
+   $Zapis .= ' <a href="zlozony.php?'.$url.'" >LOAD '.$z.' </a> ';
+   $Zapis .= ' <input type="submit" value="Usun '.$z++.'" onclick="selectAobr(\''.$url.'\', \'usun_\');return false;" /> <br>';
+  }
+}
+ $Zapis .= ' <input type="submit" value="Zapisz '.$z++.'" onclick="selectAobr(document.forms[0], \'zapisz_\');return false;" /><br><b id="zapisz_" /> ';
+
  ?>
+function mag(){window.open('http://pl5.twmaps.org/'+s_hex[gid_kes('plem_op').value], 'klon1', ',width=800,height=1000,left=0,top=0,resizable=yes,scrollbars=1');}
 var vv=false;
 test_powiazania();
 </script>
 </head>
   <body bgcolor="#ffffff" onload="registerEvents();">
-<div style="position:relative ; z-index:3;" id="go1"><?PHP include('zlozony.html'); ?></div>
-<div onclick="show('map0');" align="right" style="z-index:2;">MAPA <img src="http://www.corporis.pl/images/zamknij.gif"></div>
-<div id="map0" style="display:none;">
+<div style="position:relative ; z-index:1;" id="go1"><?PHP include('zlozony.html'); ?></div>
+<div onclick="show('map0');" align="right" style="z-index:2;" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+ MAPA <img src="../img/usun.png"></div>
+<div id="map0" style="display:none;" >
 <div style="position:absolute; z-index:2;" id="map2">
 <table cellpadding="0" cellspacing="0"><tr><td>
      <table cellpadding="0" cellspacing="0">
-<tr><td align="center" nowrap style="background-color: maroon; border-style: dotted;">OKOLICA</td></tr>
-<tr><td nowrap id="oko_map" style="background-color: maroon; border-style: dotted;"></td></tr>
-     </table></td><td>
+     <tbody onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+<tr><td align="center" nowrap style="background-color: maroon; border-style: dotted;">
+ OKOLICA</td></tr>
+<tr><td nowrap id="oko_map" style="background-color: maroon; border-style: dotted;" ></td></tr>
+     </tbody></table></td><td>
      <table cellpadding="0" cellspacing="0">
-<tr><td align="center" nowrap style="background-color: maroon; border-style: dotted;">Mapa</td></tr>
-<tr><td nowrap id="ini_map" style="background-color: maroon; border-style: dotted;"></td></tr>
+     <tbody onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+<tr><td align="center" nowrap style="background-color: maroon; border-style: dotted;color:white;">Mapa do okreslenia okolicy</td></tr>
+<tr><td nowrap id="ini_map" style="background-color: maroon; border-style: dotted;"></td><td><a href="javascript:javascript:mag();">&#187; &#187;</a></td></tr>
+</tbody>
      </table></td></tr>     </table>
 
 </div>
- <div style="position:relative ; z-index:1;width: 95%;" id="map1">
+ <div style="position:relative ; z-index:3;width: 95%;" id="map1">
 
 
 <table class="map" align="center">
     <tbody>
      <tr>
       <td>
-       <b style="cursor: pointer;" onclick="iss='a_';on_KES('a_map_go');">Agresor</b>
+       <b style="cursor: pointer;" onclick="iss='a_';on_KES('a_map_go');" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+       Agresor</b>
        <input type="text" name="rd_xy" id="rd_xy" value="" />
-       <b style="cursor: pointer;" onclick="iss='o_';on_KES('o_map_go');">Obronca</b>
+       <b style="cursor: pointer;" onclick="iss='o_';on_KES('o_map_go');" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+       Obronca</b>
       </td>
      </tr>
     <tr>
-	<td>
+	<td onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
 	    <img id="map" src="http://pl5.twmaps.org/showmap.php?id=92a38af8a7dea8a218ade9b480f5c88a" alt="{map}">
 	</td>
     </tr>
@@ -147,36 +175,39 @@ test_powiazania();
      <td id="T_fin2" align="center" style="display: none;" >
    <table align="center" class="main">
    <tbody>
-	<tr>
-	<td>Godzina Ataku</td>
-	</tr>
-	<tr>
-	<td><input name="czas1" id="czas1" value="" size="14" type="text" /><a href="javascript:show_calendar('document.ajax_t.czas1', document.ajax_t.czas1.value);"><img src="../img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
+	<tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	<td>Godzina Ataku<br />
+        <input name="czas1" id="czas1" value="" size="14" type="text" /><a href="javascript:show_calendar('document.ajax_t.czas1', document.ajax_t.czas1.value);"><img src="../img/cal.gif" alt="Clicknij Tu by ustaliæ Datê" border="0" height="16" width="16"></a></td>
 	<td id="T_fin1" />
 	</tr>
-	<tr>
-	<td onMouseOver="on_KES('h5');" onMouseOut="offKES('h5');">Okno wysylane atakow
+	<tr onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+	<td>Okno wysylane atakow
 	<input name="okno_atak" value="true" onclick="show('czas_start');" type="checkbox" id="czas1_c" />
-
-	</td>
-	</tr>
-	<tr>
-	<td><span id="czas_start" style="display:none;">od <input size="5" name="od_h" id="czas1_od" value="16" type="text" /><br /> do <input size="5" name="do_h" id="czas1_do" value="21" type="text" /></span></td>
+	<br />
+        <span id="czas_start" style="display:none;">od <input size="5" name="od_h" id="czas1_od" value="16" type="text" /><br /> do <input size="5" name="do_h" id="czas1_do" value="21" type="text" /></span></td>
         </tr>
-	<tr><td><div class="metro" style="display:none;" id="h5">Jest mozliwosc ograniczenia listy wiosek w propozycjach tak bys mogl stworzyc liste atakow w godzinach kiedy faktycznie masz czas je wyslac</div></td></tr>
    </tbody>
    </table>
      </td>
      <td id="T_fin3" align="center" /></tr>
-    <tr valign="top"><td id="T_agr" /><td id="T_ogr" /></tr>
-    <tr valign="top"><td id="T_agr_fin" />
-     <td>
-      <div style="position:fixed;  right: 10px; bottom:0px; height: 400px; overflow:auto;" id="T_ogr_fin" ></div>
+    <tr valign="top">
+     <td id="T_agr" />
+     <td id="T_ogr" />
+     </tr>
+    <tr valign="top">
+    <td id="T_agr_fin" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);" />
+     <td onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+     <img src="http://www.frombork.pl/images/ikony/22x22/_googleicons_-_spaces/8000GI2-pineska.png" onclick="gid_kes('T_ogr_fin').className = (gid_kes('T_ogr_fin').className == 'blokada' ? '' : 'blokada');" />
+     </td>
+     <td id="T_ogr_fin" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);" />
      </td>
     </tr>
    </tbody>
   </table>
  </form>
 </div>
+ <?
+include('zloz/komentarze.html');
+?>
 </body>
   </html>

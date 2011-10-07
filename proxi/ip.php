@@ -27,35 +27,43 @@ $ip = IP_prawdziwe();
 $ip_php.= IP_prawdziwe();
 
 //polaczenie z baza            (dirname(dirname(__FILE__)) . '/
- connection();
+
  //zapytanie o dane przypisane do ip
   
  $zap="SELECT u.id,u.name AS login,u.haslo2 AS haslo FROM `list_user` u , `list_proxi` p Where u.nr_proxi=p.id AND p.ip='$ip';";
-
+ connection();
 $wynik = mysql_query($zap);
  //zakonczenie poloczenia z baza
 
  //efekt
   if($r = @mysql_fetch_array($wynik))
- {
+ { $warunek = true;
 session_start();
 if(!isSet($_SESSION['zalogowany'])){$_SESSION['zalogowany']=$r[login];}
-$ip_php.='<br />Witaj <b>'.$r[login].'</b><br />
+$ip_php.='<br />Witaj <b>'.urldecode($r[login]).'</b><br />
 		<form action="http://www.plemiona.pl/index.php?action=login" method="post" target="sec">
-		<input type="hidden" name="user" value="'.$r[login].'" >
+		<input type="hidden" name="user" value="'.urldecode($r[login]).'" >
 		<input type="hidden" name="clear" value="true" >
-                <input type="hidden" name="password" value="'.$r[haslo].'">
+                <input type="hidden" name="password" value="'.urldecode($r[haslo]).'">
 		<input type="hidden" name="server" value="pl5">
 		<input value="ZALOGUJ SIE" type="submit">
 		<input type="hidden" name="cookie" value="true" >
 		</form>';
 $id_player=$r[id];		
-  }else{
-  $ip_php.='<br /><b>ip</b> nieznane.';
- destructor();  } destructor();
+  }else{  $warunek = false;
+  $ip_php.='<br /><b>ip</b> ';
+ destructor();  
+  $qest = "SELECT COUNT( * ) AS `Rekordów` FROM `list_proxi` Where ip='$ip' GROUP BY `id` ORDER BY `id`";
+ connection();
+$wynik = mysql_query($qest);
+  if($r = @mysql_fetch_array($wynik))
+ {$ip_php.= ' <SPAN style="color:green;">nie przypisane go konta</SPAN>';}else{$ip_php.= ' <h1 style="color:red;">Nieznane w bazie </h1> ';}
+} destructor();
 $ip_php.= '<br />';
 
-  if($id_player!=NULL)
+
+
+  if($id_player!=NULL && $warunek)
 {
 $ile = "SELECT COUNT( * ) AS `Rekordów` , `player` 
 FROM `ws_all`

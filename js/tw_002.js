@@ -434,7 +434,7 @@ function img_go(name,img_x,img_y)
 	mapol_img.style.top=img_y+zoom+check()+"px";
 	mapol_img.style.width=zoom+(check()*2)+"px";
 	mapol_img.style.display="block";
-
+ if(img_x>1500 || img_y>1500){MapMouseOut_kes(name);}
 }
 function HideMouseMarker()             // ukrywanie obramowki kursora
 {
@@ -456,7 +456,13 @@ function MapMouseOut(e)        //ukrywa kursor po opuszczeniu mapy
     getElement("rd_bottom").style.left="-1000px";
     getElement("rd_left").style.left="-1000px";
 }
-
+function MapMouseOut_kes(e)        //ukrywa kursor po opuszczeniu mapy
+{
+    getElement(e+"top").style.left="-1000px";
+    getElement(e+"right").style.left="-1000px";
+    getElement(e+"bottom").style.left="-1000px";
+    getElement(e+"left").style.left="-1000px";
+}
 function registerEvents()        //ustalanie na starcie procesow mapy
 {
     var map = getElement('map');// KES modyfikacja

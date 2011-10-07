@@ -1,7 +1,7 @@
-<head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<? include('../connection.php');sesio_id();$moje_id = $_SESSION['id']; ?><head>     <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
            <link rel="stylesheet" type="text/css" href="stamm.css">
 <?PHP   $i=1; $komu=' ';
-  include('../connection.php');sesio_id();$moje_id = $_SESSION['id'];
+  
     if($_POST!=null)
     {
   //    Insert Into `hex_kolor` Values('','$opis[0]','$id_zalogowany','$opis[3]','$w_atak','$w_obro'

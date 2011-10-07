@@ -5,7 +5,7 @@ a:hover { font-weight:bold; color: #0082BE; text-decoration:none; }
 td		{ font-size:9pt; }
 .hidden { color:#DED3B9; }
 table.main { border-width:2px; border-style: solid; border-color:#804000; background-color:#F1EBDD; background-image:url(graphic/background/main.jpg)}
-table.main th { background-color:#bbccff; text-align:right; } 
+table.main th { background-color:#bbccff; text-align:center; } 
 table.news { background-color:#F1EBDD; } 
 .in_border { background-color:#F1EBDD; text-align:left;}
 

@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php $s='
+'; session_start();
 //if(!isSet($_COOKIE['wtyk'])){
 if(!isSet($_SESSION['zalogowany'])){
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
@@ -215,7 +215,7 @@ default:	return 'in';	// inne
 break;             }
 }
 // dla Proxi
- $funkcja = Array('Niewybrana','Dostêp Go¶cinny','Rozbudowa','Handlarz','Pluskwa','Rozbiurka', 'Twórca nowych wiosek');
+ $funkcja = Array('Niewybrana','Dostep Goscinny','Rozbudowa','Handlarz','Pluskwa','Rozbiorka', 'Tworca nowych wiosek');
 function zap($a,$b,$c)
 { $zap = "SELECT ".$a." FROM ".$b." WHERE ".$c.";";
   connection();

@@ -48,7 +48,7 @@ echo '<br /><b> Posiadaj± prawa Radnego do studni. </b><br />';
 
   while($f = @mysql_fetch_array($wynik))
 {
-echo $f[name].'<br />';
+echo urldecode($f[name]).'<br />';
 }    destructor();
 ?>
 </body>

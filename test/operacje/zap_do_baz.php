@@ -1,11 +1,11 @@
-<html><head>
+<? include('../connection.php'); ?><html><head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" href="stamm.css">
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head>
 <body>
 <?php 
-  include('../connection.php');
+
 $and=" AND ";// echo data_z_bazy(75724722);
 
 if($_xy!=NULL)

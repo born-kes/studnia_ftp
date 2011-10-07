@@ -69,20 +69,20 @@ if(!test){cf();}
 				if (dt_current_day.getDate() == dt_datetime.getDate() &&
 					dt_current_day.getMonth() == dt_datetime.getMonth())
 				{	// print current date
-					var td = 'td';var class=' class="red"';
+					var td = 'td'; var clas=' class="red"';
 				}else if (dt_current_day.getDay() == 0 || dt_current_day.getDay() == 6)
 				{	// weekend days
-					var td = 'th';var class='';
+					var td = 'th';var clas='';
 				}else
 				{	// print working days of current month
-					var td = 'td';var class='';
+					var td = 'td';var clas='';
 }
 				if (dt_current_day.getMonth() == dt_datetime.getMonth())
 				{var a='a';	// print days of current month
-				}else{var a='b'; var class='';
+				}else{var a='b'; var clas='';
 					// print days of other months
 				}
-					str_buffer += "	<"+td +class+" align=\"right\">"+
+					str_buffer += "	<"+td +clas+" align=\"right\">"+
 				"<"+a+" href=\"\" onclick=\"aut_picker("+str_target+",'"+dt2dtstr(dt_current_day)+"'); return false; \">"+
 				dt_current_day.getDate()+"</"+a+"></"+td +">\n";
 				dt_current_day.setDate(dt_current_day.getDate()+1);
