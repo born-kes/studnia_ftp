@@ -5,55 +5,57 @@
  include_once('../connection.php');
 $czas   = mktime();
 $wczasy = mktime()-$godzina_zero;
+$j = 0;
 $i = 0;
-if($_GET[pas]==1){ echo 'I';
-$trach=" UPDATE `ws_all` SET name='$wczasy' WHERE id='0';";
+if($_GET[pas]==1){ $word[$j++]=(" UPDATE `ws_all` SET name='$wczasy' WHERE id='0';");
 
- $zi ="SELECT `id` , `name` , `player` , `points` FROM `ws_all` ORDER BY `id` ASC";
+ $zi ="SELECT `id` , `name` , `player` , `points` FROM `ws_all` Where id!=0 ORDER BY `id` ASC";
+
+ $id_user;
+
  connection();
-      $wynik = @mysql_query($zi); $row = $zaptr = NULL; echo 'I';
+      $wynik = @mysql_query($zi); $row = NULL;
 
  while( $r = @mysql_fetch_array($wynik) )
+  {
+ $row[$r[id]][1]=$r[1];  //'name'
+ $row[$r[id]][2]=$r[2];  //'player'
+ $row[$r[id]][3]=$r[3];  //'points'
+  } destructor();
+  $lines = gzfile('http://pl5.plemiona.pl/map/village.txt.gz');
+ foreach($lines as $line)
  {
-$row[$r[id]][1]=$r[1];  //'name'
-$row[$r[id]][2]=$r[2];  //'player'
-$row[$r[id]][3]=$r[3];  //'points'
- } destructor();echo 'I';
-$lines = gzfile('http://pl5.plemiona.pl/map/village.txt.gz'); echo 'I';
-foreach($lines as $line)
-{
     list($id, $name, $x, $y, $player, $points, $rank) = explode(',', $line);       $name = addslashes($name);
 	if(intval($row[$id][2])!=intval($player)){ $delete .= $w.$id;    if($w==NULL) $w=' , ';}
 
 	if( plCharset($row[$id][1])!=plCharset($name) || intval($row[$id][2])!=intval($player) )
-		$zaptr[$i++]=" UPDATE `ws_all` SET name='$name', player='$player', points='$points' WHERE id='$id';
-                ";
-else	if(intval($row[$id][3])!=intval($points))
-		$zaptr[$i++]=" UPDATE `ws_all` SET points='$points' WHERE id='$id';
-                ";
+		$word[$j++]=(" UPDATE `ws_all` SET name='$name', player='$player', points='$points' WHERE id='$id';");
+ else	if(intval($row[$id][3])!=intval($points))
+		$word[$j++]=(" UPDATE `ws_all` SET points='$points' WHERE id='$id';");
+ }
+ if($w==' , ')
+ {
+        $word[$j++]=("DELETE FROM `ws_raport` WHERE `id` IN ($delete);\n OPTIMIZE TABLE `ws_raport` ;");
+        $word[$j++]=("DELETE FROM `ws_mobile` WHERE `id` IN ($delete);\n OPTIMIZE TABLE `ws_mobile` ;");
 
-/*	if($zaptr!=NULL)
-	{ //echo (mktime()-$czas).'<br>'.$zaptr.'<br>';
-	 connection();
-	      if( @mysql_query($zaptr) ){ $i++; }
-	 destructor(); $zaptr=NULL;
-	}*/
-}echo 'I';
-if($w==' , ')
-{
-   $zap1="DELETE FROM `ws_raport` WHERE `id` IN ($delete);";
-   $zap2="DELETE FROM `ws_mobile` WHERE `id` IN ($delete);";
+ }
+ echo 'Wykonane w '.(mktime()-$czas).' sek. Zmieniono '.$i.' wpisów.<br>';
 
-}echo 'I';
+$zaptr = $word;
+
+  $hr=0; $hu=0;	 connection();
+
+ foreach($zaptr as $line)
+ {$line=trim($line);
+   if($line!='')
+   {
+ 				if(! @mysql_query($line) )
+      { $huw.= $line."\n";$hu++; echo mysql_query($line).'<br>'; }else{$hr++;};	
+   }
+ } destructor();     echo '<br>Koniec ';
+  echo '<br>Wykonane w '.(mktime()-$czas).' sek. => '.$hr.' Nie udalo siê z '.$hu;
 
 
-if($i>0){ echo 'Wykonane w '.(mktime()-$czas).' sek. Zmieniono '.$i.' wpisów.'; connection(); @mysql_query($trach); destructor();}else{ echo 'Nie Wykonane, moze to dlatego ze niema zmian. ';}
-if($w!=NULL)
-{echo 'I ';
- connection();
-      if( @mysql_query($zap1) && @mysql_query($zap2)) echo ' Usuniêto nieaktualne raporty '; else echo 'Niema wiosek które zmieni³y w³a¶ciciela';
- destructor();
-}
  }else if($_GET[pas]==2){
 $trach="UPDATE `list_user` SET data=$wczasy, gra=1 where id=0; ";
 

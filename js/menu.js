@@ -117,6 +117,18 @@ function ga()
  ua();
  ile_gdzie_poszlo();
 }
+function ile_gdzie_poszlo_juz(this1,id)
+{
+   function test_o_limit(k,s){if(gid_kes('limit_'+s).value !='' && gid_kes('limit_'+s).value<=k && !gid_kes('bloka_'+o_id[s]).checked )return true; else return false;  }
+   if( test_o_limit(this1,id) )
+    {gid_kes('bloka_'+o_id[id]).checked=true; blokowanie_opcji(o_id[id]);on_KES("tr"+o_id[id] ); }
+
+var k = gid_kes().innerHTML.split(" ")[1]*1;
+ if(k[s]==0 && o_if2[s] && !gid_kes('bloka_'+o_id[id]).checked ){offKES("tr"+o_id[id] );}else{on_KES("tr"+o_id[id] );r++;}
+ loading('x '+ k+1 ,"cel_"+o_id[id] );
+
+if(vv){vv=true;test_powiazania();}
+}
 function ile_gdzie_poszlo()
 { 	var k = Array(); var r=0;
         var form = document.forms['ajax_t'];

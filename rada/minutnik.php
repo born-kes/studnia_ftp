@@ -91,7 +91,7 @@ if($mktt>0){      echo ' <span class="timer"> '.$pdata.' </span> ';
 }else{ echo ' <b><span class="warn" >Odliczanie skonczone</span></b> ';}
 
 echo ' </th><td width="1%"> </td><td width="63%"> <a href="javascript:popup_scroll(\'minutnik_menu.php?id='.$r[id].'\',250,250)">'.urldecode($r[3]).'</a> </td><td width="1%"></td>';
- if($r[4]!=0 && $r[5]!=0&&$r[4]!=NULL && $r[5]!=NULL){echo '<td><a href="http://pl5.plemiona.pl/game.php?'.$t.'village='.$r[4].'&amp;screen=place&amp;mode=command&amp;target='.$r[5].'" target="_parent/ramka">wyslij wojska</a></td>'; }else{echo '<td></td>';}
+ if($r[4]!=0 && $r[5]!=0&&$r[4]!=NULL && $r[5]!=NULL){echo '<td><a href="http://pl5.plemiona.pl/game.php?'.$t.'village='.$r[4].'&amp;screen=place&amp;mode=command&amp;target='.$r[5].'&ukryjmenu=tak" target="inramka">wyslij wojska</a></td>'; }else{echo '<td></td>';}
 echo'<td width="6%"> <a href="?'.$t.'usun='.$r[0].'&str='.$_GET[str].'"> USUN </a></td></tr>
 <tr/>';
 }                    destructor();
@@ -103,3 +103,5 @@ echo'<td width="6%"> <a href="?'.$t.'usun='.$r[0].'&str='.$_GET[str].'"> USUN </
 Zegarek: <b><span id="serverTime" class="warn"><?PHP echo date("G:i:s"); ?></span></b></td>
 </tr></tbody></table>
 <script type="text/javascript">startTimer();</script>
+
+<iframe style="border: 0px none;" name="inramka" id="inramka" height="350" width="100%"></iframe>

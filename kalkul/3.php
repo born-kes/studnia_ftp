@@ -1,7 +1,8 @@
 <?php    include_once(dirname(dirname(__FILE__)) . '/connection.php'); sesio_id();?>
 <html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
 <link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
+<? //script src="../js/jquery1.7.mini.js" type="text/javascript"></script UTF-8 ?>
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head>
 <body><br /><form enctype="multipart/form-data" action="4.php" method="post">

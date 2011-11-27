@@ -1,4 +1,4 @@
-<?PHP include_once('../serwer.php');
+<?PHP include_once('../serwer.php'); session_start();
 
     if($_GET[p]!==NULL)
 {$pass=$_GET[p];}
@@ -38,7 +38,7 @@ $wynik = mysql_query($zap);
  //efekt
   if($r = @mysql_fetch_array($wynik))
  { $warunek = true;
-session_start();
+//session_start();
 if(!isSet($_SESSION['zalogowany'])){$_SESSION['zalogowany']=$r[login];}
 $ip_php.='<br />Witaj <b>'.urldecode($r[login]).'</b><br />
 		<form action="http://www.plemiona.pl/index.php?action=login" method="post" target="sec">

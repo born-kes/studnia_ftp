@@ -48,7 +48,7 @@ function kukocIsNumeric($txt) {
   if($_GET[id]!=NULL){ $zap =$_GET[id];}else
   if($_GET[xy]!=NULL){
        $xy = explode("|",$_GET['xy']);
-          $zap ="SELECT id FROM `ws_all` WHERE x='".$xy[0]."' AND y='".$xy[1]."';";
+          $zap ="SELECT id FROM `ws_all` WHERE x='".$xy[0]."' AND y='".$xy[1]."' limit 1; ";
 connection();
 $wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}
   destructor();
@@ -57,7 +57,7 @@ $wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}
   $zapytanie =" SELECT id AS id, mur,data,
 pik,mie,axe,luk,zw,lk,kl,ck,tar,kat,ry,sz, status,d_mur
   FROM `ws_raport`
-  WHERE id=".$zap;
+  WHERE id=".$zap.' limit 1';
 // echo $zapytanie;
 connection();
 $wynik = @mysql_query($zapytanie);
@@ -106,7 +106,7 @@ destructor();
 $zapytanie =" SELECT id, data,
 pik,mie,axe,luk,zw,lk,kl,ck,tar,kat,ry,sz, typ
   FROM `ws_mobile`
-  WHERE id=".$zap;
+  WHERE id=".$zap.' limit 1';
  // echo $zapytanie;
 connection();
 $wynik = @mysql_query($zapytanie);

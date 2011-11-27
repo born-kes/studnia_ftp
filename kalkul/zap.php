@@ -180,7 +180,7 @@ $Storing .='<o_if2>true</o_if2>'.$s;                                            
   {$efekt=true;
 $Storing .='<Wsi>'.$s; 
 $Storing .='<x><'.$log.'_id>'.$r[id].'</'.$log.'_id></x>'.$s;                                                  //$id__1
-$Storing .='<'.$log.'_name>"'.plCharset(urldecode($r[name]), UTF8_TO_WIN1250).'"</'.$log.'_name>'.$s;   //$name1
+$Storing .='<'.$log.'_name>"'.plCharset(urldecode($r[name]), ISO88592_TO_WIN1250).'"</'.$log.'_name>'.$s;   //$name1
 $Storing .='<'.$log.'_xy>"'.$r[x].'|'.$r[y].'</'.$log.'_xy>'.$s;                                        //$xy__1
 
 $Storing .='<'.$log.'_pt>'.$r[points].'</'.$log.'_pt>'.$s;                                                               //$pkt_1

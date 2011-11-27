@@ -1,4 +1,5 @@
-<?php  $wi=9; if(!$s=$_GET[s]){$s=111;}  $sz = $wi*$s;
+<?php include_once(dirname(dirname(__FILE__)) . '/connection.php');
+  $wi=9; if(!$s=$_GET[s]){$s=111;}  $sz = $wi*$s;
 session_start();
 if(!isSet($_SESSION['zalogowany'])){
 $dest=ImageCreate(200,15);
@@ -12,7 +13,6 @@ imagegif($dest);
 imagedestroy($dest);
 exit();
 }
- include_once(dirname(dirname(__FILE__)) . '/connection.php');
 
 if(isSet($_SESSION['id'])){ $moje_id= $_SESSION['id'];}
 else{ $user=$_SESSION['zalogowany'];

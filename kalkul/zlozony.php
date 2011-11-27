@@ -1,6 +1,6 @@
 <?PHP include('../connection.php'); sesio_id();?><html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
 <link rel="stylesheet" type="text/css" href="../stamm1201718544.css">
 
            <script src="../js/plac.js?2b" type="text/javascript"></script>
@@ -106,10 +106,10 @@ test_powiazania();
 </head>
   <body bgcolor="#ffffff" onload="registerEvents();">
 <div style="position:relative ; z-index:1;" id="go1"><?PHP include('zlozony.html'); ?></div>
-<div onclick="show('map0');" align="right" style="z-index:2;" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
+<div onclick="show('map0');" align="right" style="z-index:4;" onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">
  MAPA <img src="../img/usun.png"></div>
 <div id="map0" style="display:none;" >
-<div style="position:absolute; z-index:2;" id="map2">
+<div style="position:absolute; z-index:4;" id="map2">
 <table cellpadding="0" cellspacing="0"><tr><td>
      <table cellpadding="0" cellspacing="0">
      <tbody onMouseOver="komentarze(<?echo$ww++; ?>);" onMouseOut="komentarze(0);">

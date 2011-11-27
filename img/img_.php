@@ -7,7 +7,7 @@ FROM ws_all w
 LEFT JOIN ws_raport wr ON wr.id = w.id
 LEFT JOIN ws_mobile wm ON wm.id = w.id
 LEFT JOIN list_ataki a ON w.id = a.cel AND a.godz>$ec
-  WHERE w.id='$id' ORDER BY `a`.`godz` ASC ;";//LIMIT 1;";
+  WHERE w.id='$id' ORDER BY `a`.`godz` ASC LIMIT 1;";
 //echo $zapytanie;
 connection();
 $wynik = @mysql_query($zapytanie);

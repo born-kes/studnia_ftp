@@ -219,7 +219,7 @@ function manu(a)
     url = 'rada/zona.php'; break;
     case 5:
     login = 'Minutnik - odliczanie czasu';
-    url = 'rada/minutnik.php'+t; break;
+    url = 'rada/minutnik.php?'+t; break;
     case 6:
     login = 'Raporty - przeglad nowych raportow w bazie';
     url = 'rada/raporty.php?village='+game_data.village.id; break;
@@ -344,6 +344,7 @@ men2.document.forms["units"].elements["y"].value = y;//parent.
 }
 function export_xy_KES(x, y,i) {
 selectTargetKES(x, y);
+gid_kes("ilcz_"+i).textContent = Math.floor(gid_kes("ilcz_"+i).textContent)+1;
 if( gid_kes("auto_del").checked ) onKES(i);
 }
 
@@ -422,37 +423,54 @@ function odlicz(v)
 // alert(self.name);
 
 
- var xy_dom = top.xy_dom.split("|");
+if(v!=true)v=false;
 
-   var all = document.evaluate('//table[@class="vis"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-   var table = all.snapshotItem(0);
+ var xy_dom = top.xy_dom.split("|");
+ var marsz= (top.czas*60);
+
+
+ //  var all = document.evaluate('//table[@class="vis"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
+   var table = gid_kes('menvis');
    var e=gN(table,'tr');
      for (var i=2; i< e.length ; i++ )
-     {
+     { e.id
        var f=gN(e[i],'td');
        var xy_b = f[2].innerHTML.split("|");
         var odleglosc1=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1]))*100000 )/100000;
        var odleglosc=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1])) );
-if(v==true){  f[0].innerHTML =odleglosc1; gid_kes('czas_'+(i-2)).innerHTML=data_getTime(Math.floor(odleglosc1*50)/100); }
+   if(v==true)
+    { 
+
+     f[0].innerHTML =odleglosc1;// alert('czas_'+(i-2));
+     gid_kes('czas_'+e[i].id.split("_")[1] ).innerHTML=data_getTime(Math.floor(odleglosc1*marsz)); 
+     }
 else   f[0].innerHTML =odleglosc;                                                                    //alert(xy_dom +'+'+xy_b+'='+odleglosc);
-       f[5].innerHTML =odleglosc;
-      }
+     }
 }
 
 function data_getTime(i)
-{
-var minut = 60*1000;var str='';
+{ var minut= 1000;
+var str='';
 var zm= new Date().getTime();
+var zmD=new Date();
   if(i!=Math.floor(i)) i=Math.floor(Math.floor(i)*60 + (i-Math.floor(i))*60)*minut  ;
-  else i=i*60*minut;
-var zmienna= new Date(zm+i );
-if(zmienna.getHours()>8)str+='<b class="green">';
-str += 'Dotrze dnia: ';
-str += zmienna.getDate()+"."+
-          zmienna.getMonth()+' '+
-          zmienna.getHours()+':'+
-          zmienna.getMinutes();
-if(zmienna.getHours()>8)str+='</b>';
+  else i= i*minut;
+
+var zmienna= new Date(zm+i);
+if(Math.floor(zmienna.getHours()) > 7)
+ str+='<b class="green">';
+if(Math.floor(zmienna.getDate())==Math.floor(zmD.getDate()))
+ str+='dzis o ';
+else if(Math.floor(zmienna.getDate())+1 ==Math.floor(zmD.getDate()))
+ str+='jutro o ';
+else 
+str += zmienna.getDate()+"."+(zmienna.getMonth()+1)+' o ';
+
+str +=    zmienna.getHours() + ':';
+ if(Math.floor(zmienna.getMinutes())<10)
+str +='0';
+str +=    zmienna.getMinutes();
+if(Math.floor(zmienna.getHours()) >7)str+='</b>';
 return str ;
 
 }
@@ -684,6 +702,19 @@ window.setTimeout("map_kesi_1s()",10000);
 }
 }
 //--------
+function formatTime_kesi(time) {
+                 var timeString='';
+        var dni =   Math.floor(time/86400);
+	var hours = Math.floor(time/3600) % 24;
+	var minutes = Math.floor(time/60) % 60;
+        if(dni>0) timeString = dni +' dni ';
+
+	timeString += hours + ":";
+	if(minutes < 10)
+		timeString += "0";
+	timeString += minutes;
+ return timeString;
+}
 function formatTime_kes(element, time, clamp) {
 
   time++;	// Wieder aufsplitten
@@ -783,7 +814,7 @@ var form= t.childNodes[8].childNodes[3].childNodes[1];
 var str = "[quote][b]\n";
 var tr= gN(gid_kes('tabela_xy'),'tr');
 
-   for(var j=0;j<tr.length;j++)
+   for(var j=0;j<tr.length-1;j++)
   {
     if(tr[j].style.display=='')str+="\t [coord]" + gN(tr[j],'td')[2].innerHTML + "[/coord] \n";
    }
