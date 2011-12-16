@@ -18,21 +18,24 @@ if(!isSet($_SESSION['id']) || $_SESSION['id']==null|| count($_SESSION['id'])>1){
        if($r = mysql_fetch_row($wynik)){ $_SESSION['id']=$r[0];}
   destructor();
 }
-# Wyciaga x|y Wioski 
+# Wyciaga x|y Wioski
 function xy_wioski($name){
- $name= substr($name ,   strrpos($name, "(")+1 ); 
- $name= substr($name ,0, strrpos($name, ")")   ); 
+   $name= substr($name ,   strrpos($name, "(")+1 );
+   $name= substr($name ,0, strrpos($name, ")")   );
 
-return $name;}
+ return $name;
+}
 
-$co_idzie =array ('1'=>'Wedlug bazy',
-                  '9'=>'Zwiad',
-                  '18'=>'Piki, Topory, Luki',
-                  '22'=>'Miecze',
-                  '10'=>'Lekka kawaleria, Lucznicy konni',
-                  '11'=>'Ciezka kawaleria',
-                  '30'=>'Tarany, katapulty',
-                  '35'=>'Szlachta');
+$co_idzie =array (
+             '1'=>'Wedlug bazy',
+             '9'=>'Zwiad',
+             '18'=>'Piki, Topory, Luki',
+             '22'=>'Miecze',
+             '10'=>'Lekka kawaleria, Lucznicy konni',
+             '11'=>'Ciezka kawaleria',
+             '30'=>'Tarany, katapulty',
+             '35'=>'Szlachta'
+                  );
 
 # liczy wojsko
 function deCode($x)
@@ -46,7 +49,7 @@ return $wojo;
 function jaki_czas_marszu($pik, $mie, $axe, $arche,$zw, $lk, $kl, $ck, $tar, $kat, $ryc, $sz){
 if($sz!=0){return 35;}
 elseif($kat!=0 ||$tar!=0){return 30;}
-elseif($mie!=0){return 22;} 
+elseif($mie!=0){return 22;}
 elseif($pik!=0 ||$axe!=0 || $arche!=0){return 18;}
 elseif($ck!=0){return 11;}
 elseif($lk!=0  || $kl!=0){return 10;}
@@ -85,9 +88,9 @@ function data_z_bazy($rr,$war =true)
 
 if($rr==NULL||$rr == $godzina_zero){
      $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu">'; if($war)$ciag .=' Brak Raportu';}
-elseif($rr<$godzina_jeden-31362000){
+elseif($rr<$godzina_jeden-(86400*362) ){
      $ciag =$wynik.' <IMG SRC="../img/z6.gif" title="Raport ma ponad!! '.dns($rr).'"> ';}
-elseif($rr<$godzina_jeden-518400 ){
+elseif($rr<$godzina_jeden- (86400*6) ){
      $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Raport Stary ma '.dns($rr).'"> ';}
 elseif($rr<$godzina_jeden ){
      $ciag =$wynik.' <IMG SRC="../img/z3.gif" title="Raport Nowy ma '.dns($rr).'"> ';}
@@ -97,6 +100,50 @@ elseif($rr<mktime()-$godzina_zero+200 ){
      if($war)$ciag =' Raport wlasnie dodany. ';}
 else{
      $ciag =$wynik.' <IMG SRC="../img/z4.gif" title="Przyszlosc Data za '.dns($rr).'"> ';}
+    return $ciag;
+}
+# poprawka
+function dataZBazy($dataRaportu,$war =true){
+  global $godzina_zero;
+   $teraz[0] = mktime()-$godzina_zero;
+  global $godzina_jeden;
+   $teraz[1] = $godzina_jeden;
+   if($war){
+    $wynik = data_z($dataRaportu);
+      $dns = dns($dataRaportu);
+   }else{
+    $wynik = dns($dataRaportu);
+     $stri = data_z($dataRaportu);
+   }
+
+
+  if( $dataRaportu==NULL || $dataRaportu == $godzina_zero ){
+     $src = 5;
+     $str="Nie ma raportu";
+       if($war)$img = ' Brak Raportu';
+  }elseif($dataRaportu < $teraz[1] - (86400*362) ){
+     $src = 6;
+     $str = 'Raport ma ponad!! '.$dns;
+  }elseif($dataRaportu < $teraz[1] - (86400*6) ){
+     $src = 2;
+     $str = 'Raport Stary ma '.$dns;
+  }elseif($dataRaportu < $teraz[1] ){
+     $src = 3;
+     $str = 'Raport Nowy ma '.$dns;
+  }elseif($dataRaportu < $teraz[0] ){
+     $src = 1;
+     $str ='Raport Bardzo Swierzy ma '.$dns;
+  }elseif($dataRaportu < $teraz[0] +200 ){
+     if($war)$img =' Raport wlasnie dodany. ';
+  }else{
+     $src =4;
+     $str ='Przyszlosc Data za '.$dns;
+    }
+    if($dns==null)
+       $img = ' <IMG SRC="../img/z'.$src.'.gif" title="'.$stri.'"> ';
+    if($img==null)
+        $img = ' <IMG SRC="../img/z'.$src.'.gif" title="'.$str.'"> ';
+    $ciag = $img.$wynik;
     return $ciag;
 }
 
@@ -148,11 +195,11 @@ function mkczas_pl($szll){
 # Zamienia czas na Uniksowy
 # ROK.miesi±c.DZIEN.godzina.minuta.sekunda
 function mkczas($szll){
-    $da = split("[ .:-]", $szll);    
+    $da = split("[ .:-]", $szll);
     $mktt= mktime($da[3],$da[4],$da[5],$da[1],$da[2],$da[0])-$mkczas;
     return $mktt;
 }
-  
+
 function zap_raport()
 {
 $zap =" SELECT  v.name AS n_wsi, v.id AS id_wsi,v.mur, v.x,v.y,v.points,v.opis,v.typ,v.data,
@@ -164,11 +211,11 @@ v.pik,v.mie,v.axe,v.luk,v.zw,v.lk,v.kl,v.ck,v.tar,v.kat,v.ry,v.sz, t.name AS gra
 function zap_mapa()
 {
 $zap =" SELECT w.id AS id_wsi, w.x, w.y, p.id AS id_User, p.name, a.id AS id_plemie, a.tag, w.name, w.points, w.typ, w.data, w.mur, w.pik, w.mie, w.axe, w.luk, w.zw, w.lk, w.kl, w.ck, w.tar, w.kat, w.ry, w.sz, w.opis
-FROM village w, tribe p, ally a 
+FROM village w, tribe p, ally a
 WHERE w.player = p.id
 AND p.ally = a.id ";
     return $zap;
-} 
+}
 
 # Ustala kontynent
 function ustal_k($x,$y)
@@ -178,16 +225,16 @@ $k = intval($y /100).intval($x /100);
 }
 function data_map($rr)
 { global $godzina_zero;
-  global $godzina_jeden; 
+  global $godzina_jeden;
 if($rr==NULL){
      //$ciag = ' Brak Raportu';
 }
-elseif($rrr<$godzina_jeden && $rr<$godzina_jeden-2592000 )//obecnie - 30dni
+elseif($rrr<$godzina_jeden && $rr<$godzina_jeden-(86400*30) )//obecnie - 30dni
 {     $ciag ='"Stary raport"'; return 1;
 }
-elseif($rr<$godzina_jeden && $rr>$godzina_jeden- 1296000 )//obecnie - 15dni
+elseif($rr<$godzina_jeden && $rr>$godzina_jeden- (86400*15) )//obecnie - 15dni
 {     $ciag ='"Nowy Rapoirt"'; return 2;}
-elseif($rr>$godzina_jeden-172800){ //obecnie -(3) i -3 dni
+elseif($rr>$godzina_jeden-(86400*2)){ //obecnie -(3) i -3 dni
      $ciag ='"Jeszcze goracy raport"'; return 3;}
 }
 function url_proxi($str)

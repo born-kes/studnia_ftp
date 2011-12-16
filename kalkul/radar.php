@@ -121,7 +121,7 @@ LEFT JOIN ws_mobile wm ON wm.id = w.id
 connection(); 
 $wynik = @mysql_query($zap);
 
-if(mysql_num_rows($wynik) ==0){ echo '<table class="main"><tr><th>Nic Dla Ciebie nie mam</th></tr>';destructor(); exit();}
+if(@mysql_num_rows($wynik) ==0){ echo '<table class="main"><tr><th>Nic Dla Ciebie nie mam</th></tr>';destructor(); exit();}
 
 
 while($r = mysql_fetch_array($wynik))

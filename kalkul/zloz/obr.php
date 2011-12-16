@@ -33,9 +33,6 @@ if($xy[0]==0 && $xy[1]==0){$okolica = false; }
 
      if($_GET[zwiad]!=NULL){ $zwiad= true; if($_GET[zwiad_st]!=NULL)$zwiad_st=intval($_GET[zwiad_st]);}
 
-$qzap_b =' FROM `ws_all` w, list_user t ';
-$qzap_c =' WHERE w.player = t.id ';
-
 if($query)
 { $wynik='';
 	for($i=0; $i<count($query_lis); $i++)
@@ -54,8 +51,15 @@ $wioska_xy[1]=of_te($wioska_xy[1]);
 }
 else
 {
-   if( $gracz!=NULL)
-    {$zap.=$and."(t.name='$gracz' OR  t.name='".$gracz1."')";}
+   if( $gracz!=NULL){
+     connection();    $wynik = @mysql_query("SELECT id FROM `list_user` WHERE `name`='$gracz'; ");
+      if($r = @mysql_fetch_array($wynik))
+        $graczId= $r[0];
+      else
+        $Komunikat='Nieznany login gracza';
+
+   //$zap.=$and."(t.name='$gracz' OR  t.name='".$gracz1."')";
+   }
 
    if($mini!=NULL){$zap.=$and." w.points >'$mini'";}
 
@@ -67,21 +71,27 @@ else
      $do_x=$xy[0]+$oko;
      $od_y=$xy[1]-$oko;
      $do_y=$xy[1]+$oko;
-   $zap.= $and." w.x>'$od_x' $and w.y>'$od_y' $and w.x<'$do_x' $and w.y<'$do_y' ";
+   $zap.= $and." `w`.`x`>'$od_x' $and `w`.`y`>'$od_y' $and `w`.`x`<'$do_x' $and `w`.`y`<'$do_y' ";
     }
 
    if($zwiad)
-   {                             $qzap0=", ws_raport m "; $zap.=$and.' m.id=w.id ';
-             if($zwiad_st!=NULL) $zap.=$and.'m.status='.$zwiad_st;
+   {                             $qzap0=", `ws_raport` `m` "; $zap.=$and.' `m`.`id`=`w`.`id` ';
+             if($zwiad_st!=NULL) $zap.=$and.'`m`.`status`='.$zwiad_st;
    }
-   else{             $qzap1="LEFT JOIN ws_raport m ON m.id=w.id";}
+   else{             $qzap1="LEFT JOIN `ws_raport` `m` ON `m`.`id`=`w`.`id`";}
 
 }
+$qzap_b =' FROM `ws_all` `w`';
 
-if($COUNT) {$qzap_a = 'SELECT COUNT( * ) AS `Rekordów` ';$qzap3.=' GROUP BY t.`gra` ORDER BY t.`gra` ';}
-else{$qzap_a = ' SELECT w.name, w.x, w.y, w.points, w.id, m.status ,m.data , lz.opis,
-   m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz ';
-$qzap1.=' LEFT JOIN list_zadan lz ON lz.id_cel=w.id AND lz.id_gracz=w.player';
+
+   if( $gracz!=NULL)$qzap_c =' WHERE `w`.`player` ='.$graczId;
+   else{ $qzap_c =' WHERE `w`.`player` = `t`.`id` ';$qzap_b.=', `list_user` `t` ';}
+
+if($COUNT) {$qzap_a = 'SELECT COUNT( * ) AS `Rekordow` ';$qzap3.=' GROUP BY `w`.`player` ORDER BY `w`.`player` ';}
+else{$qzap_a = ' SELECT `w`.`name`, `w`.`x`, `w`.`y`, `w`.`points`, `w`.`id`, `m`.`status` ,`m`.`data` , `lz`.`opis`,
+   `m`.`pik`, `m`.`mie`, `m`.`axe`, `m`.`luk`, `m`.`zw`, `m`.`lk`, `m`.`kl`, `m`.`ck`, `m`.`tar`, `m`.`kat`, `m`.`ry`, `m`.`sz` ';
+   
+$qzap1.=' LEFT JOIN `list_zadan` `lz` ON `lz`.`id_cel`=`w`.`id` AND `lz`.`id_gracz`=`w`.`player`';
 }
 
 $log = 'o';

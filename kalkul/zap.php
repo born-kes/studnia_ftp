@@ -174,6 +174,11 @@ $Storing .='<o_if>true</o_if>'.$s;                                              
 
 $Storing .='<o_if2>true</o_if2>'.$s;                                                                    //$if__2
 }
+
+
+//$Storing .='<sql>'.$zapytanie.'</sql>'.$s;
+
+
       connection();
    $wynik = @mysql_query($zapytanie);
       while($r = @mysql_fetch_array($wynik))

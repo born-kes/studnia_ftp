@@ -20,38 +20,56 @@ tr.center td { text-align:center; }
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head><body><form name="fe" action="" method="post"><div style="position:absolute; top:-1px;right:2px; bottom:4px; left:2px;" ><?php
 //if(!isSet($_COOKIE['wtyk'])){
-
+ function aut($s){return (int)$s;}
     if($_GET['xy']   !=NULL){ $xy = explode("|",($_GET['xy']));//xy_wioski
 
     if($_GET['w']    !=NULL && $_GET['w']    !=''){ $wg = explode(",",$_GET['w']); }   // Wojsko Get  foreach($wojo_get as $w){echo $w.':';} }
     if($_GET['Mur']  !=NULL && $_GET['Mur']!='undefined'){ $wm = intval($_GET['Mur']);}              //Wioska Typ
     if($_GET['typ']  !=NULL){ $wt = $_GET['typ']; }              //Wioska Typ
-    if($_GET['data'] !=NULL){ $data = mkczas_pl($_GET['data'])-$godzina_zero; }
+    if($_GET['data'] !=NULL){ $data = aut(mkczas_pl($_GET['data'])-$godzina_zero); }
 
-        $zap ="SELECT id FROM `ws_all` WHERE x=".($xy[0])." AND y=".($xy[1])."";//intval
+        $zap ="SELECT id FROM `ws_all` WHERE x=".aut($xy[0])." AND y=".aut($xy[1])."";//intval
+       // echo $zap;
 connection();
-$wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}else{echo $zap;exit();}
+$wynik = @mysql_query($zap);if($r = @mysql_fetch_array($wynik)){ $zap=$r[id];}else{echo 'blad'; exit();}
 destructor();
 
 if($_POST[sql]!==NULL)
 {
-               $sql_all=", pik=$wg[0],mie=$wg[1],axe=$wg[2],luk=$wg[3],zw=$wg[4],lk=$wg[5],kl=$wg[6],ck=$wg[7],tar=$wg[8],kat=$wg[9],ry=$wg[10],sz=$wg[11] ";
-            if($_POST['typ']  !=NULL){ $wt = $_POST['typ']; }              //Wioska Typ
+               $sql_all=",
+                          pik=".aut($wg[0]).",
+                          mie=".aut($wg[1]).",
+                          axe=".aut($wg[2]).",
+                          luk=".aut($wg[3]).",
+                          zw=".aut($wg[4]).",
+                          lk=".aut($wg[5]).",
+                          kl=".aut($wg[6]).",
+                          ck=".aut($wg[7]).",
+                          tar=".aut($wg[8]).",
+                          kat=".aut($wg[9]).",
+                          ry=".aut($wg[10]).",
+                          sz=".aut($wg[11])." ";
+            if($_POST['typ']  !=NULL){ $wt = aut($_POST['typ']); }              //Wioska Typ
 
-if($_GET['o0']==0){
- $zapytanie = "UPDATE ws_mobile SET ";
- $zapytanie2 = "INSERT INTO ws_mobile SET id=$zap";
+ if($_GET['o0']==0){
+  $zapytanie = "UPDATE ws_mobile SET ";
+  $zapytanie2 = "INSERT INTO ws_mobile SET id=$zap";
                 $sql_typ=", typ=$wt ";
-                $sql_Mur="";  }
- else
-if($_GET['o0']==1){
- $zapytanie = "UPDATE ws_raport SET ";
- $zapytanie2 = "INSERT INTO ws_raport SET id=$zap ";
+                $sql_Mur="";
+ }else
+   if($_GET['o0']==1){
+    $zapytanie = "UPDATE ws_raport SET ";
+    $zapytanie2 = "INSERT INTO ws_raport SET id=$zap ";
                $sql_typ=", status=$wt ";
-               if($wm!==NULL){
-if($_POST[sql]=='Mur'){$sql_Mur='';}else{$sql_Mur=',';}
-$sql_Mur.=" mur=$wm, d_mur=".$data;}else{$sql_Mur=null;}
-                  }
+     if($wm!==NULL){
+       if($_POST[sql]=='Mur'){$sql_Mur='';
+       }else{ $sql_Mur=',';
+       }
+       $sql_Mur.=" mur=$wm, d_mur=".$data;
+     }else{
+     $sql_Mur=null;
+     }
+  }
 
 
     if($_POST[sql]=='Wojsko')   {$zapytanie.=" data='$data'".$sql_all; $zapytanie2.=", data='$data'".$sql_all; $ok=1;}
@@ -62,6 +80,7 @@ elseif($_POST[sql]=='WSZYSTKO') {$zapytanie.=" data='$data'".$sql_all.$sql_typ.$
 elseif($_POST[sql]=='+'&&$_GET['o0']==0)
 {
     connection();  $wy = @mysql_query("SELECT pik,mie,axe,luk,zw,lk,kl,ck,tar,kat,sz FROM `ws_mobile` WHERE id=$zap;");
+
       if($r = mysql_fetch_array($wy))
       {
       $sql_plus=" pik=".($wg[0]+$r[pik]).",
@@ -83,7 +102,7 @@ elseif($_POST[sql]=='+'&&$_GET['o0']==0)
 }
  $zapytanie.=" WHERE id=$zap;";
 if( $ok==1)
- {  // echo $zapytanie;
+ { // echo $zapytanie.'<br>'.$zapytanie2;
      connection();
        if(!@mysql_query($zapytanie2))
        {

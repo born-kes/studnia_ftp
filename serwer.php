@@ -46,7 +46,7 @@ Bunkier______		 3  ->
 BUNKIER______		??
 					  1	      2 	3	     4		5	   6	     7		*/
 $statuss =array();
-$statuss[typ] = array ('Niewybrana','Niebroniona','Oddzia³','Posterunek','Warownia','Twierdza','Bunkier','BUNKIER');
+$statuss[typ] = array ('Niewybrana','Niebroniona (0-0,4)','Oddzial (0,4-1)','Posterunek (1-3)','Warownia (3-6)','Twierdza (6-10)','Bunkier (10->)','BUNKIER (niewiadomo)');
 function status($s){
 
 if($s===NULL || $s<0){return 7;}  //BUNKIER

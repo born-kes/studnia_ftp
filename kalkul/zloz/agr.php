@@ -50,8 +50,13 @@ $wioska_xy[1]=of_te($wioska_xy[1]);
 }
 else
 {
-   if( $gracz!=NULL)
-    {$zap.=$and."(t.name='$gracz' OR  t.name='".$gracz1."')";}
+   if( $gracz!=NULL){
+     connection();    $wynik = @mysql_query("SELECT id FROM `list_user` WHERE `name`='$gracz';");
+      if($r = @mysql_fetch_array($wynik))
+        $graczId= $r[0];
+      else
+        $graczId=$Komunikat='Nieznany login gracza';
+    }
 
    if($minutnik){$zap.=$and." lz.id_cel is NULL";}
 
@@ -71,30 +76,30 @@ else
      switch ($wojsko)
      {
       case 0:  break;
-      case 9:  $zap.=$and.' m.zw >0'; break;
-      case 10: $zap.=$and.' (m.lk >0 OR m.kl>0)'; break;
-      case 11: $zap.=$and.' m.CK >0'; break;
-      case 18: $zap.=$and.' (m.pik >0 OR m.axe>0 OR m.luk>0)'; break;
-      case 22: $zap.=$and.' (m.mie >0 )'; break;
-      case 30: $zap.=$and.' (m.tar >0 OR m.kat>0)'; break;
-      case 35: $zap.=$and.' (m.sz >0)'; break;
+      case 9:  $zap.=$and.'  `m`.`zw` >0'; break;
+      case 10: $zap.=$and.' (`m`.`lk` >0 OR `m`.`kl`>0)'; break;
+      case 11: $zap.=$and.'  `m`.`CK` >0'; break;
+      case 18: $zap.=$and.' (`m`.`pik` >0 OR `m`.`axe`>0 OR `m`.`luk`>0)'; break;
+      case 22: $zap.=$and.' (`m`.`mie` >0 )'; break;
+      case 30: $zap.=$and.' (`m`.`tar` >0 OR `m`.`kat`>0)'; break;
+      case 35: $zap.=$and.' (`m`.`sz` >0)'; break;
      default:  break;
      }
    }
-   if($foff && $wojsko!=9){$zap.=$and."m.axe>$axe $and m.lk >$lk $and m.tar>$tar";}
-else if($foff && $wojsko==9)$zap.=$and." m.zw>$zwi ";
+   if($foff && $wojsko!=9){$zap.=$and."`m`.`axe`>$axe $and `m`.`lk` >$lk $and `m`.`tar`>$tar";}
+else if($foff && $wojsko==9)$zap.=$and." `m`.`zw`>$zwi ";
 
 }
-$qzap1 = ' FROM `ws_all` w, list_user t ';
-$qzap2 =' WHERE w.player = t.id ';
+$qzap1 = ' FROM `ws_all` w ';
+$qzap2 =" WHERE `w`.`player` = ".$graczId ;
 
-                    $qzap1 .=', ws_mobile m ';$qzap2.=' AND m.id=w.id '; $log = 'a';
-if($minutnik)       $qzap1.=' LEFT JOIN list_zadan lz ON lz.id_cel=w.id AND lz.id_gracz=w.player';
+                    $qzap1 .=', `ws_mobile` `m` ';$qzap2.=' AND `m`.`id`=`w`.`id` '; $log = 'a';
+if($minutnik)       $qzap1.=' LEFT JOIN `list_zadan` `lz` ON `lz`.`id_cel`=`w`.`id` AND `lz`.`id_gracz`=`w`.`player`';
 
-if($COUNT)         {$qzap0 = 'SELECT COUNT( * ) AS `Rekordów` ';$qzap3.=' GROUP BY t.`gra` ORDER BY t.`gra` ';}
+if($COUNT)         {$qzap0 = 'SELECT COUNT( * ) AS `Rekordów` ';$qzap3.=' GROUP BY `w`.`player` ORDER BY `w`.`player` ';}
 else
-                   {$qzap0 = ' SELECT w.name, w.x, w.y, w.points, w.id,
-   m.pik, m.mie, m.axe, m.luk, m.zw, m.lk, m.kl, m.ck, m.tar, m.kat, m.ry, m.sz ';}
+                   {$qzap0 = ' SELECT `w`.`name`, `w`.`x`, `w`.`y`, `w`.`points`, `w`.`id`,
+   `m`.`pik`, `m`.`mie`, `m`.`axe`, `m`.`luk`, `m`.`zw`, `m`.`lk`, `m`.`kl`, `m`.`ck`, `m`.`tar`, `m`.`kat`, `m`.`ry`, `m`.`sz` ';}
 
 
 ?>

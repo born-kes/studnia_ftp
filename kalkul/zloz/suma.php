@@ -1,4 +1,4 @@
-<?PHP include('../connection.php'); sesio_id();  $ec =mktime()-$godzina_zero-(86400*7);
+<?PHP include('../connection.php'); sesio_id();  $ec =mktime()-$godzina_zero-(86400*7); $Komunikat=null;
 function of_te($str){return preg_replace('/[^0-9]/', '', $str);}
 
 
@@ -18,18 +18,24 @@ $zapytanie = $qzap_a.
                $zap.
                $qzap3;
 
-//echo '<br />'.$zapytanie.'<br />';
+//echo $zapytanie.'<br />'.$Komunikat;
 $s ='
 ';
 
-
+if($Komunikat!=null){echo $Komunikat;exit();}
 if($COUNT)
 { connection();    $wynik = @mysql_query($zapytanie);
-  if($r = @mysql_fetch_array($wynik))
-  { echo $r[0].' '; }else{echo 0;}@destructor();
+  if($r = @mysql_fetch_array($wynik)){
+   echo $r[0].' '; 
+  }else{
+   echo 0;
+  }
+  @destructor();
 }
 else
 { if($log=='o'){
+//$Storing .='<sql>'.$zapytanie.'</sql>';
+
 $Storing .='<wsi>';
 $Storing .='<o_id>0</o_id>'.$s;                                               
 $Storing .='<o_name>"Wojska które zostan± w wiosce "</o_name>'.$s;  

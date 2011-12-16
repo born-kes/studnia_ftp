@@ -324,10 +324,10 @@ function Klonowanie(url,url1)
 url = 'http://pl5.plemiona.pl/game.php?village='+url+'&screen=place&ukryjmenu=tak';
  if(url1!='undefined')url+='&target='+url1;
 
-top.klon1 = window.open(url, "klon1", ",width=300,height=500,left=0,top=0,resizable=yes,scrollbars=1");
-top.klon1 = window.open(url, "klon2", ",width=300,height=500,left=300,top=0,resizable=yes,scrollbars=1");
-top.klon1 = window.open(url, "klon3", ",width=300,height=500,left=600,top=0,resizable=yes,scrollbars=1");
-top.klon1 = window.open(url, "klon4", ",width=300,height=500,left=900,top=0,resizable=yes,scrollbars=1");
+top.klon1 = window.open(url, "klon1", ",width=300,height=650,left=0,top=0,resizable=yes,scrollbars=1");
+top.klon1 = window.open(url, "klon2", ",width=300,height=650,left=300,top=0,resizable=yes,scrollbars=1");
+top.klon1 = window.open(url, "klon3", ",width=300,height=650,left=600,top=0,resizable=yes,scrollbars=1");
+top.klon1 = window.open(url, "klon4", ",width=300,height=650,left=900,top=0,resizable=yes,scrollbars=1");
 top.klon1.focus();
 top.klon2.focus();
 top.klon3.focus();
@@ -671,7 +671,7 @@ gid_kes('kesik').src = string;
 
 
 function map_kesi_legenda()
-{    if(gid_kes('kesik')){offKES('kesik');}
+{ show('tw_maps');
 gid_kes('iframe_KES').src = 'http://www.bornkes.w.szu.pl/test/operacje/lista_map_tw.php';
 }
 function map_kesi_1s()
