@@ -1,22 +1,5 @@
 <html>
-<head>
-<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-<link href="http://pl5.plemiona.pl/merged/game.css?1323168552" type="text/css" rel="stylesheet">
-<style type="text/css">
-<!--
-table.main { background-color:#F7EED3; border:0px solid #804000;}
-table.ba { border-bottom:0px;}
-td{font-size:12px;}
-
-table.main th{font-size:9px;}
-table.main tr.row th{font-size:9px;}
-table.main tr.row td { background-color:#006600; background-image:none; color:#F1EBDD;}
-table.main tr.row td.hidden { color:#333366; }
-tr.center td { text-align:center; }
-
--->
-</style>
-</head>
+<?php include("../head.html"); ?>
 <body>
   <div style="position:absolute; top:1px;right:0px; bottom:1px; left:0px;overflow: hidden; " >
     <table class="main" width="100%" style="border-collapse:collapse">

@@ -139,7 +139,7 @@ echo '<input type="hidden" name="id" value="'.$_GET[id].'" />'; // village ??
 <tr><td valign="top" align="center">
 <input type="submit" value="POLICZ" /></td></tr></table>
 </form>
-<div style="position: absolute;left:-100;">
+<div style="position: absolute;left:-50;right:-50px;">
 
 <?  $ec =mktime()-$godzina_zero;
 
@@ -157,7 +157,14 @@ $stor=$gstr;
   while($r = @mysql_fetch_array($wynik)){
  $stor.='
  <tr>
-  <td><b><a href="" onclick="document.form.czas1.value = \''.data_z($r[godz]).'\' ;return false;"><img src="../img/cal.gif" border="0" height="16" width="16" alt="Clicknij Tu by ustaliæ Datê"></a><-</b> <a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=map&x='.$r[x].'&y='.$r[y].'" target="_blank">'.$r[x].'|'.$r[y].' </a><b id="czas1_txt"></b></td>
+  <td>'.
+   '<b>'.
+    '<a href="" onclick="document.form.czas1.value = \''.data_z($r[godz]).'\' ;return false;">'.
+     '<img src="../img/cal.gif" border="0" height="16" width="16" alt="Clicknij Tu by ustaliæ Datê">'.
+    '</a>'.
+   '<-</b>'.
+   '<a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=map&x='.$r[x].'&y='.$r[y].'" target="_blank">'.$r[x].'|'.$r[y].' </a>'.
+   '<b id="czas1_txt"></b></td>
   <td>(<i> <a href="http://pl5.plemiona.pl/game.php?village='.$_GET[id].'&screen=info_player&id='.$r[kto].'" target="_blank">'.urldecode($r[name]).' </a></i>)</td>
   <td> '.data_z_bazy($r[godz]).' </td>
  </tr>';}
@@ -170,7 +177,7 @@ if($stor!=$gstr){$stor.='</table>'; echo $stor;}
 <!--
 function url_dla_img()
 {var img = document.getElementsByTagName("img");
-	for (var i = 0; i < 8; i++) {	img[i].src = 'http://pl5.plemiona.pl/graphic/unit/unit_'+img[i].className+'.png';  }
+	for (var i = 0; i < 8; i++) {	img[i].src = 'http://cdn.tribalwars.net/graphic/unit/unit_'+img[i].className+'.png';  }
 }url_dla_img();
 checkCookie('place');
 

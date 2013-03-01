@@ -1,5 +1,4 @@
 <?php  include('../connection.php');
-function aut($s){return (int)$s;}
 function ifs($s){ if($s!=null)return ', '; else return ''; }
 function td($s,$w=''){
      if($s==0)
@@ -7,6 +6,36 @@ function td($s,$w=''){
      else
        $hidd = '';
      return '<td'.$hidd.$w.'>'.$s.'</td>';
+}
+function dzialaniaNaTablicach($tablica1,$tablica2,$tablica3){
+  if(count($tablica1)==count($tablica2)&&count($tablica2)==count($tablica3)){
+     for($i=0; $i<count($tablica1); $i++){
+      $sumaTablicy[$i] = autPlus(($tablica1[$i]-$tablica2[$i])+$tablica3[$i]);
+     }
+     return $sumaTablicy;
+  }else{
+      return $tablica3;
+  }
+}
+function sqlAll($wg){
+         if(count($wg)==12)
+     $sql_all=" pik=".autPlus($wg[0]).",
+                mie=".autPlus($wg[1]).",
+                axe=".autPlus($wg[2]).",
+                luk=".autPlus($wg[3]).",
+                zw=".autPlus($wg[4]).",
+                lk=".autPlus($wg[5]).",
+                kl=".autPlus($wg[6]).",
+                ck=".autPlus($wg[7]).",
+                tar=".autPlus($wg[8]).",
+                kat=".autPlus($wg[9]).",
+                ry=".autPlus($wg[10]).",
+                sz=".autPlus($wg[11])." ";
+                
+return $sql_all;
+}
+function autPlus($s){$s=aut($s);
+if($s<0)return 0; else return $s;
 }
 $idWsi=NULL;
 $wioskaIstnieje=false;
@@ -27,24 +56,17 @@ $atak = false;
 $data=null;
     if($_GET['data'] !=NULL){
        $data = aut(mkczas_pl($_GET['data'])-$godzina_zero);
-       $sql.=ifs($sql)." data=".$data;
     }
 
  $wg = $sql_all = null;
     if( $_GET['w'] !=NULL && $_GET['w'] != '' && $_GET['w'] != 'undefined' ){
      $wg = explode(",",$_GET['w']);
-     $sql_all=" pik=".aut($wg[0]).",
-                mie=".aut($wg[1]).",
-                axe=".aut($wg[2]).",
-                luk=".aut($wg[3]).",
-                zw=".aut($wg[4]).",
-                lk=".aut($wg[5]).",
-                kl=".aut($wg[6]).",
-                ck=".aut($wg[7]).",
-                tar=".aut($wg[8]).",
-                kat=".aut($wg[9]).",
-                ry=".aut($wg[10]).",
-                sz=".aut($wg[11])." ";
+      // $sql do function
+      if( $_GET['w0'] !=NULL && $_GET['w0'] != '' && $_GET['w0'] != 'undefined' ){
+                $w0 = explode(",",$_GET['w0']);
+
+          }
+
      }
 
 // ATAK
@@ -63,16 +85,18 @@ if($obrona){
           $sql.=ifs($sql)." d_mur=".$data;
     }
 $status=null;
-    if( is_array($wg) )
+    if( is_array($wg) && count($wg)==12 )
        $status = status(ile_woja(aut($wg[0]), aut($wg[1]), aut($wg[2]), aut($wg[3]),aut($wg[4]), aut($wg[5]), aut($wg[6]), aut($wg[7]), aut($wg[8]), aut($wg[9]), aut($wg[10]), aut($wg[11])));
+    else $status=7;
+
+$sql_all = sqlAll($wg);
+   if($sql_all!=null )
+   $sql .= ifs($sql).$sql_all;
 
 }
 // WSPULNE
-   $sql .= (is_array($wg) ? ifs($sql).$sql_all : '');
 
-  if($_SESSION['id']!=null && $_SESSION['id']!=0 && $sql!=null)
-    $sql.=ifs($sql)." player=".$_SESSION['id'];
-
+   // sql_all przeniesione
 
      /* Pobieranie Id Wioski która opracowuje */
     if($_GET['xy']   !=NULL && $_GET['id'] ==NULL ){
@@ -116,18 +140,32 @@ else{
          }
 if($r[data]<$data && $idWsi != null ){
 
+      if($status!=null && $obrona){
+          if($wioskaIstnieje && $status==7 ){
+               if( $r[status]<=7){
+                  if( aut($_GET[zw])+1 > aut($r[zw]*2) )
+                  $sql.=ifs($sql)." status=".$status.', zw='.( (aut($_GET[zw])+1) *2);
+                  //else
+                    // stary raport mowi ze zwiadu jest wiecej
+              }//else
+                 // $sql.=ifs($sql)." status=".$status ;
+          }elseif(!$wioskaIstnieje && $status==7 ){           $str='niema mnie';
+                $sql.=ifs($sql)." status=".$status.', zw='.( (aut($_GET[zw])+1) *2);}
+          else
+                $sql.=ifs($sql)." status=".$status;
+       }else if($atak){ $tablicaZBazy = array($r[pik],$r[mie],$r[axe],$r[luk],$r[zw],$r[lk],$r[kl],$r[ck],$r[tar],$r[kat],$r[ry],$r[sz]);
+                $tablicaWojskAgresora = dzialaniaNaTablicach($tablicaZBazy,$w0,$wg);
+                 $sql .= ifs($sql).sqlAll($tablicaWojskAgresora);
+
+       }
+
+
   $ok=0;
     if( $zapytanie!=null && $sql!=null){  $ok=1;
-       if($status!=null){
-          if($wioskaIstnieje){
-             if($status==7 && $r[status]<7 ){ // nowy raport jest bunkier
-               if( aut($_GET[zw])>($r[zw]*2) )
-                  $sql.=ifs($sql)." status=".$status ;
-             }else
-                  $sql.=ifs($sql)." status=".$status ;
-          }elseif(!$wioskaIstnieje)
-                $sql.=ifs($sql)." status=".$status ;
-       }
+                $sql.=ifs($sql)." data=".$data;
+           if($_SESSION['id']!=null && $_SESSION['id']!=0 && $sql!=null)
+                $sql.=ifs($sql)." player=".$_SESSION['id'];
+
        $zapytanie.= $sql;
          if($wioskaIstnieje)
            $zapytanie.=" Where id=".$idWsi;
@@ -152,7 +190,6 @@ if($r[data]<$data && $idWsi != null ){
      $string='Jest bardziej aktualny raport';
   }
 }
-
 
 include("html/raport.php");
 

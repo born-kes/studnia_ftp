@@ -109,12 +109,14 @@ else gid_kes('Kes_edyt').innerHTML = ' NieAktywny';
            td = gN(tr[i],'td');
            for (var j=3; j< td.length-1 ; j++ )
            {    // if(td[j].innerHTML.lastIndexOf('span')>-1) td[j].innerHTML = td[j].textContent;
-               if( dels(td[j].textContent)*1000 < wytyczne[j]*1000){td[j].style.backgroundColor  = '#00c000';td[j].style.color  = '#3c3c3c';}
-               if( dels(td[j].textContent)*1000 > wytyczne[j]*1000){td[j].style.backgroundColor  = '#ff3232';td[j].style.color  = '#3c3c3c';}
-
+    
+              if( dels(td[j].textContent)*1000 < wytyczne[j]*1000){
+                td[j].style.backgroundColor  = '#00c000';
+              }
+               if( dels(td[j].textContent)*1000 > wytyczne[j]*1000){td[j].style.backgroundColor  = '#ff3232';
+              }
            }
        }
-
 }
 function Cookie_checkbox(name)
 { if(gid_kes(name).checked===true ){ zapisz_cokisa(name,village_KES);}
@@ -207,6 +209,7 @@ function edy_menus(login,url){
 
 function manu(a)
  { var login,url;
+if(wersja === undefined)var wersja = game_data.studnia.versja;
    switch (a){
     case 1:
     login = 'Masz Wtyczke wersja :'+wersja;
@@ -345,13 +348,9 @@ men2.document.forms["units"].elements["y"].value = y;//parent.
 function export_xy_KES(x, y,i) {
 selectTargetKES(x, y);
 gid_kes("ilcz_"+i).textContent = Math.floor(gid_kes("ilcz_"+i).textContent)+1;
-if( gid_kes("auto_del").checked ) onKES(i);
+if( gid_kes("auto_del").checked ) offKES("s_"+i);
 }
 
-function onKES(a){
- offKES("lis_"+a);
- offKES("liss_"+a);
-}
 function offKES(a){
  gid_kes(a).style.display = 'none';
 }
@@ -367,23 +366,6 @@ function show(name) {
 }
 function show_on(name) { gid_kes(name).style.display = '';return false;}
 
-function cmpKES(a, b,v){
-if(v==7){a=a.split(" ")[0];b=b.split(" ")[0];}
-//if(v==0||v==7){
-a=Math.floor(a);b=Math.floor(b);//} Niepami�tam czemu wyjatek
-
-	return a>b;
-}
-
-function sort(v,d){
-	d.o=d.o>0?-1:1;
-	var tbody=d.parentNode.parentNode.parentNode.getElementsByTagName('tbody')[0];
-	for(var i=0, c=[], tr, trs=tbody.getElementsByTagName('tr'); tr=trs[i]; i++){c[i]=tr} // just make an array from trs
-	c.sort(function(a,b){if(v!=7 && v!=19 ){return cmpKES(a.getElementsByTagName('td')[v].firstChild.data,b.getElementsByTagName('td')[v].firstChild.data,v)>0?d.o:-d.o}else{return cmpKES(a.getElementsByTagName('td')[v].textContent,b.getElementsByTagName('td')[v].textContent,v)>0?d.o:-d.o}});
-	for(var i=0; i<c.length; i++){
-		tbody.appendChild(c[i]);
-	}
-}
 
 
 function selectNotAll(){
@@ -410,43 +392,10 @@ function dane(s)
       s= dels(s);
       return s;
 }
-function potega(podstawa)
-{   var wynik = podstawa; var i = 1;
-    while (i++ < 2)
-        wynik *= podstawa;
-    return wynik;
-}
-function odlicz(v)
-{ //alert(self.name);
-// alert(men2.src);
-// alert(self.men2.src);
-// alert(self.name);
+function potega(a){ return a*a;}
+function kwadrat(a){ return a*a;}
+function testxy(s){return s.match(/([0-9]{1,3})\|([0-9]{1,3})/);}
 
-
-if(v!=true)v=false;
-
- var xy_dom = top.xy_dom.split("|");
- var marsz= (top.czas*60);
-
-
- //  var all = document.evaluate('//table[@class="vis"]',document,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-   var table = gid_kes('menvis');
-   var e=gN(table,'tr');
-     for (var i=2; i< e.length ; i++ )
-     { e.id
-       var f=gN(e[i],'td');
-       var xy_b = f[2].innerHTML.split("|");
-        var odleglosc1=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1]))*100000 )/100000;
-       var odleglosc=Math.floor( Math.sqrt(potega(xy_dom[0]-xy_b[0])+potega(xy_dom[1]-xy_b[1])) );
-   if(v==true)
-    { 
-
-     f[0].innerHTML =odleglosc1;// alert('czas_'+(i-2));
-     gid_kes('czas_'+e[i].id.split("_")[1] ).innerHTML=data_getTime(Math.floor(odleglosc1*marsz)); 
-     }
-else   f[0].innerHTML =odleglosc;                                                                    //alert(xy_dom +'+'+xy_b+'='+odleglosc);
-     }
-}
 
 function data_getTime(i)
 { var minut= 1000;
@@ -620,8 +569,8 @@ table = all.snapshotItem(0);
                 stor += '<input type="hidden" name="id[]" value="'+url+'" />';
                 }
      if(j==19){  //alert(e.innerHTML);
-                if(u =e.getElementsByTagName('span')[0]){stor += '<input type="hidden" name="mur[]" value="'+u.innerHTML+'" />' ;}
-                else{stor += '<input type="hidden" name="mur[]" value="'+e.innerHTML+'" />' ;}
+                if(u =e.getElementsByTagName('span')[0]){stor += '<input type="hidden" name="mur[]" value="'+u.textContent+'" />' ;}
+                else{stor += '<input type="hidden" name="mur[]" value="'+e.textContent+'" />' ;}
               }
    }
  }
@@ -742,7 +691,7 @@ function getTime_kes(element) {
 	if(element.firstChild.nodeValue == null) return -1;
 	var part = element.firstChild.nodeValue.split(":");
 
-	// Führende Nullen entfernen
+	// Fåhrende Nullen entfernen
 	for(var j=1; j<3; j++) {
 		if(part[j].charAt(0) == "0")
 			part[j] = part[j].substring(1, part[j].length);

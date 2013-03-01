@@ -1,4 +1,6 @@
 <?PHP
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 
 session_start();
 if(isSet($_SESSION['zalogowany'])){
@@ -9,6 +11,7 @@ if(isSet($_SESSION['zalogowany'])){
   <a href="indexout.php">wyloguj siê</a>
   <img id="img" />
   <script language="JavaScript"><!-- 
+var warunek = true;
 document.getElementById("img").src = "img/xy.php?p="+screen.width+"x"+screen.height 
 //--></script>';
 return $str;
@@ -143,7 +146,9 @@ elseif($CL == 2)
 <form name = "formularz1"
       action = ""
       method = "POST"
->
+><script language="JavaScript"><!-- 
+var warunek = false;
+//--></script>
 <table border="0" align="center" style="border:1px;"><tr>
 <td colspan="2" align="center">
 <?php if(isSet($_SESSION['komunikat']))

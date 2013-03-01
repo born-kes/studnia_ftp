@@ -1,6 +1,9 @@
 <?php include('../connection.php');//<script src="../js/scriptt.js" type="text/javascript"></script>
       include('../hello/id.php');
-if(strpos($_GET[wersja],$name)!==false){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3><a href="../hello/Hello_Studnia'.$name.'.xpi"  id="ff">tutaj </a>';exit();}
+if(strpos($_GET[wersja],$name)!==false){echo '<h3 align="center" style="color: rgb(255, 0, 0);">Masz najnowsz± wtyczkê</h3><a href="../hello/Hello_Studnia'.$name.'.xpi"  id="ff">tutaj </a><br />
+<a href="../hello/wtyczka.xpi"  id="ff">wersja dla ff 13 :P</a>
+
+';exit();}
 //<script type="text/javascript">
 //			var pageTracker = _gat._getTracker("UA-1427236-2");
 //			pageTracker._trackPageview();

@@ -17,12 +17,13 @@ if($r = mysql_fetch_array($wynik))
 
  if( ($r[mur]!=NULL) || ($r[typ]!=NULL&&$r[typ]!=0) || ($r[data]!=NULL) || ($r[sz]!=NULL&&$r[sz]!=0) || ($r[godz]!=NULL) )
  {
-
+//*
   if($r[mur]!=NULL){ include('imur.php'); }
   if($r[typ]!=NULL&&$r[typ]!=0){ include('ityp.php'); }
   if($r[data]!=NULL){ include('iwoj.php'); }
   if($r[sz]!=NULL&&$r[sz]!=0){ include('isz.php'); }
   if($r[godz]!=NULL){ include('iatak.php'); }
+//*/
  }
 
 }destructor();

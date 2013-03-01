@@ -1,20 +1,30 @@
-<?PHP
+<?php
 
+if (!defined('STUDNIA'))
+	define('STUDNIA', './');
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
+$connection=NULL;
 function connection() {
+global $connection;
     $mysql_server = "my40.szu.pl";
     $mysql_admin = "bornkesws";
     $mysql_pass = "lo5ksgol208";
     $mysql_db = "bornkesws";
-    
-    @mysql_connect($mysql_server, $mysql_admin, $mysql_pass)
+if($connection==NULL){    
+   $connection= @mysql_connect($mysql_server, $mysql_admin, $mysql_pass)
  or die('Brak po³aczenia z serwerem MySQL.');      // nawiazujemy po³aczenie z serwerem MySQL
     
     @mysql_select_db($mysql_db)
     or die('B³ad wyboru bazy danych.');            // ³&#65533;czymy siê z baz&#65533; danych
 }
+}
 
 function destructor(){
-@mysql_close();
+global $connection;
+  $connection=NULL;
+    @mysql_close();
 }
 
 function sesio_id(){
@@ -46,7 +56,7 @@ Bunkier______		 3  ->
 BUNKIER______		??
 					  1	      2 	3	     4		5	   6	     7		*/
 $statuss =array();
-$statuss[typ] = array ('Niewybrana','Niebroniona (0-0,4)','Oddzial (0,4-1)','Posterunek (1-3)','Warownia (3-6)','Twierdza (6-10)','Bunkier (10->)','BUNKIER (niewiadomo)');
+$statuss['typ'] = array ('Niewybrana','Niebroniona (0-0,4)','Oddzial (0,4-1)','Posterunek (1-3)','Warownia (3-6)','Twierdza (6-10)','Bunkier (10->)','BUNKIER (niewiadomo)');
 function status($s){
 
 if($s===NULL || $s<0){return 7;}  //BUNKIER
@@ -79,4 +89,3 @@ $i++;
 $w_tepm   = array (  18, 22 , 9, 10 , 11, 30, 35);
 $w_typ   = array ( 'Pik/Top/£uk' , 'Miecznik', 'Zwiadowca', 'Kawaleria', 'C.Kawaleria','Tar/Kat', 'Szlachcic');
 $and=' AND ';
-?>

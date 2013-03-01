@@ -20,7 +20,7 @@ tr.center td { text-align:center; }
 <script src="../js/scriptt.js" type="text/javascript"></script>
 </head><body><form name="fe" action="" method="post"><div style="position:absolute; top:-1px;right:2px; bottom:4px; left:2px;" ><?php
 //if(!isSet($_COOKIE['wtyk'])){
- function aut($s){return (int)$s;}
+# function aut($s){return (int)$s;}
     if($_GET['xy']   !=NULL){ $xy = explode("|",($_GET['xy']));//xy_wioski
 
     if($_GET['w']    !=NULL && $_GET['w']    !=''){ $wg = explode(",",$_GET['w']); }   // Wojsko Get  foreach($wojo_get as $w){echo $w.':';} }

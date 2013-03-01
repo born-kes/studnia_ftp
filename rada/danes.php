@@ -12,7 +12,7 @@
 $wsi = zap('name,name','`ws_all`','id=0');
 $users = zap('data,data','`list_user`','id=0');
 $plemie =  zap('name,name','`list_plemie`','id=0');
-
+echo $wsi[0];
 function zly($a)
 {// global $godzina_zero;
  if(count($a)>1){$b=$a = intval($a[0]);}else{$b = intval($a);}

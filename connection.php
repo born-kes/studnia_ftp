@@ -1,6 +1,10 @@
 <?php $s='
 '; session_start();
 //if(!isSet($_COOKIE['wtyk'])){
+
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+
 if(!isSet($_SESSION['zalogowany'])){
   $_SESSION['komunikat'] = "Nie jeste¶ zalogowany!";
   header("Location: ../");
@@ -10,6 +14,11 @@ if(!isSet($_SESSION['zalogowany'])){
   exit();}
 
 include_once('serwer.php');
+
+if (!defined('STUDNIA'))
+	exit();
+
+
 if(!isSet($_SESSION['id']) || $_SESSION['id']==null|| count($_SESSION['id'])>1){
  $user=$_SESSION['zalogowany'];
   connection();
@@ -18,6 +27,9 @@ if(!isSet($_SESSION['id']) || $_SESSION['id']==null|| count($_SESSION['id'])>1){
        if($r = mysql_fetch_row($wynik)){ $_SESSION['id']=$r[0];}
   destructor();
 }
+
+function aut($s){return (int)$s;}
+
 # Wyciaga x|y Wioski
 function xy_wioski($name){
    $name= substr($name ,   strrpos($name, "(")+1 );
@@ -89,7 +101,8 @@ function data_z_bazy($rr,$war =true)
 if($rr==NULL||$rr == $godzina_zero){
      $ciag = '<IMG SRC="../img/z5.gif" title="Nie ma raportu">'; if($war)$ciag .=' Brak Raportu';}
 elseif($rr<$godzina_jeden-(86400*362) ){
-     $ciag =$wynik.' <IMG SRC="../img/z6.gif" title="Raport ma ponad!! '.dns($rr).'"> ';}
+//     $ciag =$wynik.' <IMG SRC="../img/z6.gif" title="Raport ma ponad!! '.dns($rr).'"> ';}
+     $ciag ='Ponad rok';}
 elseif($rr<$godzina_jeden- (86400*6) ){
      $ciag =$wynik.' <IMG SRC="../img/z2.gif" title="Raport Stary ma '.dns($rr).'"> ';}
 elseif($rr<$godzina_jeden ){
@@ -318,4 +331,3 @@ $imie_1=plCharset($imie_1, WIN1250_TO_UTF8);
 $imie_1=plCharset($imie_1, UTF8_TO_WIN1250);
 $imie_1=plCharset($imie_1, ISO88592_TO_WIN1250);
 */
-?>

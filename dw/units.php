@@ -1,6 +1,5 @@
 <?
 include_once(dirname(dirname(__FILE__)) . '/connection.php');
-function aut($s){return (int)$s;}
 
 $wczasy = mktime()-$godzina_zero;
 $ileSukces=0;

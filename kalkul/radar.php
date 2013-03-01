@@ -72,7 +72,7 @@ elseif($_POST[gracz]!=null && $_POST[t]==null)
 else
 {echo 'Nie wiem kim jeste¶'; exit();}
 
-     $zap = "SELECT x,y FROM `ws_all` Where id='".$_POST[xy]."';";//wioska
+  $zap = "SELECT x,y FROM `ws_all` Where id='".$_POST[xy]."';";//wioska
 
 connection();$wynik = @mysql_query($zap);
 if($r = mysql_fetch_array($wynik))
@@ -86,10 +86,10 @@ $xy_ag[1]=$xy_ob[1]=$r[y];// wioska do której ma dotrzec       => id Wioski
 //$xy_ob = explode("|",$_POST[xy]);  
 
 $p=" AND ";
-$zap= " SELECT  name AS n_wsi, w.id AS id_wsi,x,y,pik,mie,axe,luk,zw,lk,kl,ck,sz,tar
+ $zap= " SELECT  name AS n_wsi, w.id AS id_wsi,x,y,pik,mie,axe,luk,zw,lk,kl,ck,sz,tar
   FROM ws_all w
 LEFT JOIN ws_mobile wm ON wm.id = w.id
-  WHERE player = '$gracz'";
+  WHERE w.player = '$gracz'";
 
 
 // $mxo = $max_odleglosc = intval($mk_ruznica/(11*60));
@@ -248,7 +248,7 @@ if($odleglosc==0){continue;}
 if( count($Dane[odleglosc])==0){echo '<table class="main"><tr><th>Nic Dla Ciebie nie mam</th></tr>';destructor(); exit();}
 
 @array_multisort ($Dane[odleglosc], SORT_ASC, SORT_NUMERIC, $Dane[wojsko],$Dane[kordy],$Dane[name],$Dane[id_wsi],$Dane[odleglosc]);
-echo '<table class="main"><tr><th>Czas marszu</th><th>Jednostki</th><th>wioska</th><th>Ostatni dzwonek</th><th>wys³ane teraz dotrze na</th></tr>';
+echo '<table class="main"><tr><th>Czas marszu</th><th>Jednostki</th><th>wioska</th><th>Ostatni dzwonek</th><th>wyslane teraz dotrze na</th></tr>';
 for($i=0;count($Dane[odleglosc])>$i;$i++)
 {
   echo '<tr><td>';
@@ -270,7 +270,7 @@ echo '<script language="JavaScript">
 <!--
 function url_dla_img()
 {var img = document.getElementsByTagName("img");
-	for (var i = 1; i < img.length; i++) {	img[i].src = \'http://pl5.plemiona.pl/graphic/unit/unit_\'+img[i].className+\'.png\';  }
+	for (var i = 1; i < img.length; i++) {	img[i].src = \'http://cdn.tribalwars.net/graphic/unit/unit_\'+img[i].className+\'.png\';  }
 }url_dla_img();
 //-->
 </script>';
