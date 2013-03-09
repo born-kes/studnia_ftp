@@ -2,45 +2,177 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
- if(@$_GET['s']!=NULL)
-{
-  if(@$_GET['s1']!=NULL)
-   {$cols = '30%,*'; $w=30;
-    $s= 'http://pl5.plemiona.pl/game.php?village='.@$_GET['s'].'&boby=tak';
-    $s1='http://pl5.plemiona.pl/game.php?village='.@$_GET['s'];
-  
-          if(@$_GET['s1']!=1){$s.='&screen=info_player&id='.@$_GET['s1'];  $s1.='&screen=place'; }
-         else             {$s.='&screen=overview_villages&mode=prod';$s1.='&screen=market';} 
-   }
- else 
-  if(@$_GET['b']==4)
-   {$cols = '*,*,*,*'; $w=20;
-    $s= 'http://pl5.plemiona.pl/game.php?village='.@$_GET['s'].'&screen=place';
-          if(@$_GET['st']!='undefined'){$s.='&target='.@$_GET['st']; }
+session_start();
+if(isSet($_SESSION['zalogowany'])){
+ function Done($user){
+global $SERWER;
 
-   }
- else
-   {$cols = '*';$w=100;}
+ $str= ' Logowanie Zakoñczone Sukcesem
+  <p align="center">Witam <i>'.$user.'</i></p>
+  Od¶wie¿yæ stronê by kontynuowaæ<br>
+  <a href="indexout.php">wyloguj siê</a>
+  <img id="img" />
+  <script language="JavaScript"><!-- 
+var warunek = true;
+document.getElementById("img").src = "img/xy.php?p="+screen.width+"x"+screen.height; 
+//--></script>';
+
+return $str;
 }
+ echo Done($_SESSION['zalogowany']);
+include('rada/at.php');
+ exit();
+}
+if(isSet($_SESSION['logowany']) && $_POST!=null)
+  $_SESSION['logowany']=$_SESSION['logowany']+1;
 else
-{$s='indexi.php'; $cols = '*';} 
+  $_SESSION['logowany']=0;
+
+function Czarna_lista()
+{
+  if($_SERVER['HTTP_X_FORWARDED_FOR']){
+    $ip_usera = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  }else {
+  $ip_usera = $_SERVER['REMOTE_ADDR'];
+  }
+  $query = "SELECT `ip` FROM `Czarna_lista` WHERE `ip`='$ip_usera' ";
+   connection();
+  if(!$result = mysql_query($query )){destructor();return 2;}
+       if($ro=@mysql_fetch_row($result )){destructor();return 1;}else{destructor();return 0;}
+}
+include_once('serwer.php');
+
+$CL = Czarna_lista();
 
 
-?>
-<html>
- <frameset cols="<?PHP echo $cols ; ?>">
+if($_POST!= NULL && $CL==0){
 
-	<frame src="<?PHP echo $s; ?>" />
-<?PHP if(@$_GET['s1']!=NULL){
-echo '	<frame src="'. $s1.'" />';}
- else if(@$_GET['b']==4)
-{ 
-echo '	<frame src="'. $s.'" />
-	<frame src="'. $s.'" />
-	<frame src="'. $s.'" />
-';
+function na_czarnom_liste($user)
+{
+ if ($_SERVER['HTTP_X_FORWARDED_FOR']){
+  $ip_usera = $_SERVER['HTTP_X_FORWARDED_FOR'];
+ }else{
+  $ip_usera = $_SERVER['REMOTE_ADDR'];
+ }
+ $query = "INSERT INTO Czarna_lista VALUES('','$ip_usera','$user'); ";
+connection(); mysql_query($query); destructor();
+}
+function checkPass($user, $pass){
+/*sprawdzenie d³ugo³ci przekazanych ci±gów*/
+
+  $userNameLength = strlen($user);
+  $userPassLength = strlen($pass);
+
+  if($userNameLength < 3 || $userNameLength > 20 ||
+     $userPassLength < 6 || $userPassLength > 30){  return 2; }
+
+  $query = "SELECT COUNT(*) AS rec, `prawa`,id FROM list_user WHERE name='$user' ";
+  $query .= "AND haslo='$pass' GROUP BY `id` ORDER BY `id`";
+  //echo $query;
+  /*nawiazanie po³aczenia serwerem i wybór bazy*/
+
+  connection();
+  if(!$result = mysql_query($query))
+  {
+    destructor();
+    return 1;
+  }
+  /*sprawdzenie wyników zapytania*/
+
+  if(!$row = @mysql_fetch_row($result))
+  {
+    //echo('Wyst¹pi³ b³¹d: nieprawid³owe wyniki zapytania...');
+    @destructor();    return 1;
+  }else{
+	if($row[0] <> 1)
+	{
+	  @destructor();
+	  return 2;
+        }elseif(!$row[1] > 0){
+          @destructor();
+          return 3;
+        }else{
+	  $_SESSION['id']=$row[2];
+          @destructor();
+          return 0;
+        }
+  }
 }
 
-?>
-</frameset></html>
 
+  /* rozpoczêcie sesji i procedur logowania*/
+  //echo $_POST[haslo].$_POST[user].'<br>';
+session_start();
+  if(!isSet($_SESSION['logowany'])||$_SESSION['logowany']===NULL){
+	$_SESSION['logowany']=0;
+  }else{	//echo $_SESSION['logowany'];
+	if($_SESSION['logowany']>20){na_czarnom_liste($_POST["user"]); $CL=2;}
+	$_SESSION['logowany']+=1;
+  }
+
+  if(
+     isSet($_SESSION['zalogowany'])
+  && $_SESSION['zalogowany']!=NULL
+  && !($_GET['q']!=NULL)
+  ){
+  echo Done($_SESSION['zalogowany']);include('rada/at.php');exit();
+	//   header("Location: test/");
+  }elseif(!isSet($_POST["haslo"]) || !isSet($_POST["user"])){
+	$_SESSION['komunikat'] = "Wprowadz nazwê i has³o u¿ytkownika:";
+  }else{
+     $val = checkPass($_POST["user"], $_POST["haslo"]);
+	if($val == 0){
+		$_SESSION['zalogowany'] = $_POST["user"];
+		$_SESSION['logowany']=-1;
+		header("Location: http://www.bornkes.w.szu.pl/");
+	}else if($val == 1){
+		$_SESSION['komunikat'] = "B³±d serwera. Zalogowanie nie by³o mo¿liwe.";
+	}else if($val == 2){
+		$_SESSION['komunikat'] = "Nieprawid³owa nazwa lub has³o u¿ytkownika.";
+	}else if($val == 3){ $CL = 3;
+		$_SESSION['komunikat'] = "Nie masz Uprawnieñ.";
+	}else{
+		$_SESSION['komunikat'] = "B³±d serwera. Zalogowanie nie by³o mo¿liwe.";
+	}
+      }
+} //if $_POST
+
+  if($CL == 1)
+  {
+        $_SESSION['komunikat'] = "Ban za próbê Z³amania Has³a.";
+  }
+elseif($CL == 2)
+  {
+        $_SESSION['komunikat'] = "Blokada Problem z Twoim IP.";
+  }
+
+?>
+<form name = "formularz1"
+      action = ""
+      method = "POST"
+><script language="JavaScript"><!-- 
+var warunek = false;
+//--></script>
+<table border="0" align="center" style="border:1px;"><tr>
+<td colspan="2" align="center">
+<?php if(isSet($_SESSION['komunikat']))
+  echo $_SESSION['komunikat'];
+else
+  echo "Wprowadz nazwê i has³o u¿ytkownika:";
+
+if($CL!=0){exit();}
+if($_SESSION['logowany']>0){  echo " Próba zalogowania nr:".$_SESSION['logowany'];}
+if($_SESSION['logowany']>17){ echo "<br>Uwaga 20 nie udanych prób logowania grozi Banem.";}
+ ?>
+</td></tr><tr>
+<td>U¿ytkownik:</td>
+<td><input type="text" name="user" value="<?PHP echo $_POST["user"]; ?>"></td>
+</tr><tr>
+<td>Has³o:</td>
+<td><input type="password" name="haslo"></td>
+</tr><tr>
+<td colspan="2" align="center">
+  <input type="submit" value="Wejdz">
+</td></tr>
+</table>
+</form><? echo $_GET[q]; ?>

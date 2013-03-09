@@ -1,4 +1,10 @@
-<?php header('Content-type: text/html'); ?><html><head>
+<?php 
+function Endd(){echo 'Nic mi nie dziala na szu.pl'; }
+register_shutdown_function("Endd"); 
+
+
+/*
+header('Content-type: text/html'); ? ><html><head>
 	<title>Loniek (665|602) - Plemiona - ¦wiat 5</title>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 </head>
@@ -12,7 +18,7 @@ var test_json = "haha "+"test zero"; //{"hmm":"haha","zz":"test zero","jeden":11
 </script>
 <a href="" onclick="alert(test_json[0]);return false">sprwadz</a>
 </body>
-<html><?php
+<html>< ?php
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
@@ -27,3 +33,4 @@ var test_json = "haha "+"test zero"; //{"hmm":"haha","zz":"test zero","jeden":11
 
 //header('Content-type: text/plain');
 
+*/

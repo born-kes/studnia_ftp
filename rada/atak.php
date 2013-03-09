@@ -1,7 +1,7 @@
-<?PHP
+<?php
  include('../connection.php');
  include('css.htm');
- $ec =mktime()-$godzina_zero;
+$ec =mktime()-$godzina_zero;
 
 
  $zap ="SELECT COUNT( t.id ) AS `Rekordow` , t.name, t.id
@@ -23,26 +23,14 @@ Klik(gdzie,'ataki_wsi.php?lista='+a+'&cel='+b);
 //-->
 </script>
 
- <table class="main"><?php
+<?php
   connection();
    $wynik = @mysql_query($zap);
   while($r = @mysql_fetch_array($wynik)){
+  
+$storing1.='<option value="gracz_'.deCode($r[name]).'" id="'.$r[id].'">'.deCode($r[name]).' x '.$r[Rekordow].'</option>';
            $storing0.= '
  <tr>
-  <td valign="top">
-    <a href="javascript:selectOdp(\'gracz_'.deCode($r[name]).'\',1,'.$r[id].');">
-      <i>'.deCode($r[name]).'</i>
-    </a>
-  </td>
-  <td>x
-    <b>'.$r[Rekordow].'</b>
-  </td>
-  <td>
-    <a href="javascript:selectOdp(\'gracz_'.deCode($r[name]).'\',3,'.$r[id].');">[Wszystkie]</a>
-  </td>
- </tr>
- <tr>
-  <td />
   <td id="gracz_'.deCode($r[name]).'" />
  </tr>
  <tr>
@@ -52,11 +40,13 @@ Klik(gdzie,'ataki_wsi.php?lista='+a+'&cel='+b);
  </tr> ';
  $kto[$q]=$r[id];}
   destructor();
-
-   $storing0.= '</table>';
 //   $storing.= '</td><td valign="top">';
+//    <a href="javascript:selectOdp(\'gracz_'.deCode($r[name]).'\',3,'.$r[id].');">[Wszystkie]</a>
+?>
+<table>
+<tr><td>Atakowani Gracze: <select onChange="selectOdp(this.value,1,this.options[this.selectedIndex].id);"><option></option><?php echo $storing1; ?></select></td></tr>
+<?php echo $storing0; ?>
+</table>
 
-echo $storing0;
- ?>
  </body>
 </html>
